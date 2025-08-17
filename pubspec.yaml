@@ -34,19 +34,31 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   gif: ^2.2.0
+  google_fonts: ^6.1.0
+  font_awesome_flutter: ^10.7.0
   cupertino_icons: ^1.0.8
+  smooth_page_indicator: ^1.1.0
+  flutter_localizations:
+    sdk: flutter
+  intl: ^0.20.2
+  shared_preferences: ^2.2.2
+  intl_phone_field: ^3.2.0
+  google_sign_in: ^6.1.0 # For Google Sign-In
+  flutter_facebook_auth: ^6.1.0 # For Facebook Login
+  sign_in_with_apple: ^6.0.0 # For Apple Sign-In
+  flutter_web_auth_2: ^4.0.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
+  fl_chart: ^0.68.0
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^5.0.0
-
+  uuid: ^4.4.0
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
@@ -57,36 +69,10 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
-
+  generate: true
   # To add assets to your application, add an assets section, like this:
   assets:
-    # Logo
-    - assets/kolshy_logo_noir.gif
+    - assets/
+    - assets/icons/
 
-    # Avatar placeholder
-    - assets/avatar_placeholder.jpg
-
-    # All your icon PNGs (active/inactive states)
-    - assets/icons/dashboard_on.png
-    - assets/icons/dashboard_off.png
-    - assets/icons/orders_on.png
-    - assets/icons/orders_off.png
-    - assets/icons/product_on.png
-    - assets/icons/product_off.png
-    - assets/icons/analytics_on.png
-    - assets/icons/analytics_off.png
-    - assets/icons/transactions_on.png
-    - assets/icons/transactions_off.png
-    - assets/icons/revenue_on.png
-    - assets/icons/revenue_off.png
-    - assets/icons/review_on.png
-    - assets/icons/review_off.png
-    - assets/welcome_background.jpeg
-    - assets/kolshy_logo.gif
-
-    # Bottom navigation icons
-    - assets/icons/menu.png
-    - assets/icons/home.png
-    - assets/icons/chat.png
-    - assets/icons/bell.png
 
