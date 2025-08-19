@@ -1,24 +1,44 @@
 import 'package:app_vendor/presentation/analytics/customer_analytics_screen.dart';
-import 'package:app_vendor/presentation/auth/login/login_screen.dart';
 import 'package:app_vendor/presentation/dashboard/dashboard_screen.dart';
 import 'package:app_vendor/presentation/orders/orders_list_screen.dart';
 import 'package:app_vendor/presentation/payouts/payouts_screen.dart';
 import 'package:app_vendor/presentation/products/add_product_screen.dart';
 import 'package:app_vendor/presentation/products/drafts_list_screen.dart';
 import 'package:app_vendor/presentation/products/products_list_screen.dart';
+import 'package:app_vendor/presentation/revenue/revenue_screen.dart';
 import 'package:app_vendor/presentation/reviews/reviews_screen.dart';
 import 'package:app_vendor/presentation/transactions/transactions_screen.dart';
+import 'package:app_vendor/presentation/translation/Language.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+
 import 'presentation/common/app_shell.dart';
 import 'presentation/common/nav_key.dart';
+import 'state_management/locale_provider.dart';
+import 'l10n/app_localizations.dart';
 
-void main() => runApp(const KolshyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  final localeProvider = LocaleProvider();
+  await localeProvider.loadSavedLocale();
+
+  runApp(
+    ChangeNotifierProvider.value(
+      value: localeProvider,
+      child: const KolshyApp(),
+    ),
+  );
+}
 
 class KolshyApp extends StatelessWidget {
   const KolshyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<LocaleProvider>(context);
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Kolshy',
@@ -27,7 +47,19 @@ class KolshyApp extends StatelessWidget {
         fontFamily: 'Inter',
         scaffoldBackgroundColor: Colors.white,
       ),
-      home: const LoginScreen(),
+      locale: provider.locale,
+      supportedLocales: const [
+        Locale('en'),
+        Locale('fr'),
+        Locale('ar'),
+      ],
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      home: const LanguageScreen(),
     );
   }
 }
@@ -43,7 +75,7 @@ class _HomeState extends State<Home> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   NavKey _selected = NavKey.dashboard;
 
-  // The 'home' icon is at index 1 in your AppShell, so we start there.
+  /// The top bar in AppShell has: 0=menu, 1=home, 2=chat, 3=bell
   int _bottomIndex = 1;
   int _unreadCount = 4;
 
@@ -63,15 +95,18 @@ class _HomeState extends State<Home> {
         setState(() {
           _bottomIndex = i;
           _selected = _navKeyForBottomIndex(i);
+          if (i == 3) {
+            // user tapped the bell; clear unread badge
+            _unreadCount = 0;
+          }
         });
       },
       unreadCount: _unreadCount,
-      onOpenNotifications: _showNotifications,
       child: _screenFor(_selected),
     );
   }
 
-  // === route mapper ===
+  /// Map NavKey to the screen widget shown in the body.
   Widget _screenFor(NavKey key) {
     switch (key) {
       case NavKey.dashboard:
@@ -88,51 +123,28 @@ class _HomeState extends State<Home> {
         return const CustomerAnalyticsScreen();
       case NavKey.transactions:
         return const TransactionsScreen();
-    // Corrected mapping: using PayoutsScreen for transactions
       case NavKey.payouts:
         return const PayoutsScreen();
-    // Corrected mapping: assuming RevenueScreen is the correct destination
       case NavKey.revenue:
-        return const ReviewsScreen();
-    // Added missing case for ReviewsScreen
+        return const RevenueScreen();
       case NavKey.review:
         return const ReviewsScreen();
-    // Fallback for unmapped keys to avoid errors
-      default:
-        return const DashboardScreen();
     }
   }
 
-  // A helper function to map the bottom bar index to a NavKey.
+  /// Decide which NavKey to select when a top bar icon is tapped.
   NavKey _navKeyForBottomIndex(int index) {
     switch (index) {
       case 1:
-        return NavKey.dashboard;
+        return NavKey.dashboard; // home
       case 2:
-        return NavKey.orders; // The 'chat' icon
+        return NavKey.orders; // using "chat" icon to jump to Orders
       case 3:
-      // Assuming notifications have their own screen or NavKey
-        return NavKey.dashboard; // Fallback to dashboard for now
+      // bell doesn't navigate to a new page; keep current selection
+        return _selected;
+      case 0:
       default:
-        return NavKey.dashboard;
+        return _selected;
     }
-  }
-
-  Future<void> _showNotifications() async {
-    await showDialog(
-      context: context,
-      barrierColor: Colors.black.withOpacity(.25),
-      builder: (context) => AlertDialog(
-        title: const Text('Notification'),
-        content: const Text('…your notifications list here…'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Close'),
-          ),
-        ],
-      ),
-    );
-    setState(() => _unreadCount = 0);
   }
 }
