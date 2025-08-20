@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import 'package:app_vendor/l10n/app_localizations.dart';
 import 'package:app_vendor/state_management/locale_provider.dart';
-import 'package:app_vendor/main.dart'; // pour le retour Home()
 
 class LanguageScreen extends StatefulWidget {
   const LanguageScreen({super.key});
@@ -23,15 +21,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
   @override
   void initState() {
     super.initState();
-    final code =
-        Provider.of<LocaleProvider>(context, listen: false).locale.languageCode;
-    if (code == 'ar') {
-      selectedLanguage = 'arabic';
-    } else if (code == 'fr') {
-      selectedLanguage = 'french';
-    } else {
-      selectedLanguage = 'english';
-    }
+    selectedLanguage = 'english'; // Valeur par défaut
   }
 
   @override
@@ -44,111 +34,136 @@ class _LanguageScreenState extends State<LanguageScreen> {
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context)!;
 
-    final all = <_LangItem>[
-      _LangItem(
-        label: t.english,
-        value: 'english',
-        flag: '🇬🇧',
-        locale: const Locale('en'),
-      ),
-      _LangItem(
-        label: t.arabic,
-        value: 'arabic',
-        flag: '🇸🇦',
-        locale: const Locale('ar'),
-      ),
-    ];
+    // Utilisation de Consumer pour accéder au LocaleProvider et gérer les états de langue
+    return Consumer<LocaleProvider>(
+      builder: (context, localeProvider, child) {
+        final locale = localeProvider.locale;
 
-    final q = _searchController.text.trim().toLowerCase();
-    final filtered = all.where((e) {
-      if (q.isEmpty) return true;
-      return e.label.toLowerCase().contains(q) || e.value.contains(q);
-    }).toList();
+        // VÉRIFIER SI LOCALE EST NULL AVANT DE CONTINUER
+        if (locale == null) {
+          // Si le locale est null, afficher un indicateur de chargement
+          return Scaffold(
+            appBar: AppBar(title: Text(t.language)),
+            body: const Center(child: CircularProgressIndicator()),
+          );
+        }
 
-    return Scaffold(
-      backgroundColor: _bgScaffold,
-      body: SafeArea(
-        top: false,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(20, 18, 20, 6),
-              child: Text(
-                t.language,
-                style: const TextStyle(
-                  fontSize: 34,
-                  fontWeight: FontWeight.w800,
-                  color: Colors.black,
-                ),
-              ),
-            ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 14),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(18),
-                    boxShadow: const [
-                      BoxShadow(
-                        color: Color(0x0F000000),
-                        blurRadius: 20,
-                        offset: Offset(0, 10),
-                      )
-                    ],
+        final code = locale.languageCode;
+
+        // Définir la langue sélectionnée en fonction du code de la locale
+        if (code == 'ar') {
+          selectedLanguage = 'arabic';
+        } else if (code == 'fr') {
+          selectedLanguage = 'french';
+        } else {
+          selectedLanguage = 'english';
+        }
+
+        final all = <_LangItem>[
+          _LangItem(
+            label: t.english,
+            value: 'english',
+            flag: '🇬🇧',
+            locale: const Locale('en'),
+          ),
+          _LangItem(
+            label: t.arabic,
+            value: 'arabic',
+            flag: '🇸🇦',
+            locale: const Locale('ar'),
+          ),
+        ];
+
+        final q = _searchController.text.trim().toLowerCase();
+        final filtered = all.where((e) {
+          if (q.isEmpty) return true;
+          return e.label.toLowerCase().contains(q) || e.value.contains(q);
+        }).toList();
+
+        return Scaffold(
+          backgroundColor: _bgScaffold,
+          body: SafeArea(
+            top: false,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 18, 20, 6),
+                  child: Text(
+                    t.language,
+                    style: const TextStyle(
+                      fontSize: 34,
+                      fontWeight: FontWeight.w800,
+                      color: Colors.black,
+                    ),
                   ),
-                  padding: const EdgeInsets.fromLTRB(14, 14, 14, 18),
-                  child: Column(
-                    children: [
-                      _SearchField(
-                        controller: _searchController,
-                        hintText: t.search,
-                        onChanged: (_) => setState(() {}),
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 14),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(18),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Color(0x0F000000),
+                            blurRadius: 20,
+                            offset: Offset(0, 10),
+                          )
+                        ],
                       ),
-                      const SizedBox(height: 12),
-                      if (filtered.isEmpty)
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 6),
-                            child: Text(
-                              _noResultsText(context),
-                              style: const TextStyle(color: Colors.black54),
-                            ),
+                      padding: const EdgeInsets.fromLTRB(14, 14, 14, 18),
+                      child: Column(
+                        children: [
+                          _SearchField(
+                            controller: _searchController,
+                            hintText: t.search,
+                            onChanged: (_) => setState(() {}),
                           ),
-                        )
-                      else
-                        Expanded(
-                          child: ListView.separated(
-                            itemBuilder: (_, i) {
-                              final item = filtered[i];
-                              final isSelected =
-                                  selectedLanguage == item.value;
-                              return _LanguageCard(
-                                item: item,
-                                isSelected: isSelected,
-                                onTap: () {
-                                  setState(() => selectedLanguage = item.value);
-                                  Provider.of<LocaleProvider>(context,
-                                      listen: false)
-                                      .setLocale(item.locale);
+                          const SizedBox(height: 12),
+                          if (filtered.isEmpty)
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Padding(
+                                padding: const EdgeInsets.only(top: 6),
+                                child: Text(
+                                  _noResultsText(context),
+                                  style: const TextStyle(color: Colors.black54),
+                                ),
+                              ),
+                            )
+                          else
+                            Expanded(
+                              child: ListView.separated(
+                                itemBuilder: (_, i) {
+                                  final item = filtered[i];
+                                  final isSelected =
+                                      selectedLanguage == item.value;
+                                  return _LanguageCard(
+                                    item: item,
+                                    isSelected: isSelected,
+                                    onTap: () {
+                                      setState(() => selectedLanguage = item.value);
+                                      localeProvider.setLocale(item.locale);
+                                    },
+                                  );
                                 },
-                              );
-                            },
-                            separatorBuilder: (_, __) =>
-                            const SizedBox(height: 12),
-                            itemCount: filtered.length,
-                          ),
-                        ),
-                    ],
+                                separatorBuilder: (_, __) =>
+                                const SizedBox(height: 12),
+                                itemCount: filtered.length,
+                              ),
+                            ),
+                        ],
+                      ),
+                    ),
                   ),
                 ),
-              ),
+              ],
             ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 
@@ -207,8 +222,7 @@ class _SearchField extends StatelessWidget {
           ),
           if (controller.text.isNotEmpty)
             IconButton(
-              icon: const Icon(Icons.close,
-                  color: Colors.black54, size: 20),
+              icon: const Icon(Icons.close, color: Colors.black54, size: 20),
               onPressed: () {
                 controller.clear();
                 FocusScope.of(context).unfocus();
