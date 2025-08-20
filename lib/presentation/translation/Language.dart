@@ -14,10 +14,8 @@ class LanguageScreen extends StatefulWidget {
 
 class _LanguageScreenState extends State<LanguageScreen> {
   static const Color _bgScaffold = Color(0xFFF7F7F8);
-  static const Color _topbar = Color(0xFF2F2F2F);
   static const Color _primary = Color(0xFFE51742); // Rouge sélectionné
   static const Color _stroke = Color(0xFFE6E6E8); // Bordure grise
-  static const Color _hint = Color(0x5A000000);
 
   late String selectedLanguage;
   final TextEditingController _searchController = TextEditingController();
@@ -25,7 +23,8 @@ class _LanguageScreenState extends State<LanguageScreen> {
   @override
   void initState() {
     super.initState();
-    final code = Provider.of<LocaleProvider>(context, listen: false).locale.languageCode;
+    final code =
+        Provider.of<LocaleProvider>(context, listen: false).locale.languageCode;
     if (code == 'ar') {
       selectedLanguage = 'arabic';
     } else if (code == 'fr') {
@@ -58,7 +57,6 @@ class _LanguageScreenState extends State<LanguageScreen> {
         flag: '🇸🇦',
         locale: const Locale('ar'),
       ),
-
     ];
 
     final q = _searchController.text.trim().toLowerCase();
@@ -69,7 +67,6 @@ class _LanguageScreenState extends State<LanguageScreen> {
 
     return Scaffold(
       backgroundColor: _bgScaffold,
-      appBar: const _TopBar(),
       body: SafeArea(
         top: false,
         child: Column(
@@ -126,17 +123,21 @@ class _LanguageScreenState extends State<LanguageScreen> {
                           child: ListView.separated(
                             itemBuilder: (_, i) {
                               final item = filtered[i];
-                              final isSelected = selectedLanguage == item.value;
+                              final isSelected =
+                                  selectedLanguage == item.value;
                               return _LanguageCard(
                                 item: item,
                                 isSelected: isSelected,
                                 onTap: () {
                                   setState(() => selectedLanguage = item.value);
-                                  Provider.of<LocaleProvider>(context, listen: false).setLocale(item.locale);
+                                  Provider.of<LocaleProvider>(context,
+                                      listen: false)
+                                      .setLocale(item.locale);
                                 },
                               );
                             },
-                            separatorBuilder: (_, __) => const SizedBox(height: 12),
+                            separatorBuilder: (_, __) =>
+                            const SizedBox(height: 12),
                             itemCount: filtered.length,
                           ),
                         ),
@@ -160,46 +161,6 @@ class _LanguageScreenState extends State<LanguageScreen> {
       default:
         return 'No results';
     }
-  }
-}
-
-class _TopBar extends StatelessWidget implements PreferredSizeWidget {
-  const _TopBar();
-
-  static const Color _topbar = Color(0xFF2F2F2F);
-
-  @override
-  Size get preferredSize => const Size.fromHeight(56);
-
-  @override
-  Widget build(BuildContext context) {
-    return AppBar(
-      backgroundColor: _topbar,
-      elevation: 0,
-      centerTitle: false,
-      titleSpacing: 0,
-      leadingWidth: 56,
-      leading: IconButton(
-        icon: const Icon(Icons.menu_rounded, color: Colors.white),
-        onPressed: () => Navigator.maybePop(context),
-      ),
-      title: const SizedBox.shrink(),
-      actions: [
-        IconButton(
-          icon: const Icon(Icons.home_outlined, color: Colors.white),
-          onPressed: () {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (_) => const Home()),
-            );
-          },
-        ),
-        IconButton(
-          icon: const Icon(Icons.shopping_bag_outlined, color: Colors.white),
-          onPressed: () {},
-        ),
-      ],
-    );
   }
 }
 
@@ -239,13 +200,15 @@ class _SearchField extends StatelessWidget {
                 hintText: hintText,
                 hintStyle: const TextStyle(color: _hint, fontSize: 16),
                 border: InputBorder.none,
-                contentPadding: const EdgeInsets.symmetric(horizontal: 6, vertical: 14),
+                contentPadding:
+                const EdgeInsets.symmetric(horizontal: 6, vertical: 14),
               ),
             ),
           ),
           if (controller.text.isNotEmpty)
             IconButton(
-              icon: const Icon(Icons.close, color: Colors.black54, size: 20),
+              icon: const Icon(Icons.close,
+                  color: Colors.black54, size: 20),
               onPressed: () {
                 controller.clear();
                 FocusScope.of(context).unfocus();
@@ -280,7 +243,7 @@ class _LanguageCard extends StatelessWidget {
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeInOut,
         decoration: BoxDecoration(
-          color: isSelected ? Colors.white : Colors.white,
+          color: Colors.white,
           borderRadius: BorderRadius.circular(isSelected ? 16 : 20),
           border: Border.all(
             color: isSelected ? _primary : _stroke,
@@ -295,7 +258,10 @@ class _LanguageCard extends StatelessWidget {
             Expanded(
               child: Text(
                 item.label,
-                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: Colors.black),
+                style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.black),
               ),
             ),
             _RadioPill(isOn: isSelected),

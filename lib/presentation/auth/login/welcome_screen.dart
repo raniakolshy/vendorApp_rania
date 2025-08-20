@@ -1,3 +1,5 @@
+import 'package:app_vendor/presentation/auth/login/login_screen.dart';
+import 'package:app_vendor/presentation/auth/register/register_screen.dart';
 import 'package:flutter/material.dart';
 
 /// Page d'accueil (welcome) – style basé sur la maquette fournie.
@@ -71,14 +73,20 @@ class WelcomeScreen extends StatelessWidget {
                   _PrimaryButton(
                     label: "Sign up",
                     onPressed: () {
-                      // TODO: Naviguer vers la page d'inscription
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const RegisterScreen()),
+                      );
                     },
                   ),
                   const SizedBox(height: 14),
                   _SecondaryButton(
                     label: "Sign In",
                     onPressed: () {
-                      // TODO: Naviguer vers la page de connexion
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const LoginScreen()),
+                      );
                     },
                   ),
                   const SizedBox(height: 18),

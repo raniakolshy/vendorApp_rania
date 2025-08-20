@@ -8,37 +8,17 @@ import 'package:app_vendor/presentation/products/products_list_screen.dart';
 import 'package:app_vendor/presentation/revenue/revenue_screen.dart';
 import 'package:app_vendor/presentation/reviews/reviews_screen.dart';
 import 'package:app_vendor/presentation/transactions/transactions_screen.dart';
-import 'package:app_vendor/presentation/translation/Language.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-
 import 'presentation/common/app_shell.dart';
 import 'presentation/common/nav_key.dart';
-import 'state_management/locale_provider.dart';
-import 'l10n/app_localizations.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-
-  final localeProvider = LocaleProvider();
-  await localeProvider.loadSavedLocale();
-
-  runApp(
-    ChangeNotifierProvider.value(
-      value: localeProvider,
-      child: const KolshyApp(),
-    ),
-  );
-}
+void main() => runApp(const KolshyApp());
 
 class KolshyApp extends StatelessWidget {
   const KolshyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<LocaleProvider>(context);
-
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Kolshy',
@@ -47,19 +27,7 @@ class KolshyApp extends StatelessWidget {
         fontFamily: 'Inter',
         scaffoldBackgroundColor: Colors.white,
       ),
-      locale: provider.locale,
-      supportedLocales: const [
-        Locale('en'),
-        Locale('fr'),
-        Locale('ar'),
-      ],
-      localizationsDelegates: const [
-        AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      home: const LanguageScreen(),
+      home: const Home(),
     );
   }
 }
@@ -124,7 +92,7 @@ class _HomeState extends State<Home> {
       case NavKey.transactions:
         return const TransactionsScreen();
       case NavKey.payouts:
-        return const PayoutsScreen();
+        return const TransactionsScreen();
       case NavKey.revenue:
         return const RevenueScreen();
       case NavKey.review:

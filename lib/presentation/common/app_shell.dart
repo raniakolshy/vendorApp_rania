@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'kolshy_drawer.dart';
 import 'nav_key.dart';
 
-// Ton AppShell complet
 class AppShell extends StatelessWidget {
   final GlobalKey<ScaffoldState> scaffoldKey;
   final NavKey selected;
@@ -61,6 +60,7 @@ class AppShell extends StatelessWidget {
                   active: bottomIndex == 2,
                   onTap: () => onBottomTap(2),
                 ),
+                // Bell + popover
                 Stack(
                   clipBehavior: Clip.none,
                   children: [
@@ -97,6 +97,7 @@ class AppShell extends StatelessWidget {
     );
   }
 
+  // ---- Popover ----
   void _showNotificationsPopover(BuildContext context) {
     showGeneralDialog(
       context: context,
@@ -108,12 +109,13 @@ class AppShell extends StatelessWidget {
       transitionBuilder: (ctx, anim, _, __) {
         return Stack(
           children: [
+            // tap outside to close
             Positioned.fill(
               child: GestureDetector(onTap: () => Navigator.pop(ctx)),
             ),
             Positioned(
               right: 12,
-              top: 62,
+              top: 62, // just below the dark top bar
               child: FadeTransition(
                 opacity: CurvedAnimation(parent: anim, curve: Curves.easeOut),
                 child: SlideTransition(
@@ -135,7 +137,8 @@ class AppShell extends StatelessWidget {
   }
 }
 
-// 🔝 Top buttons
+// ----------------- Top bar pieces -----------------
+
 class _TopBtn extends StatelessWidget {
   final String name;
   final bool active;
@@ -177,7 +180,6 @@ class _TopBtn extends StatelessWidget {
   }
 }
 
-// 🔴 Petit dot rouge
 class _RedDot extends StatelessWidget {
   const _RedDot();
   @override
@@ -191,9 +193,11 @@ class _RedDot extends StatelessWidget {
   }
 }
 
-// 🔔 Notifications popover
+// ----------------- Notifications popover -----------------
+
 class _NotificationsCard extends StatefulWidget {
   const _NotificationsCard();
+
   @override
   State<_NotificationsCard> createState() => _NotificationsCardState();
 }
@@ -233,6 +237,7 @@ class _NotificationsCardState extends State<_NotificationsCard> {
   @override
   Widget build(BuildContext context) {
     final text = Theme.of(context).textTheme;
+
     return Material(
       color: Colors.transparent,
       child: Container(
@@ -258,6 +263,7 @@ class _NotificationsCardState extends State<_NotificationsCard> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
+              // Header
               Row(
                 children: [
                   Text(
@@ -275,6 +281,7 @@ class _NotificationsCardState extends State<_NotificationsCard> {
                   ),
                 ],
               ),
+              // Scrollable list with swipe-to-remove
               ConstrainedBox(
                 constraints: const BoxConstraints(maxHeight: 400),
                 child: ListView.builder(
@@ -315,7 +322,7 @@ class _NotificationsCardState extends State<_NotificationsCard> {
   }
 }
 
-// 📌 Model
+// Data model
 class _NotifData {
   final String avatar, name, handleAndTime, line1;
   final bool unread;
@@ -328,7 +335,7 @@ class _NotifData {
   });
 }
 
-// 📌 Notification tile
+// A single notification row (with avatar, text, unread dot)
 class _NotifTile extends StatelessWidget {
   final String avatar;
   final String name;
@@ -347,6 +354,7 @@ class _NotifTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final text = Theme.of(context).textTheme;
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: Row(
@@ -361,6 +369,7 @@ class _NotifTile extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                // name + meta
                 Row(
                   children: [
                     Flexible(
@@ -397,6 +406,7 @@ class _NotifTile extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 8),
+          // blue unread dot
           Container(
             width: 8,
             height: 8,
