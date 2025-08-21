@@ -5,10 +5,23 @@ class AskAdminScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final TextEditingController subjectController = TextEditingController();
+    final TextEditingController queryController = TextEditingController();
+
     return Scaffold(
-      backgroundColor: Colors.grey[200], // Background grisâtre
+      backgroundColor: Colors.grey[200],
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+      ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.only(top: 100.0, left: 16.0, right: 16.0, bottom: 16.0),
+        padding: const EdgeInsets.only(top: 10.0, left: 16.0, right: 16.0, bottom: 16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -22,8 +35,8 @@ class AskAdminScreen extends StatelessWidget {
             const SizedBox(height: 20),
             Container(
               decoration: BoxDecoration(
-                color: Colors.white, // Conteneur principal en blanc
-                borderRadius: BorderRadius.circular(10), // Coins arrondis
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10),
               ),
               padding: const EdgeInsets.all(16.0),
               child: Column(
@@ -36,10 +49,13 @@ class AskAdminScreen extends StatelessWidget {
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(width: 5),
-                      Icon(
-                        Icons.info_outline,
-                        size: 16,
-                        color: Colors.grey[600],
+                      Tooltip(
+                        message: 'Enter a clear and concise subject for your request.',
+                        child: Icon(
+                          Icons.info_outline,
+                          size: 16,
+                          color: Colors.grey[600],
+                        ),
                       ),
                     ],
                   ),
@@ -50,8 +66,9 @@ class AskAdminScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10),
                       border: Border.all(color: Colors.grey),
                     ),
-                    child: const TextField(
-                      decoration: InputDecoration(
+                    child: TextField(
+                      controller: subjectController,
+                      decoration: const InputDecoration(
                         hintText: 'Input your text',
                         border: InputBorder.none,
                         contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 12),
@@ -59,73 +76,27 @@ class AskAdminScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 20),
-                  Row(
-                    children: [
-                      const Text(
-                        'Your Query',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      const SizedBox(width: 5),
-                      Icon(
-                        Icons.info_outline,
-                        size: 16,
-                        color: Colors.grey[600],
-                      ),
-                    ],
+                  const Text(
+                    'Your Query',
+                    style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 8),
                   Container(
                     decoration: BoxDecoration(
-                      color: Colors.grey[200], // Fond gris pour la boîte de requête
-                      border: Border.all(color: Colors.grey),
-                      borderRadius: BorderRadius.circular(10),
+                      color: const Color(0xFFFAFAFA),
+                      borderRadius: BorderRadius.circular(16),
+                      border: Border.all(color: const Color(0xFFE5E5E5)),
                     ),
-                    child: Column(
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-                          decoration: const BoxDecoration(
-                            color: Colors.white, // Fond blanc pour la barre d'outils
-                            border: Border(bottom: BorderSide(color: Colors.grey)),
-                          ),
-                          child: SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            child: Row(
-                              children: [
-                                _buildFormatIcon(Icons.format_bold),
-                                _buildFormatIcon(Icons.format_italic),
-                                _buildFormatIcon(Icons.format_underline),
-                                _buildFormatIcon(Icons.sentiment_satisfied_alt),
-                                _buildFormatIcon(Icons.link),
-                                _buildFormatIcon(Icons.attach_file),
-                                const SizedBox(width: 10),
-                                const SizedBox(
-                                  height: 24,
-                                  child: VerticalDivider(color: Colors.grey, thickness: 1),
-                                ),
-                                _buildFormatIcon(Icons.format_list_bulleted),
-                                _buildFormatIcon(Icons.format_align_left),
-                                const SizedBox(width: 10),
-                                const SizedBox(
-                                  height: 24,
-                                  child: VerticalDivider(color: Colors.grey, thickness: 1),
-                                ),
-                                _buildFormatIcon(Icons.arrow_back),
-                                _buildFormatIcon(Icons.arrow_forward),
-                              ],
-                            ),
-                          ),
-                        ),
-                        TextField(
-                          maxLines: 10,
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            contentPadding: const EdgeInsets.all(10),
-                            fillColor: Colors.grey[100], // Fond gris très clair pour le champ de saisie
-                            filled: true,
-                          ),
-                        ),
-                      ],
+                    child: TextField(
+                      controller: queryController,
+                      minLines: 10,
+                      maxLines: null,
+                      keyboardType: TextInputType.multiline,
+                      decoration: const InputDecoration(
+                        hintText: 'Input your text',
+                        border: InputBorder.none,
+                        contentPadding: EdgeInsets.all(16),
+                      ),
                     ),
                   ),
                   const SizedBox(height: 30),
@@ -133,9 +104,35 @@ class AskAdminScreen extends StatelessWidget {
                     width: double.infinity,
                     height: 50,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        if (subjectController.text.isEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Please enter a subject.'),
+                              backgroundColor: Colors.red,
+                            ),
+                          );
+                        } else if (queryController.text.isEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Please enter your query.'),
+                              backgroundColor: Colors.red,
+                            ),
+                          );
+                        } else {
+                          print('Subject: ${subjectController.text}');
+                          print('Query Sent: ${queryController.text}');
+
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Request sent successfully!'),
+                              backgroundColor: Colors.green,
+                            ),
+                          );
+                        }
+                      },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFFDD1E1E), // Couleur rose
+                        backgroundColor: const Color(0xFFDD1E1E),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
@@ -156,13 +153,6 @@ class AskAdminScreen extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-
-  Widget _buildFormatIcon(IconData icon) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 4.0),
-      child: Icon(icon, color: Colors.grey),
     );
   }
 }
