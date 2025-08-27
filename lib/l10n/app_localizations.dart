@@ -952,7 +952,7 @@ abstract class AppLocalizations {
   /// No description provided for @productTitle.
   ///
   /// In en, this message translates to:
-  /// **'Lorem ipsum'**
+  /// **'Product'**
   String get productTitle;
 
   /// No description provided for @productBrand.
@@ -2346,6 +2346,810 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No orders match your search.'**
   String get noOrders;
+
+  /// No description provided for @status.
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get status;
+
+  /// No description provided for @orderId.
+  ///
+  /// In en, this message translates to:
+  /// **'Order Id'**
+  String get orderId;
+
+  /// No description provided for @purchasedOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Purchased on'**
+  String get purchasedOn;
+
+  /// No description provided for @baseTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Base Total'**
+  String get baseTotal;
+
+  /// No description provided for @purchasedTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Purchased Total'**
+  String get purchasedTotal;
+
+  /// No description provided for @customer.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer'**
+  String get customer;
+
+  /// No description provided for @onHold.
+  ///
+  /// In en, this message translates to:
+  /// **'On Hold'**
+  String get onHold;
+
+  /// No description provided for @closed.
+  ///
+  /// In en, this message translates to:
+  /// **'Closed'**
+  String get closed;
+
+  /// No description provided for @pending.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending'**
+  String get pending;
+
+  /// No description provided for @printPdfTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Print PDF'**
+  String get printPdfTitle;
+
+  /// No description provided for @invoiceDetailsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice and Packing Slip Details'**
+  String get invoiceDetailsTitle;
+
+  /// No description provided for @invoiceDetailsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Add your address, VAT, and tax information for PDF documents'**
+  String get invoiceDetailsSubtitle;
+
+  /// No description provided for @invoiceDetailsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your company address, VAT number, tax information...'**
+  String get invoiceDetailsHint;
+
+  /// No description provided for @saveInfoButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Information'**
+  String get saveInfoButton;
+
+  /// No description provided for @saveInfoEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter information before saving'**
+  String get saveInfoEmpty;
+
+  /// No description provided for @saveInfoSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Information saved successfully!'**
+  String get saveInfoSuccess;
+
+  /// No description provided for @invoiceDetailsFooter.
+  ///
+  /// In en, this message translates to:
+  /// **'This information will be included in all your PDF invoices and packing slips.'**
+  String get invoiceDetailsFooter;
+
+  /// No description provided for @nameAndDescriptionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Name & description'**
+  String get nameAndDescriptionTitle;
+
+  /// No description provided for @productTitleLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Product title'**
+  String get productTitleLabel;
+
+  /// No description provided for @productTitleHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the full product name (e.g., Apple iPhone 14 Pro).'**
+  String get productTitleHelp;
+
+  /// No description provided for @requiredField.
+  ///
+  /// In en, this message translates to:
+  /// **'Required'**
+  String get requiredField;
+
+  /// No description provided for @categoryLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Category'**
+  String get categoryLabel;
+
+  /// No description provided for @categoryHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Select the category that best fits your product.'**
+  String get categoryHelp;
+
+  /// No description provided for @categoryFood.
+  ///
+  /// In en, this message translates to:
+  /// **'Food'**
+  String get categoryFood;
+
+  /// No description provided for @categoryElectronics.
+  ///
+  /// In en, this message translates to:
+  /// **'Electronics'**
+  String get categoryElectronics;
+
+  /// No description provided for @categoryApparel.
+  ///
+  /// In en, this message translates to:
+  /// **'Apparel'**
+  String get categoryApparel;
+
+  /// No description provided for @categoryBeauty.
+  ///
+  /// In en, this message translates to:
+  /// **'Beauty'**
+  String get categoryBeauty;
+
+  /// No description provided for @categoryHome.
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get categoryHome;
+
+  /// No description provided for @categoryOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get categoryOther;
+
+  /// No description provided for @tagsLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Tags'**
+  String get tagsLabel;
+
+  /// No description provided for @tagsHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Add one keyword that describes your product.'**
+  String get tagsHelp;
+
+  /// No description provided for @descriptionLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get descriptionLabel;
+
+  /// No description provided for @descriptionHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Detailed description of features, materials, sizing, etc.'**
+  String get descriptionHelp;
+
+  /// No description provided for @shortDescriptionLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Short Description'**
+  String get shortDescriptionLabel;
+
+  /// No description provided for @shortDescriptionHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Short summary (1–2 sentences) for listings/search results.'**
+  String get shortDescriptionHelp;
+
+  /// No description provided for @skuLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'SKU'**
+  String get skuLabel;
+
+  /// No description provided for @skuHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Unique stock keeping unit (e.g., SKU-12345).'**
+  String get skuHelp;
+
+  /// No description provided for @priceTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Price'**
+  String get priceTitle;
+
+  /// No description provided for @amountLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount'**
+  String get amountLabel;
+
+  /// No description provided for @amountHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Base selling price without discounts.'**
+  String get amountHelp;
+
+  /// No description provided for @validNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a valid number'**
+  String get validNumber;
+
+  /// No description provided for @specialPriceLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Special Price'**
+  String get specialPriceLabel;
+
+  /// No description provided for @specialPriceHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Turn on to add a promotional/sale price.'**
+  String get specialPriceHelp;
+
+  /// No description provided for @specialPriceError.
+  ///
+  /// In en, this message translates to:
+  /// **'Special price must be less than Amount'**
+  String get specialPriceError;
+
+  /// No description provided for @specialPriceLabel2.
+  ///
+  /// In en, this message translates to:
+  /// **'Special price'**
+  String get specialPriceLabel2;
+
+  /// No description provided for @specialPriceHelp2.
+  ///
+  /// In en, this message translates to:
+  /// **'Discounted price that overrides the regular amount.'**
+  String get specialPriceHelp2;
+
+  /// No description provided for @priceExample.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., 24.99'**
+  String get priceExample;
+
+  /// No description provided for @minAmountLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Minimum amount'**
+  String get minAmountLabel;
+
+  /// No description provided for @minAmountHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Minimum quantity a customer is allowed to purchase.'**
+  String get minAmountHelp;
+
+  /// No description provided for @maxAmountLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Maximum amount'**
+  String get maxAmountLabel;
+
+  /// No description provided for @maxAmountHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Maximum quantity a customer is allowed to purchase.'**
+  String get maxAmountHelp;
+
+  /// No description provided for @taxesLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Taxes'**
+  String get taxesLabel;
+
+  /// No description provided for @taxesHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply taxes to this product at checkout.'**
+  String get taxesHelp;
+
+  /// No description provided for @stockAndAvailabilityTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Stock & Availability'**
+  String get stockAndAvailabilityTitle;
+
+  /// No description provided for @stockLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Stock'**
+  String get stockLabel;
+
+  /// No description provided for @stockHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Number of units available.'**
+  String get stockHelp;
+
+  /// No description provided for @stockExample.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., 100'**
+  String get stockExample;
+
+  /// No description provided for @weightLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Weight'**
+  String get weightLabel;
+
+  /// No description provided for @weightHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Weight in kilograms (used for shipping).'**
+  String get weightHelp;
+
+  /// No description provided for @weightExample.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., 0.50'**
+  String get weightExample;
+
+  /// No description provided for @allowedQuantityLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Allowed Quantity per Customer'**
+  String get allowedQuantityLabel;
+
+  /// No description provided for @allowedQuantityHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Optional: maximum number of units a single customer can buy for this product.'**
+  String get allowedQuantityHelp;
+
+  /// No description provided for @allowedQuantityExample.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., 5'**
+  String get allowedQuantityExample;
+
+  /// No description provided for @nonNegativeNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a non-negative number'**
+  String get nonNegativeNumber;
+
+  /// No description provided for @stockAvailabilityLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Stock Availability'**
+  String get stockAvailabilityLabel;
+
+  /// No description provided for @stockAvailabilityHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose current availability status.'**
+  String get stockAvailabilityHelp;
+
+  /// No description provided for @stockInStock.
+  ///
+  /// In en, this message translates to:
+  /// **'In Stock'**
+  String get stockInStock;
+
+  /// No description provided for @stockOutOfStock.
+  ///
+  /// In en, this message translates to:
+  /// **'Out of Stock'**
+  String get stockOutOfStock;
+
+  /// No description provided for @visibilityLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Visibility'**
+  String get visibilityLabel;
+
+  /// No description provided for @visibilityHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Invisible products are hidden from the storefront.'**
+  String get visibilityHelp;
+
+  /// No description provided for @visibilityInvisible.
+  ///
+  /// In en, this message translates to:
+  /// **'Invisible'**
+  String get visibilityInvisible;
+
+  /// No description provided for @visibilityVisible.
+  ///
+  /// In en, this message translates to:
+  /// **'Visible'**
+  String get visibilityVisible;
+
+  /// No description provided for @metaInfosTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Meta Infos'**
+  String get metaInfosTitle;
+
+  /// No description provided for @urlKeyLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Url Key'**
+  String get urlKeyLabel;
+
+  /// No description provided for @urlKeyHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'SEO-friendly slug used in the product URL.'**
+  String get urlKeyHelp;
+
+  /// No description provided for @urlKeyExample.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., apple-iphone-14-pro'**
+  String get urlKeyExample;
+
+  /// No description provided for @metaTitleLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Meta Title'**
+  String get metaTitleLabel;
+
+  /// No description provided for @metaTitleHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Title shown in search engine results.'**
+  String get metaTitleHelp;
+
+  /// No description provided for @metaTitleExample.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., Buy the iPhone 14 Pro'**
+  String get metaTitleExample;
+
+  /// No description provided for @metaKeywordsLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Meta Keywords'**
+  String get metaKeywordsLabel;
+
+  /// No description provided for @metaKeywordsHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Optional: comma-separated keywords.'**
+  String get metaKeywordsHelp;
+
+  /// No description provided for @metaDescriptionLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Meta Description'**
+  String get metaDescriptionLabel;
+
+  /// No description provided for @metaDescriptionHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Short paragraph for search engines (150–160 chars).'**
+  String get metaDescriptionHelp;
+
+  /// No description provided for @coverImagesLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cover images'**
+  String get coverImagesLabel;
+
+  /// No description provided for @coverImagesHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload a clear, high-resolution product image.'**
+  String get coverImagesHelp;
+
+  /// No description provided for @clickOrDropImage.
+  ///
+  /// In en, this message translates to:
+  /// **'Click or drop image'**
+  String get clickOrDropImage;
+
+  /// No description provided for @saveDraftButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Draft'**
+  String get saveDraftButton;
+
+  /// No description provided for @publishNowButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Publish now'**
+  String get publishNowButton;
+
+  /// No description provided for @deleteButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get deleteButton;
+
+  /// No description provided for @draftSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Draft saved'**
+  String get draftSaved;
+
+  /// No description provided for @productPublished.
+  ///
+  /// In en, this message translates to:
+  /// **'Product published'**
+  String get productPublished;
+
+  /// No description provided for @productDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'\"{name}\" has been deleted'**
+  String productDeleted(Object name);
+
+  /// No description provided for @draftsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Drafts'**
+  String get draftsTitle;
+
+  /// No description provided for @searchDraft.
+  ///
+  /// In en, this message translates to:
+  /// **'Search draft'**
+  String get searchDraft;
+
+  /// No description provided for @allDrafts.
+  ///
+  /// In en, this message translates to:
+  /// **'All Drafts'**
+  String get allDrafts;
+
+  /// No description provided for @drafts.
+  ///
+  /// In en, this message translates to:
+  /// **'Drafts'**
+  String get drafts;
+
+  /// No description provided for @pendingReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending Review'**
+  String get pendingReview;
+
+  /// No description provided for @noDraftsMatchSearch.
+  ///
+  /// In en, this message translates to:
+  /// **'No drafts match your search.'**
+  String get noDraftsMatchSearch;
+
+  /// No description provided for @deleteDraftQuestion.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete draft?'**
+  String get deleteDraftQuestion;
+
+  /// No description provided for @deleteDraftConfirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'This will delete \"{name}\".'**
+  String deleteDraftConfirmation(Object name);
+
+  /// No description provided for @cancelButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancelButton;
+
+  /// No description provided for @quantityLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Quantity'**
+  String get quantityLabel;
+
+  /// No description provided for @createdLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Created at'**
+  String get createdLabel;
+
+  /// No description provided for @statusLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get statusLabel;
+
+  /// No description provided for @actionLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Action'**
+  String get actionLabel;
+
+  /// No description provided for @editButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get editButton;
+
+  /// No description provided for @editProduct.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Product'**
+  String get editProduct;
+
+  /// No description provided for @productsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'List of Products'**
+  String get productsTitle;
+
+  /// No description provided for @allProducts.
+  ///
+  /// In en, this message translates to:
+  /// **'All Products'**
+  String get allProducts;
+
+  /// No description provided for @enabledProducts.
+  ///
+  /// In en, this message translates to:
+  /// **'Enabled Products'**
+  String get enabledProducts;
+
+  /// No description provided for @disabledProducts.
+  ///
+  /// In en, this message translates to:
+  /// **'Disabled Products'**
+  String get disabledProducts;
+
+  /// No description provided for @lowStock.
+  ///
+  /// In en, this message translates to:
+  /// **'Low Stock'**
+  String get lowStock;
+
+  /// No description provided for @outOfStock.
+  ///
+  /// In en, this message translates to:
+  /// **'Out of Stock'**
+  String get outOfStock;
+
+  /// No description provided for @deniedProduct.
+  ///
+  /// In en, this message translates to:
+  /// **'Denied Product'**
+  String get deniedProduct;
+
+  /// No description provided for @noProductsMatchSearch.
+  ///
+  /// In en, this message translates to:
+  /// **'No products match your search.'**
+  String get noProductsMatchSearch;
+
+  /// No description provided for @deleteProduct.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Product'**
+  String get deleteProduct;
+
+  /// No description provided for @deleteProductConfirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete \"{name}\"?'**
+  String deleteProductConfirmation(Object name);
+
+  /// No description provided for @idLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'ID'**
+  String get idLabel;
+
+  /// No description provided for @quantityPerSourceLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Quantity Per Source'**
+  String get quantityPerSourceLabel;
+
+  /// No description provided for @salableQuantityLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Salable Quantity'**
+  String get salableQuantityLabel;
+
+  /// No description provided for @quantitySoldLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Quantity Sold'**
+  String get quantitySoldLabel;
+
+  /// No description provided for @quantityConfirmedLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Quantity Confirmed'**
+  String get quantityConfirmedLabel;
+
+  /// No description provided for @quantityPendingLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Quantity Pending'**
+  String get quantityPendingLabel;
+
+  /// No description provided for @priceLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Price'**
+  String get priceLabel;
+
+  /// No description provided for @statusActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get statusActive;
+
+  /// No description provided for @statusDisabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Disabled'**
+  String get statusDisabled;
+
+  /// No description provided for @statusLowStock.
+  ///
+  /// In en, this message translates to:
+  /// **'Low Stock'**
+  String get statusLowStock;
+
+  /// No description provided for @statusOutOfStock.
+  ///
+  /// In en, this message translates to:
+  /// **'Out of Stock'**
+  String get statusOutOfStock;
+
+  /// No description provided for @statusDenied.
+  ///
+  /// In en, this message translates to:
+  /// **'Denied'**
+  String get statusDenied;
+
+  /// No description provided for @visibilityCatalogSearch.
+  ///
+  /// In en, this message translates to:
+  /// **'Catalog / Search'**
+  String get visibilityCatalogSearch;
+
+  /// No description provided for @visibilityCatalogOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'Catalog Only'**
+  String get visibilityCatalogOnly;
+
+  /// No description provided for @visibilitySearchOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'Search Only'**
+  String get visibilitySearchOnly;
+
+  /// No description provided for @visibilityNotVisible.
+  ///
+  /// In en, this message translates to:
+  /// **'Not Visible'**
+  String get visibilityNotVisible;
+
+  /// No description provided for @editProductScreen.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Product Screen'**
+  String get editProductScreen;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

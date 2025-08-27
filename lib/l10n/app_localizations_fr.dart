@@ -435,7 +435,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get proceedToCheckout => 'Proceed to Checkout';
 
   @override
-  String get productTitle => 'Lorem ipsum';
+  String get productTitle => 'Product';
 
   @override
   String get productBrand => 'By Day Dissolve';
@@ -1162,4 +1162,412 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get noOrders => 'No orders match your search.';
+
+  @override
+  String get status => 'Status';
+
+  @override
+  String get orderId => 'Order Id';
+
+  @override
+  String get purchasedOn => 'Purchased on';
+
+  @override
+  String get baseTotal => 'Base Total';
+
+  @override
+  String get purchasedTotal => 'Purchased Total';
+
+  @override
+  String get customer => 'Customer';
+
+  @override
+  String get onHold => 'On Hold';
+
+  @override
+  String get closed => 'Closed';
+
+  @override
+  String get pending => 'Pending';
+
+  @override
+  String get printPdfTitle => 'Print PDF';
+
+  @override
+  String get invoiceDetailsTitle => 'Invoice and Packing Slip Details';
+
+  @override
+  String get invoiceDetailsSubtitle => 'Add your address, VAT, and tax information for PDF documents';
+
+  @override
+  String get invoiceDetailsHint => 'Enter your company address, VAT number, tax information...';
+
+  @override
+  String get saveInfoButton => 'Save Information';
+
+  @override
+  String get saveInfoEmpty => 'Please enter information before saving';
+
+  @override
+  String get saveInfoSuccess => 'Information saved successfully!';
+
+  @override
+  String get invoiceDetailsFooter => 'This information will be included in all your PDF invoices and packing slips.';
+
+  @override
+  String get nameAndDescriptionTitle => 'Name & description';
+
+  @override
+  String get productTitleLabel => 'Product title';
+
+  @override
+  String get productTitleHelp => 'Enter the full product name (e.g., Apple iPhone 14 Pro).';
+
+  @override
+  String get requiredField => 'Required';
+
+  @override
+  String get categoryLabel => 'Category';
+
+  @override
+  String get categoryHelp => 'Select the category that best fits your product.';
+
+  @override
+  String get categoryFood => 'Food';
+
+  @override
+  String get categoryElectronics => 'Electronics';
+
+  @override
+  String get categoryApparel => 'Apparel';
+
+  @override
+  String get categoryBeauty => 'Beauty';
+
+  @override
+  String get categoryHome => 'Home';
+
+  @override
+  String get categoryOther => 'Other';
+
+  @override
+  String get tagsLabel => 'Tags';
+
+  @override
+  String get tagsHelp => 'Add one keyword that describes your product.';
+
+  @override
+  String get descriptionLabel => 'Description';
+
+  @override
+  String get descriptionHelp => 'Detailed description of features, materials, sizing, etc.';
+
+  @override
+  String get shortDescriptionLabel => 'Short Description';
+
+  @override
+  String get shortDescriptionHelp => 'Short summary (1–2 sentences) for listings/search results.';
+
+  @override
+  String get skuLabel => 'SKU';
+
+  @override
+  String get skuHelp => 'Unique stock keeping unit (e.g., SKU-12345).';
+
+  @override
+  String get priceTitle => 'Price';
+
+  @override
+  String get amountLabel => 'Amount';
+
+  @override
+  String get amountHelp => 'Base selling price without discounts.';
+
+  @override
+  String get validNumber => 'Enter a valid number';
+
+  @override
+  String get specialPriceLabel => 'Special Price';
+
+  @override
+  String get specialPriceHelp => 'Turn on to add a promotional/sale price.';
+
+  @override
+  String get specialPriceError => 'Special price must be less than Amount';
+
+  @override
+  String get specialPriceLabel2 => 'Special price';
+
+  @override
+  String get specialPriceHelp2 => 'Discounted price that overrides the regular amount.';
+
+  @override
+  String get priceExample => 'e.g., 24.99';
+
+  @override
+  String get minAmountLabel => 'Minimum amount';
+
+  @override
+  String get minAmountHelp => 'Minimum quantity a customer is allowed to purchase.';
+
+  @override
+  String get maxAmountLabel => 'Maximum amount';
+
+  @override
+  String get maxAmountHelp => 'Maximum quantity a customer is allowed to purchase.';
+
+  @override
+  String get taxesLabel => 'Taxes';
+
+  @override
+  String get taxesHelp => 'Apply taxes to this product at checkout.';
+
+  @override
+  String get stockAndAvailabilityTitle => 'Stock & Availability';
+
+  @override
+  String get stockLabel => 'Stock';
+
+  @override
+  String get stockHelp => 'Number of units available.';
+
+  @override
+  String get stockExample => 'e.g., 100';
+
+  @override
+  String get weightLabel => 'Weight';
+
+  @override
+  String get weightHelp => 'Weight in kilograms (used for shipping).';
+
+  @override
+  String get weightExample => 'e.g., 0.50';
+
+  @override
+  String get allowedQuantityLabel => 'Allowed Quantity per Customer';
+
+  @override
+  String get allowedQuantityHelp => 'Optional: maximum number of units a single customer can buy for this product.';
+
+  @override
+  String get allowedQuantityExample => 'e.g., 5';
+
+  @override
+  String get nonNegativeNumber => 'Enter a non-negative number';
+
+  @override
+  String get stockAvailabilityLabel => 'Stock Availability';
+
+  @override
+  String get stockAvailabilityHelp => 'Choose current availability status.';
+
+  @override
+  String get stockInStock => 'In Stock';
+
+  @override
+  String get stockOutOfStock => 'Out of Stock';
+
+  @override
+  String get visibilityLabel => 'Visibility';
+
+  @override
+  String get visibilityHelp => 'Invisible products are hidden from the storefront.';
+
+  @override
+  String get visibilityInvisible => 'Invisible';
+
+  @override
+  String get visibilityVisible => 'Visible';
+
+  @override
+  String get metaInfosTitle => 'Meta Infos';
+
+  @override
+  String get urlKeyLabel => 'Url Key';
+
+  @override
+  String get urlKeyHelp => 'SEO-friendly slug used in the product URL.';
+
+  @override
+  String get urlKeyExample => 'e.g., apple-iphone-14-pro';
+
+  @override
+  String get metaTitleLabel => 'Meta Title';
+
+  @override
+  String get metaTitleHelp => 'Title shown in search engine results.';
+
+  @override
+  String get metaTitleExample => 'e.g., Buy the iPhone 14 Pro';
+
+  @override
+  String get metaKeywordsLabel => 'Meta Keywords';
+
+  @override
+  String get metaKeywordsHelp => 'Optional: comma-separated keywords.';
+
+  @override
+  String get metaDescriptionLabel => 'Meta Description';
+
+  @override
+  String get metaDescriptionHelp => 'Short paragraph for search engines (150–160 chars).';
+
+  @override
+  String get coverImagesLabel => 'Cover images';
+
+  @override
+  String get coverImagesHelp => 'Upload a clear, high-resolution product image.';
+
+  @override
+  String get clickOrDropImage => 'Click or drop image';
+
+  @override
+  String get saveDraftButton => 'Save Draft';
+
+  @override
+  String get publishNowButton => 'Publish now';
+
+  @override
+  String get deleteButton => 'Delete';
+
+  @override
+  String get draftSaved => 'Draft saved';
+
+  @override
+  String get productPublished => 'Product published';
+
+  @override
+  String productDeleted(Object name) {
+    return '\"$name\" has been deleted';
+  }
+
+  @override
+  String get draftsTitle => 'Drafts';
+
+  @override
+  String get searchDraft => 'Search draft';
+
+  @override
+  String get allDrafts => 'All Drafts';
+
+  @override
+  String get drafts => 'Drafts';
+
+  @override
+  String get pendingReview => 'Pending Review';
+
+  @override
+  String get noDraftsMatchSearch => 'No drafts match your search.';
+
+  @override
+  String get deleteDraftQuestion => 'Delete draft?';
+
+  @override
+  String deleteDraftConfirmation(Object name) {
+    return 'This will delete \"$name\".';
+  }
+
+  @override
+  String get cancelButton => 'Cancel';
+
+  @override
+  String get quantityLabel => 'Quantity';
+
+  @override
+  String get createdLabel => 'Created at';
+
+  @override
+  String get statusLabel => 'Status';
+
+  @override
+  String get actionLabel => 'Action';
+
+  @override
+  String get editButton => 'Edit';
+
+  @override
+  String get editProduct => 'Edit Product';
+
+  @override
+  String get productsTitle => 'List of Products';
+
+  @override
+  String get allProducts => 'All Products';
+
+  @override
+  String get enabledProducts => 'Enabled Products';
+
+  @override
+  String get disabledProducts => 'Disabled Products';
+
+  @override
+  String get lowStock => 'Low Stock';
+
+  @override
+  String get outOfStock => 'Out of Stock';
+
+  @override
+  String get deniedProduct => 'Denied Product';
+
+  @override
+  String get noProductsMatchSearch => 'No products match your search.';
+
+  @override
+  String get deleteProduct => 'Delete Product';
+
+  @override
+  String deleteProductConfirmation(Object name) {
+    return 'Are you sure you want to delete \"$name\"?';
+  }
+
+  @override
+  String get idLabel => 'ID';
+
+  @override
+  String get quantityPerSourceLabel => 'Quantity Per Source';
+
+  @override
+  String get salableQuantityLabel => 'Salable Quantity';
+
+  @override
+  String get quantitySoldLabel => 'Quantity Sold';
+
+  @override
+  String get quantityConfirmedLabel => 'Quantity Confirmed';
+
+  @override
+  String get quantityPendingLabel => 'Quantity Pending';
+
+  @override
+  String get priceLabel => 'Price';
+
+  @override
+  String get statusActive => 'Active';
+
+  @override
+  String get statusDisabled => 'Disabled';
+
+  @override
+  String get statusLowStock => 'Low Stock';
+
+  @override
+  String get statusOutOfStock => 'Out of Stock';
+
+  @override
+  String get statusDenied => 'Denied';
+
+  @override
+  String get visibilityCatalogSearch => 'Catalog / Search';
+
+  @override
+  String get visibilityCatalogOnly => 'Catalog Only';
+
+  @override
+  String get visibilitySearchOnly => 'Search Only';
+
+  @override
+  String get visibilityNotVisible => 'Not Visible';
+
+  @override
+  String get editProductScreen => 'Edit Product Screen';
 }

@@ -1,4 +1,4 @@
-import 'package:app_vendor/presentation/products/drafts_list_screen.dart';
+import 'package:app_vendor/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:typed_data';
@@ -38,17 +38,49 @@ class _AddProductScreenState extends State<AddProductScreen> {
   final _tagInput = TextEditingController();
 
   // State
-  String _category = 'Food';
-  final _categories = const ['Food', 'Electronics', 'Apparel', 'Beauty', 'Home', 'Other'];
+  String? _category;
   String? _tag; // only one tag
   bool _hasSpecial = false;
   bool _taxes = true;
-  String _stockAvail = 'In Stock';
-  String _visibility = 'Invisible';
+  String? _stockAvail;
+  String? _visibility;
   bool _submitting = false;
   Uint8List? _coverBytes;
   String? _coverName;
 
+  // Dropzone (web)
+  DropzoneViewController? _dzController;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final localizations = AppLocalizations.of(context)!;
+    _category ??= localizations.categoryFood;
+    _stockAvail ??= localizations.stockInStock;
+    _visibility ??= localizations.visibilityInvisible;
+  }
+
+  @override
+  void dispose() {
+    _scroll.dispose();
+    _title.dispose();
+    _sku.dispose();
+    _desc.dispose();
+    _shortDesc.dispose();
+    _amount.dispose();
+    _sp.dispose();
+    _minQty.dispose();
+    _maxQty.dispose();
+    _stock.dispose();
+    _weight.dispose();
+    _cities.dispose();
+    _url.dispose();
+    _metaTitle.dispose();
+    _metaKeywords.dispose();
+    _metaDesc.dispose();
+    _tagInput.dispose();
+    super.dispose();
+  }
 
   // ---------- styling helpers ----------
   BorderRadius get _radius => BorderRadius.circular(16);
@@ -69,7 +101,8 @@ class _AddProductScreenState extends State<AddProductScreen> {
         margin: const EdgeInsets.only(right: 8),
         decoration: BoxDecoration(
           color: const Color(0xFFF3F3F3),
-          borderRadius: const BorderRadius.horizontal(left: Radius.circular(14)),
+          borderRadius:
+          const BorderRadius.horizontal(left: Radius.circular(14)),
           border: const Border(right: BorderSide(color: Color(0xFFE5E5E5))),
         ),
         alignment: Alignment.center,
@@ -117,7 +150,6 @@ class _AddProductScreenState extends State<AddProductScreen> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Wrap the label instead of overflowing
           Expanded(
             child: Text(
               text,
@@ -129,7 +161,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
           if (hasHelp)
             Tooltip(
               message: help,
-              triggerMode: TooltipTriggerMode.tap,   // 👈 tap to show on mobile
+              triggerMode: TooltipTriggerMode.tap,
               waitDuration: const Duration(milliseconds: 150),
               showDuration: const Duration(seconds: 4),
               preferBelow: false,
@@ -143,14 +175,26 @@ class _AddProductScreenState extends State<AddProductScreen> {
     );
   }
 
-
-
+  Future<void> _pickCover() async {
+    final result = await FilePicker.platform.pickFiles(
+      type: FileType.image,
+      allowMultiple: false,
+      withData: true, // important for web
+    );
+    if (result != null && result.files.isNotEmpty) {
+      final file = result.files.first;
+      setState(() {
+        _coverBytes = file.bytes;
+        _coverName = file.name;
+      });
+    }
+  }
 
   // ---------- actions ----------
   void _setTag() {
     final t = _tagInput.text.trim();
     if (t.isNotEmpty) {
-      setState(() => _tag = t); // only one tag kept
+      setState(() => _tag = t);
     }
   }
 
@@ -163,11 +207,12 @@ class _AddProductScreenState extends State<AddProductScreen> {
 
   Future<void> _publish() async {
     if (!_formKey.currentState!.validate()) return;
+    final localizations = AppLocalizations.of(context)!;
     if (_hasSpecial && _sp.text.trim().isNotEmpty) {
       final p = double.tryParse(_amount.text);
       final s = double.tryParse(_sp.text);
       if (p != null && s != null && s >= p) {
-        _snack('Special price must be less than Amount', error: true);
+        _snack(localizations.specialPriceError, error: true);
         return;
       }
     }
@@ -177,13 +222,17 @@ class _AddProductScreenState extends State<AddProductScreen> {
   Future<void> _submit({required bool isDraft}) async {
     setState(() => _submitting = true);
     await Future<void>.delayed(const Duration(milliseconds: 600)); // TODO: call your API here
-    _snack(isDraft ? 'Draft saved' : 'Product published');
+    final localizations = AppLocalizations.of(context)!;
+    _snack(isDraft ? localizations.draftSaved : localizations.productPublished);
     setState(() => _submitting = false);
   }
 
   void _delete() {
     // TODO: delete API call
-    _snack('Product deleted');
+    final localizations = AppLocalizations.of(context)!;
+    // ⛳️ FIX: productDeleted est une *fonction* générée par l10n (signature souvent: String productDeleted(Object arg))
+    // Si tu n'as pas d'argument à passer, fournis une chaîne vide:
+    _snack(localizations.productDeleted(''));
   }
 
   void _snack(String msg, {bool error = false}) {
@@ -195,6 +244,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
   // ---------- UI ----------
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
     // Force black switches (no purple)
     final switchTheme = SwitchThemeData(
       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
@@ -205,398 +255,399 @@ class _AddProductScreenState extends State<AddProductScreen> {
       overlayColor: MaterialStateProperty.all(Colors.transparent),
     );
 
+    // Dynamic lists for dropdowns
+    final categories = [
+      localizations.categoryFood,
+      localizations.categoryElectronics,
+      localizations.categoryApparel,
+      localizations.categoryBeauty,
+      localizations.categoryHome,
+      localizations.categoryOther,
+    ];
+    final stockOptions = [localizations.stockInStock, localizations.stockOutOfStock];
+    final visibilityOptions = [localizations.visibilityInvisible, localizations.visibilityVisible];
+
     return Scaffold(
-        backgroundColor: const Color(0xFFF7F7F7),
-        body: SafeArea(
-          child: Theme( // local theme override for switches
-            data: Theme.of(context).copyWith(switchTheme: switchTheme),
-            child: Center(
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 900),
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(24, 20, 24, 16),
-                      child: Row(
-                        children: const [
-                          SizedBox(width: 4),
-                          Text('Product', style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700)),
-                        ],
-                      ),
+      backgroundColor: const Color(0xFFF7F7F7),
+      body: SafeArea(
+        child: Theme( // local theme override for switches
+          data: Theme.of(context).copyWith(switchTheme: switchTheme),
+          child: Center(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 900),
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(24, 20, 24, 16),
+                    child: Row(
+                      children: [
+                        const SizedBox(width: 4),
+                        Text(localizations.productTitle, style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w700)),
+                      ],
                     ),
-                    Expanded(
-                      child: Form(
-                        key: _formKey,
-                        child: Scrollbar(
+                  ),
+                  Expanded(
+                    child: Form(
+                      key: _formKey,
+                      child: Scrollbar(
+                        controller: _scroll,
+                        child: SingleChildScrollView(
                           controller: _scroll,
-                          child: SingleChildScrollView(
-                            controller: _scroll,
-                            padding: const EdgeInsets.fromLTRB(24, 0, 24, 120),
-                            child: Column(
-                              children: [
-                                // Name & description
-                                _sectionCard(title: 'Name & description', children: [
-                                  _label('Product title', help: 'Enter the full product name (e.g., Apple iPhone 14 Pro).'),
+                          padding: const EdgeInsets.fromLTRB(24, 0, 24, 120),
+                          child: Column(
+                            children: [
+                              // Name & description
+                              _sectionCard(title: localizations.nameAndDescriptionTitle, children: [
+                                _label(localizations.productTitleLabel, help: localizations.productTitleHelp),
+                                TextFormField(
+                                  controller: _title,
+                                  decoration: _dec(context, hint: localizations.inputYourText),
+                                  validator: (v) => (v == null || v.trim().isEmpty) ? localizations.requiredField : null,
+                                ),
+                                const SizedBox(height: 20),
+
+                                _label(localizations.categoryLabel, help: localizations.categoryHelp),
+                                DropdownButtonFormField<String>(
+                                  value: _category,
+                                  items: categories.map((e) => DropdownMenuItem(value: e, child: Text(e))).toList(),
+                                  onChanged: (v) => setState(() => _category = v ?? _category),
+                                  decoration: _dec(context),
+                                ),
+                                const SizedBox(height: 20),
+
+                                _label(localizations.tagsLabel, help: localizations.tagsHelp),
+                                _buildTagInput(localizations.clickOrDropImage, localizations.inputYourText),
+                                const SizedBox(height: 20),
+
+                                DescriptionMarkdownField(
+                                  label: localizations.descriptionLabel,
+                                  help: localizations.descriptionHelp,
+                                  controller: _desc,
+                                  minLines: 8,
+                                  showPreview: true,
+                                ),
+                                const SizedBox(height: 20),
+
+                                DescriptionMarkdownField(
+                                  label: localizations.shortDescriptionLabel,
+                                  help: localizations.shortDescriptionHelp,
+                                  controller: _shortDesc,
+                                  minLines: 5,
+                                  showPreview: true,
+                                ),
+                                const SizedBox(height: 20),
+
+                                _label(localizations.skuLabel, help: localizations.skuHelp),
+                                TextFormField(
+                                  controller: _sku,
+                                  decoration: _dec(context, hint: 'Ex: SKU-12345'),
+                                ),
+                              ]),
+
+                              // Price
+                              _sectionCard(title: localizations.priceTitle, children: [
+                                _label(localizations.amountLabel, help: localizations.amountHelp),
+                                TextFormField(
+                                  controller: _amount,
+                                  keyboardType: TextInputType.number,
+                                  inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}'))],
+                                  decoration: _dec(
+                                    context,
+                                    hint: '8',
+                                    prefix: const Text('\$', style: TextStyle(fontWeight: FontWeight.w700, color: Colors.black)),
+                                  ),
+                                  validator: (v) => (v == null || v.isEmpty || num.tryParse(v) == null) ? localizations.validNumber : null,
+                                ),
+                                const SizedBox(height: 16),
+
+                                Row(
+                                  children: [
+                                    Expanded(child: _label(localizations.specialPriceLabel, help: localizations.specialPriceHelp)),
+                                    Switch(value: _hasSpecial, onChanged: (v) => setState(() => _hasSpecial = v)),
+                                  ],
+                                ),
+                                const Divider(height: 24, color: Color(0xFFE5E5E5)),
+
+                                if (_hasSpecial) ...[
+                                  _label(localizations.specialPriceLabel2, help: localizations.specialPriceHelp2),
                                   TextFormField(
-                                    controller: _title,
-                                    decoration: _dec(context, hint: 'Input your text'),
-                                    validator: (v) => (v == null || v.trim().isEmpty) ? 'Required' : null,
-                                  ),
-                                  const SizedBox(height: 20),
-
-                                  _label('Category', help: 'Select the category that best fits your product.'),
-                                  DropdownButtonFormField<String>(
-                                    value: _category,
-                                    items: _categories.map((e) => DropdownMenuItem(value: e, child: Text(e))).toList(),
-                                    onChanged: (v) => setState(() => _category = v ?? _category),
-                                    decoration: _dec(context),
-                                  ),
-                                  const SizedBox(height: 20),
-
-                                  _label('Tags', help: 'Add one keyword that describes your product.'),
-                                  _buildTagInput(),
-                                  const SizedBox(height: 20),
-
-                                  DescriptionMarkdownField(
-                                    label: 'Description',
-                                    help: 'Detailed description of features, materials, sizing, etc.',
-                                    controller: _desc,
-                                    minLines: 8,
-                                    showPreview: true,
-                                  ),
-                                  const SizedBox(height: 20),
-
-                                  DescriptionMarkdownField(
-                                    label: 'Short Description',
-                                    help: 'Short summary (1–2 sentences) for listings/search results.',
-                                    controller: _shortDesc,
-                                    minLines: 5,
-                                    showPreview: true,
-                                  ),
-                                  const SizedBox(height: 20),
-
-                                  _label('SKU', help: 'Unique stock keeping unit (e.g., SKU-12345).'),
-                                  TextFormField(
-                                    controller: _sku,
-                                    decoration: _dec(context, hint: 'Ex: SKU-12345'),
-                                  ),
-                                ]),
-
-                                // Price
-                                _sectionCard(title: 'Price', children: [
-                                  _label('Amount', help: 'Base selling price without discounts.'),
-                                  TextFormField(
-                                    controller: _amount,
+                                    controller: _sp,
                                     keyboardType: TextInputType.number,
                                     inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}'))],
                                     decoration: _dec(
                                       context,
-                                      hint: '8',
+                                      hint: localizations.priceExample,
                                       prefix: const Text('\$', style: TextStyle(fontWeight: FontWeight.w700, color: Colors.black)),
                                     ),
-                                    validator: (v) => (v == null || num.tryParse(v) == null) ? 'Enter a valid number' : null,
                                   ),
                                   const SizedBox(height: 16),
+                                ],
 
-                                  Row(
-                                    children: [
-                                      Expanded(child: _label('Special Price', help: 'Turn on to add a promotional/sale price.')),
-                                      Switch(value: _hasSpecial, onChanged: (v) => setState(() => _hasSpecial = v)),
-                                    ],
-                                  ),
-                                  const Divider(height: 24, color: Color(0xFFE5E5E5)),
+                                _label(localizations.minAmountLabel, help: localizations.minAmountHelp),
+                                TextFormField(
+                                  controller: _minQty,
+                                  keyboardType: TextInputType.number,
+                                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                                  decoration: _dec(context, hint: '0'),
+                                ),
+                                const SizedBox(height: 16),
 
-                                  if (_hasSpecial) ...[
-                                    _label('Special price', help: 'Discounted price that overrides the regular amount.'),
-                                    TextFormField(
-                                      controller: _sp,
-                                      keyboardType: TextInputType.number,
-                                      inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}'))],
-                                      decoration: _dec(
-                                        context,
-                                        hint: 'e.g., 24.99',
-                                        prefix: const Text('\$', style: TextStyle(fontWeight: FontWeight.w700, color: Colors.black)),
-                                      ),
-                                    ),
-                                    const SizedBox(height: 16),
+                                _label(localizations.maxAmountLabel, help: localizations.maxAmountHelp),
+                                TextFormField(
+                                  controller: _maxQty,
+                                  keyboardType: TextInputType.number,
+                                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                                  decoration: _dec(context, hint: '0'),
+                                ),
+                                const SizedBox(height: 12),
+
+                                Row(
+                                  children: [
+                                    Expanded(child: _label(localizations.taxesLabel, help: localizations.taxesHelp)),
+                                    Switch(value: _taxes, onChanged: (v) => setState(() => _taxes = v)),
                                   ],
+                                ),
+                              ]),
 
-                                  _label('Minimum amount', help: 'Minimum quantity a customer is allowed to purchase.'),
-                                  TextFormField(
-                                    controller: _minQty,
-                                    keyboardType: TextInputType.number,
-                                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                                    decoration: _dec(
-                                      context,
-                                      hint: '0',
-                                      prefix: const Text('\$', style: TextStyle(fontWeight: FontWeight.w700, color: Colors.black)),
-                                    ),
+                              // Stock & availability
+                              _sectionCard(title: localizations.stockAndAvailabilityTitle, children: [
+                                _label(localizations.stockLabel, help: localizations.stockHelp),
+                                TextFormField(
+                                  controller: _stock,
+                                  keyboardType: TextInputType.number,
+                                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                                  decoration: _dec(context, hint: localizations.stockExample),
+                                ),
+                                const SizedBox(height: 20),
+
+                                _label(localizations.weightLabel, help: localizations.weightHelp),
+                                TextFormField(
+                                  controller: _weight,
+                                  keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                                  inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,3}'))],
+                                  decoration: _dec(context, hint: localizations.weightExample),
+                                ),
+                                const SizedBox(height: 20),
+
+                                _label(localizations.allowedQuantityLabel, help: localizations.allowedQuantityHelp),
+                                TextFormField(
+                                  controller: _maxQty, // or a different controller if distinct logic
+                                  keyboardType: TextInputType.number,
+                                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                                  decoration: _dec(context, hint: localizations.allowedQuantityExample),
+                                  validator: (v) {
+                                    if (v == null || v.isEmpty) return null; // optional
+                                    final n = int.tryParse(v);
+                                    if (n == null || n < 0) return localizations.nonNegativeNumber;
+                                    return null;
+                                  },
+                                ),
+                                const SizedBox(height: 20),
+
+                                _label(localizations.stockAvailabilityLabel, help: localizations.stockAvailabilityHelp),
+                                DropdownButtonFormField<String>(
+                                  value: _stockAvail,
+                                  items: stockOptions.map((s) => DropdownMenuItem(value: s, child: Text(s))).toList(),
+                                  onChanged: (v) => setState(() => _stockAvail = v ?? _stockAvail),
+                                  decoration: _dec(context),
+                                ),
+                                const SizedBox(height: 20),
+
+                                _label(localizations.visibilityLabel, help: localizations.visibilityHelp),
+                                DropdownButtonFormField<String>(
+                                  value: _visibility,
+                                  items: visibilityOptions.map((s) => DropdownMenuItem(value: s, child: Text(s))).toList(),
+                                  onChanged: (v) => setState(() => _visibility = v ?? _visibility),
+                                  decoration: _dec(context),
+                                ),
+                              ]),
+
+                              // Meta
+                              _sectionCard(title: localizations.metaInfosTitle, children: [
+                                _label(localizations.urlKeyLabel, help: localizations.urlKeyHelp),
+                                TextFormField(
+                                  controller: _url,
+                                  decoration: _dec(context, hint: localizations.urlKeyExample),
+                                ),
+                                const SizedBox(height: 20),
+
+                                _label(localizations.metaTitleLabel, help: localizations.metaTitleHelp),
+                                TextFormField(
+                                  controller: _metaTitle,
+                                  decoration: _dec(context, hint: localizations.metaTitleExample),
+                                ),
+                                const SizedBox(height: 20),
+
+                                DescriptionMarkdownField(
+                                  label: localizations.metaKeywordsLabel,
+                                  help: localizations.metaKeywordsHelp,
+                                  controller: _metaKeywords,
+                                  minLines: 8,
+                                  showPreview: true,
+                                ),
+                                const SizedBox(height: 20),
+
+                                DescriptionMarkdownField(
+                                  label: localizations.metaDescriptionLabel,
+                                  help: localizations.metaDescriptionHelp,
+                                  controller: _metaDesc,
+                                  minLines: 8,
+                                  showPreview: true,
+                                ),
+                                const SizedBox(height: 20),
+
+                                _label(localizations.coverImagesLabel, help: localizations.coverImagesHelp),
+                                Container(
+                                  height: 180,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(18),
+                                    border: Border.all(color: const Color(0xFFE5E5E5)),
                                   ),
-                                  const SizedBox(height: 16),
-
-                                  _label('Maximum amount', help: 'Maximum quantity a customer is allowed to purchase.'),
-                                  TextFormField(
-                                    controller: _maxQty,
-                                    keyboardType: TextInputType.number,
-                                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                                    decoration: _dec(
-                                      context,
-                                      hint: '0',
-                                      prefix: const Text('\$', style: TextStyle(fontWeight: FontWeight.w700, color: Colors.black)),
-                                    ),
-                                  ),
-                                  const SizedBox(height: 12),
-
-                                  Row(
+                                  alignment: Alignment.center,
+                                  child: Stack(
+                                    fit: StackFit.expand,
                                     children: [
-                                      Expanded(child: _label('Taxes', help: 'Apply taxes to this product at checkout.')),
-                                      Switch(value: _taxes, onChanged: (v) => setState(() => _taxes = v)),
+                                      // Preview
+                                      if (_coverBytes != null)
+                                        ClipRRect(
+                                          borderRadius: BorderRadius.circular(18),
+                                          child: Image.memory(_coverBytes!, fit: BoxFit.cover),
+                                        ),
+
+                                      // Click target (always)
+                                      Center(
+                                        child: InkWell(
+                                          onTap: _pickCover,
+                                          borderRadius: BorderRadius.circular(24),
+                                          child: Container(
+                                            padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 14),
+                                            decoration: BoxDecoration(
+                                              color: Colors.white.withOpacity(0.95),
+                                              borderRadius: BorderRadius.circular(24),
+                                              border: Border.all(color: const Color(0xFFE5E5E5)),
+                                              boxShadow: const [BoxShadow(color: Color(0x14000000), blurRadius: 8, offset: Offset(0, 3))],
+                                            ),
+                                            child: Row(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                const Icon(Icons.download_rounded, color: Colors.black87),
+                                                const SizedBox(width: 8),
+                                                Text(
+                                                  _coverName == null ? localizations.clickOrDropImage : _coverName!,
+                                                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: Colors.black),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+
+                                      // True drag & drop on web using flutter_dropzone
+                                      if (kIsWeb)
+                                        IgnorePointer(
+                                          ignoring: false,
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(2.0),
+                                            child: ClipRRect(
+                                              borderRadius: BorderRadius.circular(16),
+                                              child: DropzoneView(
+                                                operation: DragOperation.copy,
+                                                mime: const ['image/png', 'image/jpeg', 'image/webp'],
+                                                onCreated: (ctrl) => _dzController = ctrl,
+                                                onDrop: (ev) async {
+                                                  if (_dzController == null) return;
+                                                  try {
+                                                    final bytes = await _dzController!.getFileData(ev);
+                                                    final name  = await _dzController!.getFilename(ev);
+                                                    setState(() {
+                                                      _coverBytes = bytes;
+                                                      _coverName  = name;
+                                                    });
+                                                  } catch (_) {
+                                                    // ignore runtime errors silently for UX
+                                                  }
+                                                },
+                                              ),
+                                            ),
+                                          ),
+                                        ),
                                     ],
                                   ),
-                                ]),
-
-                                // Stock & availability
-                                _sectionCard(title: 'Stock & Availability', children: [
-                                  _label('Stock', help: 'Number of units available.'),
-                                  TextFormField(
-                                    controller: _stock,
-                                    keyboardType: TextInputType.number,
-                                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                                    decoration: _dec(context, hint: 'e.g., 100'),
-                                  ),
-                                  const SizedBox(height: 20),
-
-                                  _label('Weight', help: 'Weight in kilograms (used for shipping).'),
-                                  TextFormField(
-                                    controller: _weight,
-                                    keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                                    inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,3}'))],
-                                    decoration: _dec(context, hint: 'e.g., 0.50'),
-                                  ),
-                                  const SizedBox(height: 20),
-
-                                  _label('Allowed Quantity per Customer',
-                                      help: 'Optional: maximum number of units a single customer can buy for this product.'
-                                  ),
-                                  TextFormField(
-                                    controller: _maxQty, // or create its own controller, e.g. _perCustomerLimit
-                                    keyboardType: TextInputType.number,
-                                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                                    decoration: _dec(context, hint: 'e.g., 5'),
-                                    validator: (v) {
-                                      if (v == null || v.isEmpty) return null; // optional
-                                      final n = int.tryParse(v);
-                                      if (n == null || n < 0) return 'Enter a non-negative number';
-                                      return null;
-                                    },
-                                  ),
-                                  const SizedBox(height: 20),
-
-                                  _label('Stock Availability', help: 'Choose current availability status.'),
-                                  DropdownButtonFormField<String>(
-                                    value: _stockAvail,
-                                    items: const ['In Stock', 'Out of Stock']
-                                        .map((s) => DropdownMenuItem(value: s, child: Text(s)))
-                                        .toList(),
-                                    onChanged: (v) => setState(() => _stockAvail = v ?? _stockAvail),
-                                    decoration: _dec(context),
-                                  ),
-                                  const SizedBox(height: 20),
-
-                                  _label('Visibility', help: 'Invisible products are hidden from the storefront.'),
-                                  DropdownButtonFormField<String>(
-                                    value: _visibility,
-                                    items: const ['Invisible', 'Visible']
-                                        .map((s) => DropdownMenuItem(value: s, child: Text(s)))
-                                        .toList(),
-                                    onChanged: (v) => setState(() => _visibility = v ?? _visibility),
-                                    decoration: _dec(context),
-                                  ),
-                                ]),
-
-                                // Meta
-                                _sectionCard(title: 'Meta Infos', children: [
-                                  _label('Url Key', help: 'SEO-friendly slug used in the product URL.'),
-                                  TextFormField(
-                                    controller: _url,
-                                    decoration: _dec(context, hint: 'e.g., apple-iphone-14-pro'),
-                                  ),
-                                  const SizedBox(height: 20),
-
-                                  _label('Meta Title', help: 'Title shown in search engine results.'),
-                                  TextFormField(
-                                    controller: _metaTitle,
-                                    decoration: _dec(context, hint: 'e.g., Buy the iPhone 14 Pro'),
-                                  ),
-                                  const SizedBox(height: 20),
-                                  DescriptionMarkdownField(
-                                    label: 'Meta Keywords',
-                                    help: 'Optional: comma-separated keywords.',
-                                    controller: _metaKeywords,
-                                    minLines: 8,
-                                    showPreview: true,
-                                  ),
-                                  const SizedBox(height: 20),
-
-                                  DescriptionMarkdownField(
-                                    label: 'Meta Description',
-                                    help: 'Short paragraph for search engines (150–160 chars).',
-                                    controller: _metaDesc,
-                                    minLines: 8,
-                                    showPreview: true,
-                                  ),
-                                  const SizedBox(height: 20),
-
-
-                                  _label('Cover images', help: 'Upload a clear, high-resolution product image.'),
-                                  Container(
-                                    height: 180,
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(18),
-                                      border: Border.all(color: const Color(0xFFE5E5E5)),
-                                    ),
-                                    alignment: Alignment.center,
-                                    child: Stack(
-                                      fit: StackFit.expand,
-                                      children: [
-                                        // Preview
-                                        if (_coverBytes != null)
-                                          ClipRRect(
-                                            borderRadius: BorderRadius.circular(18),
-                                            child: Image.memory(_coverBytes!, fit: BoxFit.cover),
-                                          ),
-                                        // Click target (always)
-                                        Center(
-                                          child: InkWell(
-                                            onTap: _pickCover,
-                                            borderRadius: BorderRadius.circular(24),
-                                            child: Container(
-                                              padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 14),
-                                              decoration: BoxDecoration(
-                                                color: Colors.white.withOpacity(0.95),
-                                                borderRadius: BorderRadius.circular(24),
-                                                border: Border.all(color: const Color(0xFFE5E5E5)),
-                                                boxShadow: const [BoxShadow(color: Color(0x14000000), blurRadius: 8, offset: Offset(0, 3))],
-                                              ),
-                                              child: Row(
-                                                mainAxisSize: MainAxisSize.min,
-                                                children: [
-                                                  const Icon(Icons.download_rounded, color: Colors.black87),
-                                                  const SizedBox(width: 8),
-                                                  Text(
-                                                    _coverName == null ? 'Click or drop image' : _coverName!,
-                                                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: Colors.black),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        // (Optional) true drag & drop on web using flutter_dropzone
-                                        if (kIsWeb)
-                                          IgnorePointer(
-                                            ignoring: false,
-                                            child: LayoutBuilder(
-                                              builder: (_, __) {
-                                                return Padding(
-                                                  padding: const EdgeInsets.all(2.0),
-                                                  child: ClipRRect(
-                                                    borderRadius: BorderRadius.circular(16),
-                                                    child: DropzoneView(
-                                                      operation: DragOperation.copy,
-                                                      mime: const ['image/png', 'image/jpeg', 'image/webp'],
-                                                      onDrop: (ev) async {
-                                                        final bytes = await ev.getFileData();
-                                                        final name  = await ev.getFilename();
-                                                        setState(() {
-                                                          _coverBytes = bytes;
-                                                          _coverName  = name;
-                                                        });
-                                                      },
-                                                    ),
-                                                  ),
-                                                );
-                                              },
-                                            ),
-                                          ),
-                                      ],
-                                    ),
-                                  ),
-
-
-
-                                  // sticky footer
-                                  Container(
-                                    padding: const EdgeInsets.fromLTRB(24, 16, 24, 16),
-                                    decoration: const BoxDecoration(
-                                      color: Colors.white,
-                                      border: Border(top: BorderSide(color: Color(0xFFE5E5E5))),
-                                    ),
-                                    child: Row(
-                                      children: [
-                                        Expanded(
-                                          child: OutlinedButton(
-                                            onPressed: _submitting ? null : _saveDraft,
-                                            style: OutlinedButton.styleFrom(
-                                              padding: const EdgeInsets.symmetric(vertical: 14),
-                                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                                              side: const BorderSide(color: Colors.black87),
-                                              foregroundColor: Colors.black87,
-                                            ),
-                                            child: const Text('Save Draft'),
-                                          ),
-                                        ),
-                                        const SizedBox(width: 12),
-                                        Expanded(
-                                          child: ElevatedButton(
-                                            onPressed: _submitting ? null : _publish,
-                                            style: ElevatedButton.styleFrom(
-                                              padding: const EdgeInsets.symmetric(vertical: 14),
-                                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                                              backgroundColor: Colors.black87,
-                                              foregroundColor: Colors.white,
-                                            ),
-                                            child: _submitting
-                                                ? const SizedBox(
-                                              width: 20,
-                                              height: 20,
-                                              child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
-                                            )
-                                                : const Text('Publish now'),
-                                          ),
-                                        ),
-                                        const SizedBox(width: 12),
-                                        IconButton.outlined(
-                                          onPressed: _submitting ? null : _delete,
-                                          style: OutlinedButton.styleFrom(
-                                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                                            side: const BorderSide(color: Color(0xFFE5E5E5)),
-                                            foregroundColor: Colors.redAccent,
-                                          ),
-                                          icon: const Icon(Icons.delete_outline),
-                                          tooltip: 'Delete',
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ]),
-                              ],
-                            ),
+                                ),
+                              ]),
+                            ],
                           ),
                         ),
                       ),
                     ),
-                  ],
-                ),
+                  ),
+
+                  // Bottom actions
+                  Container(
+                    padding: const EdgeInsets.fromLTRB(24, 16, 24, 16),
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      border: Border(top: BorderSide(color: Color(0xFFE5E5E5))),
+                    ),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: OutlinedButton(
+                            onPressed: _submitting ? null : _saveDraft,
+                            style: OutlinedButton.styleFrom(
+                              padding: const EdgeInsets.symmetric(vertical: 14),
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                              side: const BorderSide(color: Colors.black87),
+                              foregroundColor: Colors.black87,
+                            ),
+                            child: Text(localizations.saveDraftButton),
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: ElevatedButton(
+                            onPressed: _submitting ? null : _publish,
+                            style: ElevatedButton.styleFrom(
+                              padding: const EdgeInsets.symmetric(vertical: 14),
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                              backgroundColor: Colors.black87,
+                              foregroundColor: Colors.white,
+                            ),
+                            child: _submitting
+                                ? const SizedBox(
+                              width: 20,
+                              height: 20,
+                              child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
+                            )
+                                : Text(localizations.publishNowButton),
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+                        IconButton.outlined(
+                          onPressed: _submitting ? null : _delete,
+                          style: OutlinedButton.styleFrom(
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                            side: const BorderSide(color: Color(0xFFE5E5E5)),
+                            foregroundColor: Colors.redAccent,
+                          ),
+                          icon: const Icon(Icons.delete_outline),
+                          tooltip: localizations.deleteButton,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
-        )
+        ),
+      ),
     );
   }
+
   // Tag input (single tag + black chip)
-  Widget _buildTagInput() {
+  Widget _buildTagInput(String hint, String remove) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       decoration: BoxDecoration(
@@ -631,43 +682,15 @@ class _AddProductScreenState extends State<AddProductScreen> {
             Expanded(
               child: TextField(
                 controller: _tagInput,
-                decoration: const InputDecoration.collapsed(hintText: 'Enter one tag and press Enter'),
+                decoration: InputDecoration(
+                  hintText: hint,
+                  border: InputBorder.none,
+                ),
                 onSubmitted: (_) => _setTag(),
               ),
             ),
         ],
       ),
-    );
-  }
-
-  Future<void> _pickCover() async {
-    final result = await FilePicker.platform.pickFiles(
-      type: FileType.image, // Only allow images
-      withData: true, // Get the file's binary data
-    );
-    if (result != null && result.files.isNotEmpty) {
-      final file = result.files.first;
-      setState(() {
-        _coverBytes = file.bytes;
-        _coverName = file.name;
-      });
-    }
-  }
-
-}
-
-class _IconRow extends StatelessWidget {
-  const _IconRow(this.icons);
-  final List<IconData> icons;
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        for (final i in icons) ...[
-          Icon(i, size: 20, color: Colors.black87),
-          const SizedBox(width: 14),
-        ]
-      ],
     );
   }
 }

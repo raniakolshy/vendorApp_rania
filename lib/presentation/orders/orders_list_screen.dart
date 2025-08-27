@@ -1,3 +1,4 @@
+import 'package:app_vendor/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(const OrdersApp());
@@ -21,6 +22,9 @@ class OrdersApp extends StatelessWidget {
           displayColor: const Color(0xFF1B1B1B),
         ),
       ),
+      // Add localizationsDelegates to MaterialApp for localization support
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
       home: const OrdersListScreen(),
     );
   }
@@ -37,7 +41,8 @@ class OrdersListScreen extends StatefulWidget {
 class _OrdersListScreenState extends State<OrdersListScreen> {
   // ----- UI state
   final TextEditingController _searchCtrl = TextEditingController();
-  String _filter = 'All Orders';
+  // Initialisation à null pour pouvoir la définir dans didChangeDependencies
+  String? _filter;
   static const int _pageSize = 2;
   int _shown = _pageSize;
   bool _loadingMore = false;
@@ -95,15 +100,34 @@ class _OrdersListScreenState extends State<OrdersListScreen> {
     ),
   ];
 
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Initialise _filter avec la traduction correcte lors du chargement des dépendances
+    if (_filter == null) {
+      _filter = AppLocalizations.of(context)!.allOrders;
+    }
+  }
+
   List<Order> get _filtered {
     final q = _searchCtrl.text.trim().toLowerCase();
     final byText = _allOrders.where((o) => o.name.toLowerCase().contains(q));
+
+    // Obtenez les traductions pour les filtres
+    final _localizations = AppLocalizations.of(context)!;
+    final deliveredText = _localizations.delivered;
+    final processingText = _localizations.processing;
+    final cancelledText = _localizations.cancelled;
+
     switch (_filter) {
       case 'Delivered':
+      case 'تم التوصيل':
         return byText.where((o) => o.status == OrderStatus.delivered).toList();
       case 'Processing':
+      case 'قيد المعالجة':
         return byText.where((o) => o.status == OrderStatus.processing).toList();
       case 'Cancelled':
+      case 'ملغاة':
         return byText.where((o) => o.status == OrderStatus.cancelled).toList();
       default:
         return byText.toList();
@@ -141,8 +165,16 @@ class _OrdersListScreenState extends State<OrdersListScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final _localizations = AppLocalizations.of(context)!;
     final visible = _filtered.take(_shown).toList();
     final canLoadMore = _shown < _filtered.length && !_loadingMore;
+
+    final List<String> filterOptions = [
+      _localizations.allOrders,
+      _localizations.delivered,
+      _localizations.processing,
+      _localizations.cancelled,
+    ];
 
     return Scaffold(
       body: Column(
@@ -169,7 +201,7 @@ class _OrdersListScreenState extends State<OrdersListScreen> {
                   children: [
                     // Title
                     Text(
-                      'Orders Details',
+                      _localizations.ordersDetails,
                       style: Theme.of(context)
                           .textTheme
                           .titleLarge
@@ -187,7 +219,7 @@ class _OrdersListScreenState extends State<OrdersListScreen> {
                             child: TextField(
                               controller: _searchCtrl,
                               decoration: InputDecoration(
-                                hintText: 'Search product',
+                                hintText: _localizations.searchProduct,
                                 hintStyle: TextStyle(
                                   color: Colors.black.withOpacity(.35),
                                 ),
@@ -229,12 +261,8 @@ class _OrdersListScreenState extends State<OrdersListScreen> {
                             borderRadius: BorderRadius.circular(12),
                             isExpanded: true,
                             style: const TextStyle(color: Colors.black, fontSize: 16),
-                            items: const [
-                              'All Orders',
-                              'Delivered',
-                              'Processing',
-                              'Cancelled',
-                            ].map((v) => DropdownMenuItem(value: v, child: Text(v)))
+                            items: filterOptions
+                                .map((v) => DropdownMenuItem(value: v, child: Text(v)))
                                 .toList(),
                             onChanged: _onFilterChanged,
                           ),
@@ -300,9 +328,9 @@ class _OrdersListScreenState extends State<OrdersListScreen> {
                                         height: 18,
                                       ),
                                     const SizedBox(width: 10),
-                                    const Text(
-                                      'Load more',
-                                      style: TextStyle(
+                                    Text(
+                                      _localizations.loadMore,
+                                      style: const TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.w600),
                                     ),
@@ -315,12 +343,12 @@ class _OrdersListScreenState extends State<OrdersListScreen> {
                       ),
 
                     if (_filtered.isEmpty)
-                      const Padding(
-                        padding: EdgeInsets.only(top: 24),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 24),
                         child: Center(
                           child: Text(
-                            'No orders match your search.',
-                            style: TextStyle(color: Colors.black54, fontSize: 16),
+                            _localizations.noOrders,
+                            style: const TextStyle(color: Colors.black54, fontSize: 16),
                           ),
                         ),
                       ),
@@ -343,6 +371,7 @@ class _OrderRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _localizations = AppLocalizations.of(context)!;
     final keyStyle = Theme.of(context)
         .textTheme
         .bodyMedium
@@ -393,7 +422,7 @@ class _OrderRow extends StatelessWidget {
                   ),
                   const SizedBox(height: 16),
                   _RowKVText(
-                    k: 'Status',
+                    k: _localizations.status,
                     v: _StatusPill(status: order.status),
                     keyStyle: keyStyle,
                     valStyle: valStyle,
@@ -401,31 +430,31 @@ class _OrderRow extends StatelessWidget {
                   ),
                   const SizedBox(height: 10),
                   _RowKVText(
-                      k: 'Order Id',
+                      k: _localizations.orderId,
                       vText: order.orderId,
                       keyStyle: keyStyle,
                       valStyle: valStyle),
                   const SizedBox(height: 10),
                   _RowKVText(
-                      k: 'Purchased on',
+                      k: _localizations.purchasedOn,
                       vText: order.purchasedOn,
                       keyStyle: keyStyle,
                       valStyle: valStyle),
                   const SizedBox(height: 10),
                   _RowKVText(
-                      k: 'Base Total',
+                      k: _localizations.baseTotal,
                       vText: order.baseTotal,
                       keyStyle: keyStyle,
                       valStyle: valStyle),
                   const SizedBox(height: 10),
                   _RowKVText(
-                      k: 'Purchased Total',
+                      k: _localizations.purchasedTotal,
                       vText: order.purchasedTotal,
                       keyStyle: keyStyle,
                       valStyle: valStyle),
                   const SizedBox(height: 10),
                   _RowKVText(
-                      k: 'Customer',
+                      k: _localizations.customer,
                       vText: order.customer,
                       keyStyle: keyStyle,
                       valStyle: valStyle),
@@ -523,32 +552,40 @@ class _StatusPill extends StatelessWidget {
     }
   }
 
-  String get _label {
-    switch (status) {
-      case OrderStatus.delivered:
-        return 'Delivered';
-      case OrderStatus.processing:
-        return 'Processing';
-      case OrderStatus.cancelled:
-        return 'Cancelled';
-      case OrderStatus.onHold:
-        return 'On Hold';
-      case OrderStatus.closed:
-        return 'Closed';
-      case OrderStatus.pending:
-        return 'Pending';
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
+    final _localizations = AppLocalizations.of(context)!;
+    String label;
+    switch (status) {
+      case OrderStatus.delivered:
+        label = _localizations.delivered;
+        break;
+      case OrderStatus.processing:
+        label = _localizations.processing;
+        break;
+      case OrderStatus.cancelled:
+        label = _localizations.cancelled;
+        break;
+      case OrderStatus.onHold:
+        label = _localizations.onHold;
+        break;
+      case OrderStatus.closed:
+        label = _localizations.closed;
+        break;
+      case OrderStatus.pending:
+        label = _localizations.pending;
+        break;
+      default:
+        label = '';
+        break;
+    }
     return DecoratedBox(
       decoration:
       BoxDecoration(color: _bg, borderRadius: BorderRadius.circular(10)),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
         child: Text(
-          _label,
+          label,
           style: Theme.of(context)
               .textTheme
               .labelLarge

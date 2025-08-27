@@ -435,7 +435,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get proceedToCheckout => 'المتابعة للدفع';
 
   @override
-  String get productTitle => 'لوريم إيبسوم';
+  String get productTitle => 'المنتج';
 
   @override
   String get productBrand => 'من دي ديسولف';
@@ -743,7 +743,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get searchCustomer => 'ابحث عن عميل';
 
   @override
-  String get loadMore => 'عرض المزيد';
+  String get loadMore => 'تحميل المزيد';
 
   @override
   String get noCustomers => 'لا يوجد عملاء يطابقون بحثك.';
@@ -932,7 +932,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get notifications => 'الإشعارات';
 
   @override
-  String get inputYourText => 'أدخل نصك هنا';
+  String get inputYourText => 'أدخل نصك';
 
   @override
   String get bold => 'عريض';
@@ -1146,7 +1146,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get ordersDetails => 'تفاصيل الطلبات';
 
   @override
-  String get searchProduct => 'ابحث عن منتج';
+  String get searchProduct => 'بحث عن منتج';
 
   @override
   String get allOrders => 'كل الطلبات';
@@ -1158,8 +1158,416 @@ class AppLocalizationsAr extends AppLocalizations {
   String get processing => 'قيد المعالجة';
 
   @override
-  String get cancelled => 'أُلغي';
+  String get cancelled => 'ملغاة';
 
   @override
-  String get noOrders => 'لا توجد طلبات مطابقة لبحثك.';
+  String get noOrders => 'لا توجد طلبات تطابق بحثك.';
+
+  @override
+  String get status => 'الحالة';
+
+  @override
+  String get orderId => 'رقم الطلب';
+
+  @override
+  String get purchasedOn => 'تم الشراء في';
+
+  @override
+  String get baseTotal => 'المجموع الأساسي';
+
+  @override
+  String get purchasedTotal => 'المجموع المشتراة';
+
+  @override
+  String get customer => 'العميل';
+
+  @override
+  String get onHold => 'في الانتظار';
+
+  @override
+  String get closed => 'مغلقة';
+
+  @override
+  String get pending => 'قيد الانتظار';
+
+  @override
+  String get printPdfTitle => 'طباعة PDF';
+
+  @override
+  String get invoiceDetailsTitle => 'تفاصيل الفاتورة وإيصال التغليف';
+
+  @override
+  String get invoiceDetailsSubtitle => 'أضف عنوانك ورقم الضريبة على القيمة المضافة ومعلومات الضرائب لوثائق PDF';
+
+  @override
+  String get invoiceDetailsHint => 'أدخل عنوان شركتك، رقم الضريبة على القيمة المضافة، معلومات الضرائب...';
+
+  @override
+  String get saveInfoButton => 'حفظ المعلومات';
+
+  @override
+  String get saveInfoEmpty => 'يرجى إدخال المعلومات قبل الحفظ';
+
+  @override
+  String get saveInfoSuccess => 'تم حفظ المعلومات بنجاح!';
+
+  @override
+  String get invoiceDetailsFooter => 'سيتم تضمين هذه المعلومات في جميع فواتيرك وإيصالات التغليف بصيغة PDF.';
+
+  @override
+  String get nameAndDescriptionTitle => 'الاسم والوصف';
+
+  @override
+  String get productTitleLabel => 'عنوان المنتج';
+
+  @override
+  String get productTitleHelp => 'أدخل الاسم الكامل للمنتج (مثال: Apple iPhone 14 Pro).';
+
+  @override
+  String get requiredField => 'مطلوب';
+
+  @override
+  String get categoryLabel => 'الفئة';
+
+  @override
+  String get categoryHelp => 'اختر الفئة الأنسب لمنتجك.';
+
+  @override
+  String get categoryFood => 'طعام';
+
+  @override
+  String get categoryElectronics => 'إلكترونيات';
+
+  @override
+  String get categoryApparel => 'ملابس';
+
+  @override
+  String get categoryBeauty => 'جمال';
+
+  @override
+  String get categoryHome => 'منزل';
+
+  @override
+  String get categoryOther => 'أخرى';
+
+  @override
+  String get tagsLabel => 'الوسوم';
+
+  @override
+  String get tagsHelp => 'أضف كلمة مفتاحية واحدة تصف منتجك.';
+
+  @override
+  String get descriptionLabel => 'الوصف';
+
+  @override
+  String get descriptionHelp => 'وصف تفصيلي للميزات، المواد، المقاسات، إلخ.';
+
+  @override
+  String get shortDescriptionLabel => 'الوصف المختصر';
+
+  @override
+  String get shortDescriptionHelp => 'ملخص قصير (1–2 جمل) للإعلانات/نتائج البحث.';
+
+  @override
+  String get skuLabel => 'رمز المنتج (SKU)';
+
+  @override
+  String get skuHelp => 'معرّف فريد للمنتج (مثال: SKU-12345).';
+
+  @override
+  String get priceTitle => 'السعر';
+
+  @override
+  String get amountLabel => 'المبلغ';
+
+  @override
+  String get amountHelp => 'سعر البيع الأساسي بدون خصومات.';
+
+  @override
+  String get validNumber => 'أدخل رقمًا صالحًا';
+
+  @override
+  String get specialPriceLabel => 'السعر الخاص';
+
+  @override
+  String get specialPriceHelp => 'فعّل لإضافة سعر ترويجي/تخفيضي.';
+
+  @override
+  String get specialPriceError => 'يجب أن يكون السعر الخاص أقل من المبلغ';
+
+  @override
+  String get specialPriceLabel2 => 'السعر الخاص';
+
+  @override
+  String get specialPriceHelp2 => 'السعر المخفّض الذي يستبدل السعر العادي.';
+
+  @override
+  String get priceExample => 'مثال: 24.99';
+
+  @override
+  String get minAmountLabel => 'الكمية الدنيا';
+
+  @override
+  String get minAmountHelp => 'الحد الأدنى المسموح للعميل شراؤه.';
+
+  @override
+  String get maxAmountLabel => 'الكمية القصوى';
+
+  @override
+  String get maxAmountHelp => 'الحد الأقصى المسموح للعميل شراؤه.';
+
+  @override
+  String get taxesLabel => 'الضرائب';
+
+  @override
+  String get taxesHelp => 'تطبيق الضرائب على هذا المنتج عند الدفع.';
+
+  @override
+  String get stockAndAvailabilityTitle => 'المخزون والتوفر';
+
+  @override
+  String get stockLabel => 'المخزون';
+
+  @override
+  String get stockHelp => 'عدد الوحدات المتوفرة.';
+
+  @override
+  String get stockExample => 'مثال: 100';
+
+  @override
+  String get weightLabel => 'الوزن';
+
+  @override
+  String get weightHelp => 'الوزن بالكيلوغرام (مستخدم للشحن).';
+
+  @override
+  String get weightExample => 'مثال: 0.50';
+
+  @override
+  String get allowedQuantityLabel => 'الكمية المسموح بها لكل عميل';
+
+  @override
+  String get allowedQuantityHelp => 'اختياري: الحد الأقصى لعدد الوحدات التي يمكن للعميل الواحد شراؤها.';
+
+  @override
+  String get allowedQuantityExample => 'مثال: 5';
+
+  @override
+  String get nonNegativeNumber => 'أدخل رقمًا غير سالب';
+
+  @override
+  String get stockAvailabilityLabel => 'توفر المخزون';
+
+  @override
+  String get stockAvailabilityHelp => 'اختر حالة التوفر الحالية.';
+
+  @override
+  String get stockInStock => 'متوفر';
+
+  @override
+  String get stockOutOfStock => 'غير متوفر';
+
+  @override
+  String get visibilityLabel => 'الظهور';
+
+  @override
+  String get visibilityHelp => 'المنتجات غير المرئية مخفية عن المتجر.';
+
+  @override
+  String get visibilityInvisible => 'غير مرئي';
+
+  @override
+  String get visibilityVisible => 'مرئي';
+
+  @override
+  String get metaInfosTitle => 'معلومات الميتا';
+
+  @override
+  String get urlKeyLabel => 'المفتاح URL';
+
+  @override
+  String get urlKeyHelp => 'رابط مناسب لمحركات البحث يُستخدم في عنوان URL للمنتج.';
+
+  @override
+  String get urlKeyExample => 'مثال: apple-iphone-14-pro';
+
+  @override
+  String get metaTitleLabel => 'عنوان الميتا';
+
+  @override
+  String get metaTitleHelp => 'العنوان الظاهر في نتائج محركات البحث.';
+
+  @override
+  String get metaTitleExample => 'مثال: اشترِ iPhone 14 Pro';
+
+  @override
+  String get metaKeywordsLabel => 'الكلمات المفتاحية';
+
+  @override
+  String get metaKeywordsHelp => 'اختياري: كلمات مفتاحية مفصولة بفواصل.';
+
+  @override
+  String get metaDescriptionLabel => 'وصف الميتا';
+
+  @override
+  String get metaDescriptionHelp => 'فقرة قصيرة لمحركات البحث (150–160 حرفًا).';
+
+  @override
+  String get coverImagesLabel => 'صور الغلاف';
+
+  @override
+  String get coverImagesHelp => 'قم بتحميل صورة واضحة وعالية الجودة للمنتج.';
+
+  @override
+  String get clickOrDropImage => 'انقر أو اسحب الصورة';
+
+  @override
+  String get saveDraftButton => 'حفظ كمسودة';
+
+  @override
+  String get publishNowButton => 'نشر الآن';
+
+  @override
+  String get deleteButton => 'حذف';
+
+  @override
+  String get draftSaved => 'تم حفظ المسودة';
+
+  @override
+  String get productPublished => 'تم نشر المنتج';
+
+  @override
+  String productDeleted(Object name) {
+    return 'تم حذف \"$name\"';
+  }
+
+  @override
+  String get draftsTitle => 'المسودات';
+
+  @override
+  String get searchDraft => 'بحث في المسودات';
+
+  @override
+  String get allDrafts => 'جميع المسودات';
+
+  @override
+  String get drafts => 'المسودات';
+
+  @override
+  String get pendingReview => 'في انتظار المراجعة';
+
+  @override
+  String get noDraftsMatchSearch => 'لا توجد مسودات تطابق بحثك.';
+
+  @override
+  String get deleteDraftQuestion => 'حذف المسودة؟';
+
+  @override
+  String deleteDraftConfirmation(Object name) {
+    return 'سيتم حذف \"$name\".';
+  }
+
+  @override
+  String get cancelButton => 'إلغاء';
+
+  @override
+  String get quantityLabel => 'الكمية';
+
+  @override
+  String get createdLabel => 'تاريخ الإنشاء';
+
+  @override
+  String get statusLabel => 'الحالة';
+
+  @override
+  String get actionLabel => 'الإجراء';
+
+  @override
+  String get editButton => 'تعديل';
+
+  @override
+  String get editProduct => 'تعديل المنتج';
+
+  @override
+  String get productsTitle => 'قائمة المنتجات';
+
+  @override
+  String get allProducts => 'جميع المنتجات';
+
+  @override
+  String get enabledProducts => 'المنتجات المفعلة';
+
+  @override
+  String get disabledProducts => 'المنتجات المعطلة';
+
+  @override
+  String get lowStock => 'مخزون منخفض';
+
+  @override
+  String get outOfStock => 'غير متوفر';
+
+  @override
+  String get deniedProduct => 'منتج مرفوض';
+
+  @override
+  String get noProductsMatchSearch => 'لا توجد منتجات تطابق بحثك.';
+
+  @override
+  String get deleteProduct => 'حذف المنتج';
+
+  @override
+  String deleteProductConfirmation(Object name) {
+    return 'هل أنت متأكد أنك تريد حذف \"$name\"؟';
+  }
+
+  @override
+  String get idLabel => 'المعرف (ID)';
+
+  @override
+  String get quantityPerSourceLabel => 'الكمية لكل مصدر';
+
+  @override
+  String get salableQuantityLabel => 'الكمية القابلة للبيع';
+
+  @override
+  String get quantitySoldLabel => 'الكمية المباعة';
+
+  @override
+  String get quantityConfirmedLabel => 'الكمية المؤكدة';
+
+  @override
+  String get quantityPendingLabel => 'الكمية المعلقة';
+
+  @override
+  String get priceLabel => 'السعر';
+
+  @override
+  String get statusActive => 'نشط';
+
+  @override
+  String get statusDisabled => 'معطل';
+
+  @override
+  String get statusLowStock => 'مخزون منخفض';
+
+  @override
+  String get statusOutOfStock => 'غير متوفر';
+
+  @override
+  String get statusDenied => 'مرفوض';
+
+  @override
+  String get visibilityCatalogSearch => 'الكتالوج / البحث';
+
+  @override
+  String get visibilityCatalogOnly => 'الكتالوج فقط';
+
+  @override
+  String get visibilitySearchOnly => 'البحث فقط';
+
+  @override
+  String get visibilityNotVisible => 'غير مرئي';
+
+  @override
+  String get editProductScreen => 'شاشة تعديل المنتج';
 }
