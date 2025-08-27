@@ -1,3 +1,4 @@
+import 'package:app_vendor/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class AskAdminScreen extends StatelessWidget {
@@ -21,13 +22,13 @@ class AskAdminScreen extends StatelessWidget {
         ),
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.only(top: 10.0, left: 16.0, right: 16.0, bottom: 16.0),
+        padding: const EdgeInsets.only(top: 10, left: 16, right: 16, bottom: 16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'Ask Question to Admin',
-              style: TextStyle(
+            Text(
+              AppLocalizations.of(context)!.askQuestionTitle,
+              style: const TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
               ),
@@ -38,19 +39,19 @@ class AskAdminScreen extends StatelessWidget {
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(10),
               ),
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
                     children: [
-                      const Text(
-                        'Subject',
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                      Text(
+                        AppLocalizations.of(context)!.subject,
+                        style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(width: 5),
                       Tooltip(
-                        message: 'Enter a clear and concise subject for your request.',
+                        message: AppLocalizations.of(context)!.subjectTooltip,
                         child: Icon(
                           Icons.info_outline,
                           size: 16,
@@ -68,17 +69,17 @@ class AskAdminScreen extends StatelessWidget {
                     ),
                     child: TextField(
                       controller: subjectController,
-                      decoration: const InputDecoration(
-                        hintText: 'Input your text',
+                      decoration: InputDecoration(
+                        hintText: AppLocalizations.of(context)!.inputHint,
                         border: InputBorder.none,
-                        contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 12),
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
                       ),
                     ),
                   ),
                   const SizedBox(height: 20),
-                  const Text(
-                    'Your Query',
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                  Text(
+                    AppLocalizations.of(context)!.yourQuery,
+                    style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 8),
                   Container(
@@ -92,10 +93,10 @@ class AskAdminScreen extends StatelessWidget {
                       minLines: 10,
                       maxLines: null,
                       keyboardType: TextInputType.multiline,
-                      decoration: const InputDecoration(
-                        hintText: 'Input your text',
+                      decoration: InputDecoration(
+                        hintText: AppLocalizations.of(context)!.inputHint,
                         border: InputBorder.none,
-                        contentPadding: EdgeInsets.all(16),
+                        contentPadding: const EdgeInsets.all(16),
                       ),
                     ),
                   ),
@@ -107,25 +108,22 @@ class AskAdminScreen extends StatelessWidget {
                       onPressed: () {
                         if (subjectController.text.isEmpty) {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Please enter a subject.'),
+                            SnackBar(
+                              content: Text(AppLocalizations.of(context)!.enterSubject),
                               backgroundColor: Colors.red,
                             ),
                           );
                         } else if (queryController.text.isEmpty) {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Please enter your query.'),
+                            SnackBar(
+                              content: Text(AppLocalizations.of(context)!.enterQuery),
                               backgroundColor: Colors.red,
                             ),
                           );
                         } else {
-                          print('Subject: ${subjectController.text}');
-                          print('Query Sent: ${queryController.text}');
-
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Request sent successfully!'),
+                            SnackBar(
+                              content: Text(AppLocalizations.of(context)!.requestSent),
                               backgroundColor: Colors.green,
                             ),
                           );
@@ -137,9 +135,9 @@ class AskAdminScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(10),
                         ),
                       ),
-                      child: const Text(
-                        'Send',
-                        style: TextStyle(
+                      child: Text(
+                        AppLocalizations.of(context)!.send,
+                        style: const TextStyle(
                           color: Colors.white,
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
