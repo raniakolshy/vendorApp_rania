@@ -1,6 +1,5 @@
 import 'package:app_vendor/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() => runApp(const CustomerAnalyticsApp());
 
@@ -16,6 +15,8 @@ class CustomerAnalyticsApp extends StatelessWidget {
     );
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
       theme: baseTheme.copyWith(
         scaffoldBackgroundColor: const Color(0xFFF3F3F4),
         textTheme: baseTheme.textTheme.apply(
@@ -23,16 +24,6 @@ class CustomerAnalyticsApp extends StatelessWidget {
           displayColor: const Color(0xFF1B1B1B),
         ),
       ),
-      localizationsDelegates: const [
-        AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: const [
-        Locale('en'),
-        Locale('ar'),
-      ],
       home: const CustomerAnalyticsScreen(),
     );
   }
@@ -47,7 +38,7 @@ class CustomerAnalyticsScreen extends StatefulWidget {
 
 class _CustomerAnalyticsScreenState extends State<CustomerAnalyticsScreen> {
   final TextEditingController _searchCtrl = TextEditingController();
-  String _timeFilter = 'all_time';
+  String _timeFilter = ''; // Initialize with an empty string
   static const int _pageSize = 2;
   int _shown = _pageSize;
   bool _loadingMore = false;
@@ -61,7 +52,6 @@ class _CustomerAnalyticsScreenState extends State<CustomerAnalyticsScreen> {
       address: '123 Main St, New York',
       baseTotal: '\$1,234.00',
       orders: '5',
-      imageAsset: 'assets/male_avatar.png',
     ),
     Customer(
       name: 'Jane Smith',
@@ -71,15 +61,47 @@ class _CustomerAnalyticsScreenState extends State<CustomerAnalyticsScreen> {
       address: '456 Oak Ave, Los Angeles',
       baseTotal: '\$2,345.00',
       orders: '8',
-      imageAsset: 'assets/female_avatar.png',
+    ),
+    Customer(
+      name: 'Robert Johnson',
+      email: 'robert.j@example.com',
+      contact: '+1 555 123 4567',
+      gender: Gender.male,
+      address: '789 Pine Rd, Chicago',
+      baseTotal: '\$3,456.00',
+      orders: '12',
+    ),
+    Customer(
+      name: 'Emily Wilson',
+      email: 'emily.w@example.com',
+      contact: '+1 444 789 1234',
+      gender: Gender.female,
+      address: '321 Elm Blvd, Houston',
+      baseTotal: '\$1,987.00',
+      orders: '7',
     ),
   ];
 
   List<Customer> get _filtered {
     final q = _searchCtrl.text.trim().toLowerCase();
-    return _allCustomers.where((c) =>
+    final AppLocalizations l10n = AppLocalizations.of(context)!;
+
+    // Apply time filter if not "All time"
+    List<Customer> timeFiltered = _allCustomers;
+    if (_timeFilter != l10n.allTime) {
+      // In a real app, you would filter by actual date/time
+      // For this example, we'll just filter by name for demonstration
+      timeFiltered = _allCustomers.where((c) =>
+      _timeFilter == l10n.last7Days ? c.name.startsWith('J') :
+      _timeFilter == l10n.last30Days ? c.name.startsWith('J') || c.name.startsWith('R') :
+      _timeFilter == l10n.lastYear ? c.name.startsWith('E') : true
+      ).toList();
+    }
+
+    return timeFiltered.where((c) =>
     c.name.toLowerCase().contains(q) ||
-        c.email.toLowerCase().contains(q)).toList();
+        c.email.toLowerCase().contains(q)
+    ).toList();
   }
 
   Future<void> _loadMore() async {
@@ -109,6 +131,15 @@ class _CustomerAnalyticsScreenState extends State<CustomerAnalyticsScreen> {
     _searchCtrl.addListener(_onSearchChanged);
   }
 
+  // Use didChangeDependencies to safely access context
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_timeFilter.isEmpty) {
+      _timeFilter = AppLocalizations.of(context)!.allTime;
+    }
+  }
+
   @override
   void dispose() {
     _searchCtrl.removeListener(_onSearchChanged);
@@ -118,13 +149,14 @@ class _CustomerAnalyticsScreenState extends State<CustomerAnalyticsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final loc = AppLocalizations.of(context)!;
+    final AppLocalizations l10n = AppLocalizations.of(context)!;
     final visible = _filtered.take(_shown).toList();
     final canLoadMore = _shown < _filtered.length && !_loadingMore;
 
     return Scaffold(
       body: Column(
         children: [
+          // Main card
           Expanded(
             child: SingleChildScrollView(
               padding: const EdgeInsets.all(14),
@@ -144,44 +176,150 @@ class _CustomerAnalyticsScreenState extends State<CustomerAnalyticsScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    // Title
                     Text(
-                      loc.customerAnalytics,
+                      l10n.customerAnalyticsTitle,
                       style: Theme.of(context)
                           .textTheme
                           .titleLarge
                           ?.copyWith(fontWeight: FontWeight.w800, fontSize: 22),
                     ),
                     const SizedBox(height: 16),
+
+                    // Time filter
                     DropdownButtonFormField<String>(
                       value: _timeFilter,
                       decoration: InputDecoration(
                         filled: true,
                         fillColor: Colors.white,
-                        contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                        contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 12, vertical: 8),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
                           borderSide: BorderSide.none,
                         ),
                       ),
-                      icon: const Icon(Icons.keyboard_arrow_down_rounded, color: Colors.black54),
+                      icon: const Icon(Icons.keyboard_arrow_down_rounded,
+                          color: Colors.black54),
                       dropdownColor: Colors.white,
                       elevation: 8,
                       borderRadius: BorderRadius.circular(12),
                       isExpanded: true,
                       style: const TextStyle(color: Colors.black, fontSize: 16),
                       items: [
-                        DropdownMenuItem(value: 'all_time', child: Text(loc.allTime)),
-                        DropdownMenuItem(value: 'last_7_days', child: Text(loc.last7days)),
-                        DropdownMenuItem(value: 'last_30_days', child: Text(loc.last30days)),
-                        DropdownMenuItem(value: 'last_year', child: Text(loc.lastYear)),
-                      ],
+                        l10n.allTime,
+                        l10n.last7Days,
+                        l10n.last30Days,
+                        l10n.lastYear,
+                      ].map((v) => DropdownMenuItem(value: v, child: Text(v)))
+                          .toList(),
                       onChanged: _onTimeFilterChanged,
                     ),
                     const SizedBox(height: 16),
+
+                    // Overview card
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(14),
+                        border: Border.all(color: const Color(0xFFEDEEEF)),
+                      ),
+                      padding: const EdgeInsets.all(16),
+                      child: Row(
+                        children: [
+                          // Customers count
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    const Icon(Icons.person_outline, size: 20, color: Colors.black54),
+                                    const SizedBox(width: 8),
+                                    Text(
+                                      l10n.customersLabel,
+                                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                        color: Colors.black54,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 8),
+                                Text(
+                                  _timeFilter == l10n.allTime ? '1,368' :
+                                  _timeFilter == l10n.last7Days ? '342' :
+                                  _timeFilter == l10n.last30Days ? '856' : '1,024',
+                                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                                    fontWeight: FontWeight.w800,
+                                  ),
+                                ),
+                                const SizedBox(height: 4),
+                                Text(
+                                  '↓ 37.8%',
+                                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                    color: Colors.red,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+
+                          // Vertical divider
+                          Container(
+                            width: 1,
+                            height: 60,
+                            color: const Color(0xFFEDEEEF),
+                          ),
+
+                          // Income
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 16),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      const Icon(Icons.shopping_cart_outlined, size: 20, color: Colors.black54),
+                                      const SizedBox(width: 8),
+                                      Text(
+                                        l10n.incomeLabel,
+                                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                          color: Colors.black54,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Text(
+                                    _timeFilter == l10n.allTime ? '\$68,192' :
+                                    _timeFilter == l10n.last7Days ? '\$12,456' :
+                                    _timeFilter == l10n.last30Days ? '\$45,678' : '\$59,123',
+                                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                                      fontWeight: FontWeight.w800,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 4),
+                                  Text(
+                                    '↑ 37.8%',
+                                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                      color: Colors.green,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 24),
+
+                    // Customers section header
                     Row(
                       children: [
                         Text(
-                          loc.customers,
+                          l10n.customersLabel,
                           style: Theme.of(context).textTheme.titleMedium?.copyWith(
                             fontWeight: FontWeight.w700,
                           ),
@@ -190,29 +328,43 @@ class _CustomerAnalyticsScreenState extends State<CustomerAnalyticsScreen> {
                       ],
                     ),
                     const SizedBox(height: 16),
+
+                    // Search
                     _InputSurface(
                       child: TextField(
                         controller: _searchCtrl,
                         decoration: InputDecoration(
-                          hintText: loc.searchCustomer,
+                          hintText: l10n.searchCustomerHint,
                           hintStyle: TextStyle(
                             color: Colors.black.withOpacity(.35),
                           ),
                           border: InputBorder.none,
-                          prefixIcon: const Icon(Icons.search, size: 22, color: Colors.black54),
-                          contentPadding: const EdgeInsets.symmetric(horizontal: 4, vertical: 14),
+                          prefixIcon: const Icon(
+                            Icons.search,
+                            size: 22,
+                            color: Colors.black54,
+                          ),
+                          contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 4,
+                            vertical: 14,
+                          ),
                         ),
                       ),
                     ),
                     const SizedBox(height: 16),
+
+                    // Customers list
                     ListView.separated(
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       itemCount: visible.length,
-                      separatorBuilder: (_, __) => const Divider(height: 1, thickness: 1, color: Color(0x11000000)),
+                      separatorBuilder: (_, __) => const SizedBox(height: 20), // Added space between items
                       itemBuilder: (context, i) => _CustomerRow(customer: visible[i]),
                     ),
+
                     const SizedBox(height: 22),
+
+                    // Load more button
                     if (_filtered.isNotEmpty)
                       Center(
                         child: Opacity(
@@ -220,36 +372,60 @@ class _CustomerAnalyticsScreenState extends State<CustomerAnalyticsScreen> {
                           child: InkWell(
                             borderRadius: BorderRadius.circular(28),
                             onTap: canLoadMore ? _loadMore : null,
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  if (_loadingMore)
-                                    const SizedBox(
-                                      width: 18,
-                                      height: 18,
-                                      child: CircularProgressIndicator(strokeWidth: 2),
-                                    )
-                                  else
-                                    const Icon(Icons.refresh, size: 18),
-                                  const SizedBox(width: 10),
-                                  Text(
-                                    loc.loadMore,
-                                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-                                  ),
+                            child: DecoratedBox(
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(28),
+                                border: Border.all(
+                                  color: const Color(0x22000000),
+                                ),
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: Color(0x0C000000),
+                                    blurRadius: 10,
+                                    offset: Offset(0, 4),
+                                  )
                                 ],
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 18, vertical: 12),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    if (_loadingMore)
+                                      const SizedBox(
+                                        width: 18,
+                                        height: 18,
+                                        child: CircularProgressIndicator(strokeWidth: 2),
+                                      )
+                                    else
+                                      Image.asset(
+                                        'assets/icons/loading.png',
+                                        width: 18,
+                                        height: 18,
+                                      ),
+                                    const SizedBox(width: 10),
+                                    Text(
+                                      l10n.loadMoreButton,
+                                      style: const TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
                         ),
                       ),
+
                     if (_filtered.isEmpty)
                       Padding(
                         padding: const EdgeInsets.only(top: 12),
                         child: Center(
                           child: Text(
-                            loc.noCustomers,
+                            l10n.noCustomersMatch,
                             style: const TextStyle(color: Colors.black54),
                           ),
                         ),
@@ -271,14 +447,103 @@ class _CustomerRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final loc = AppLocalizations.of(context)!;
-    return Column(
-      children: [
-        Text("${loc.name}: ${customer.name}"),
-        Text("${loc.email}: ${customer.email}"),
-        Text("${loc.contact}: ${customer.contact}"),
-        Text("${loc.address}: ${customer.address}"),
-      ],
+    final AppLocalizations l10n = AppLocalizations.of(context)!;
+    final keyStyle = Theme.of(context)
+        .textTheme
+        .bodyMedium
+        ?.copyWith(color: Colors.black.withOpacity(.65));
+    final valStyle = Theme.of(context)
+        .textTheme
+        .bodyMedium
+        ?.copyWith(
+        fontWeight: FontWeight.w600, color: Colors.black.withOpacity(.85));
+
+    return Container(
+      padding: const EdgeInsets.only(bottom: 20),
+      decoration: BoxDecoration(
+        border: Border(bottom: BorderSide(color: Colors.grey.shade200, width: 1)),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            margin: const EdgeInsets.only(right: 20),
+            width: 60,
+            height: 60,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: const Color(0xFFEDEEEF),
+              image: DecorationImage(
+                image: AssetImage(customer.gender == Gender.male
+                    ? 'assets/avatar_placeholder.jpg'
+                    : 'assets/female.jpg'),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  customer.name,
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleMedium
+                      ?.copyWith(fontWeight: FontWeight.w700),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  customer.email,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodySmall
+                      ?.copyWith(color: Colors.black54),
+                ),
+                const SizedBox(height: 16),
+
+                _RowKVText(
+                  k: l10n.contactLabel,
+                  v: _InfoChip(customer.contact),
+                  keyStyle: keyStyle,
+                  valStyle: valStyle,
+                  isWidgetValue: true,
+                ),
+                const SizedBox(height: 12),
+                _RowKVText(
+                  k: l10n.genderLabel,
+                  v: _GenderChip(gender: customer.gender),
+                  keyStyle: keyStyle,
+                  valStyle: valStyle,
+                  isWidgetValue: true,
+                ),
+                const SizedBox(height: 12),
+                _RowKVText(
+                  k: l10n.addressLabel,
+                  vText: customer.address,
+                  keyStyle: keyStyle,
+                  valStyle: valStyle,
+                ),
+                const SizedBox(height: 12),
+                _RowKVText(
+                  k: l10n.baseTotalLabel,
+                  vText: customer.baseTotal,
+                  keyStyle: keyStyle,
+                  valStyle: valStyle,
+                ),
+                const SizedBox(height: 12),
+                _RowKVText(
+                  k: l10n.ordersLabel,
+                  vText: customer.orders,
+                  keyStyle: keyStyle,
+                  valStyle: valStyle,
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -303,6 +568,119 @@ class _InputSurface extends StatelessWidget {
   }
 }
 
+class _RowKVText extends StatelessWidget {
+  const _RowKVText({
+    required this.k,
+    this.vText,
+    this.v,
+    required this.keyStyle,
+    required this.valStyle,
+    this.isWidgetValue = false,
+  }) : assert((vText != null) ^ (v != null), 'Provide either vText or v');
+
+  final String k;
+  final String? vText;
+  final Widget? v;
+  final TextStyle? keyStyle;
+  final TextStyle? valStyle;
+  final bool isWidgetValue;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(child: Text(k, style: keyStyle)),
+        const SizedBox(width: 8),
+        if (isWidgetValue && v != null)
+          v!
+        else
+          Text(vText ?? '', style: valStyle),
+      ],
+    );
+  }
+}
+
+class _InfoChip extends StatelessWidget {
+  const _InfoChip(this.text);
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: const Color(0xFFF1F2F4),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+        child: Text(
+          text,
+          style: Theme.of(context)
+              .textTheme
+              .labelLarge
+              ?.copyWith(fontWeight: FontWeight.w600),
+        ),
+      ),
+    );
+  }
+}
+
+class _GenderChip extends StatelessWidget {
+  const _GenderChip({required this.gender});
+  final Gender gender;
+
+  Color get _bg {
+    switch (gender) {
+      case Gender.male:
+        return const Color(0xFFE3F2FD);
+      case Gender.female:
+        return const Color(0xFFFCE4EC);
+    }
+  }
+
+  Color get _textColor {
+    switch (gender) {
+      case Gender.male:
+        return const Color(0xFF1565C0);
+      case Gender.female:
+        return const Color(0xFFC2185B);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final AppLocalizations l10n = AppLocalizations.of(context)!;
+    String label;
+    switch (gender) {
+      case Gender.male:
+        label = l10n.maleLabel;
+        break;
+      case Gender.female:
+        label = l10n.femaleLabel;
+        break;
+    }
+    return DecoratedBox(
+      decoration: BoxDecoration(
+          color: _bg,
+          borderRadius: BorderRadius.circular(10)
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+        child: Text(
+          label,
+          style: Theme.of(context)
+              .textTheme
+              .labelLarge
+              ?.copyWith(
+              fontWeight: FontWeight.w700,
+              color: _textColor
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 enum Gender { male, female }
 
 class Customer {
@@ -314,7 +692,6 @@ class Customer {
     required this.address,
     required this.baseTotal,
     required this.orders,
-    required this.imageAsset,
   });
 
   final String name;
@@ -324,5 +701,4 @@ class Customer {
   final String address;
   final String baseTotal;
   final String orders;
-  final String imageAsset;
 }

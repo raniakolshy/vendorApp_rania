@@ -1,3 +1,4 @@
+import 'package:app_vendor/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -9,11 +10,12 @@ class VendorProfileScreen extends StatefulWidget {
 }
 
 class _VendorProfileScreenState extends State<VendorProfileScreen> {
-  // Mock data to simulate fetching from an API
+  // Mock data : contenu business (non traduit intentionnellement)
   final Map<String, dynamic> _vendorData = {
     'companyName': 'Gadgets & Gear Co.',
     'location': 'New York, USA',
-    'bio': 'We are a leading provider of high-quality electronics and adventure gear. Our mission is to bring you the best products to enhance your daily life and outdoor experiences.',
+    'bio':
+    'We are a leading provider of high-quality electronics and adventure gear. Our mission is to bring you the best products to enhance your daily life and outdoor experiences.',
     'logoUrl': 'assets/logo.jpg',
     'bannerUrl': 'assets/welcome_background.jpeg',
     'socialMedia': {
@@ -22,16 +24,45 @@ class _VendorProfileScreenState extends State<VendorProfileScreen> {
       'youtube': 'GadgetsAndGear',
     },
     'products': [
-      {'name': 'Wireless Headphones', 'price': 'AED 129.99', 'category': 'Electronics', 'imageUrl': 'assets/img_square.jpg'},
-      {'name': 'Smartwatch', 'price': 'AED 249.00', 'category': 'Electronics', 'imageUrl': 'assets/img_square.jpg'},
-      {'name': 'Portable Power Bank', 'price': 'AED 45.50', 'category': 'Accessories', 'imageUrl': 'assets/img_square.jpg'},
-      {'name': 'Action Camera', 'price': 'AED 399.99', 'category': 'Electronics', 'imageUrl': 'assets/img_square.jpg'},
-      {'name': 'Bluetooth Speaker', 'price': 'AED 89.95', 'category': 'Electronics', 'imageUrl': 'assets/img_square.jpg'},
-      {'name': 'Drone', 'price': 'AED 550.00', 'category': 'Electronics', 'imageUrl': 'assets/img_square.jpg'},
+      {
+        'name': 'Wireless Headphones',
+        'price': 'AED 129.99',
+        'category': 'Electronics',
+        'imageUrl': 'assets/img_square.jpg'
+      },
+      {
+        'name': 'Smartwatch',
+        'price': 'AED 249.00',
+        'category': 'Electronics',
+        'imageUrl': 'assets/img_square.jpg'
+      },
+      {
+        'name': 'Portable Power Bank',
+        'price': 'AED 45.50',
+        'category': 'Accessories',
+        'imageUrl': 'assets/img_square.jpg'
+      },
+      {
+        'name': 'Action Camera',
+        'price': 'AED 399.99',
+        'category': 'Electronics',
+        'imageUrl': 'assets/img_square.jpg'
+      },
+      {
+        'name': 'Bluetooth Speaker',
+        'price': 'AED 89.95',
+        'category': 'Electronics',
+        'imageUrl': 'assets/img_square.jpg'
+      },
+      {
+        'name': 'Drone',
+        'price': 'AED 550.00',
+        'category': 'Electronics',
+        'imageUrl': 'assets/img_square.jpg'
+      },
     ],
   };
 
-  // Helper function to get the correct social media icon
   IconData _getSocialMediaIcon(String id) {
     switch (id) {
       case 'twitter':
@@ -51,7 +82,17 @@ class _VendorProfileScreenState extends State<VendorProfileScreen> {
     }
   }
 
-  // ---------- Section Card ----------
+  String _localizeCategory(String raw, AppLocalizations l10n) {
+    switch (raw) {
+      case 'Electronics':
+        return l10n.cat_electronics;
+      case 'Accessories':
+        return l10n.cat_accessories;
+      default:
+        return raw;
+    }
+  }
+
   Widget _sectionCard({required String title, required List<Widget> children}) {
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
@@ -80,6 +121,8 @@ class _VendorProfileScreenState extends State<VendorProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Scaffold(
       backgroundColor: const Color(0xFFF7F7F7),
       body: SafeArea(
@@ -91,25 +134,25 @@ class _VendorProfileScreenState extends State<VendorProfileScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Banner Image (Background Profile Picture)
+                  // Banner
                   Container(
                     height: 200,
                     decoration: BoxDecoration(
                       color: const Color(0xFFE5E5E5),
                       borderRadius: BorderRadius.circular(16),
                       image: DecorationImage(
-                        image: AssetImage(_vendorData['bannerUrl']), // Using the new background image
+                        image: AssetImage(_vendorData['bannerUrl']),
                         fit: BoxFit.cover,
                       ),
                     ),
                   ),
                   const SizedBox(height: 24),
 
-                  // Profile Header
+                  // Header
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Logo (Updated to use new logo)
+                      // Logo
                       Container(
                         width: 80,
                         height: 80,
@@ -118,13 +161,13 @@ class _VendorProfileScreenState extends State<VendorProfileScreen> {
                           color: Colors.white,
                           border: Border.all(color: Colors.black.withOpacity(0.1)),
                           image: DecorationImage(
-                            image: AssetImage(_vendorData['logoUrl']), // Using the new logo image
+                            image: AssetImage(_vendorData['logoUrl']),
                             fit: BoxFit.cover,
                           ),
                         ),
                       ),
                       const SizedBox(width: 16),
-                      // Vendor Info
+                      // Infos
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -145,13 +188,16 @@ class _VendorProfileScreenState extends State<VendorProfileScreen> {
                               ],
                             ),
                             const SizedBox(height: 12),
-                            // Social Media Links
+                            // Socials
                             Wrap(
                               spacing: 8.0,
-                              children: _vendorData['socialMedia'].entries.map<Widget>((entry) {
+                              children: (_vendorData['socialMedia'] as Map<String, dynamic>)
+                                  .entries
+                                  .map<Widget>((entry) {
                                 return IconButton(
+                                  tooltip: l10n.social_tooltip(entry.key),
                                   onPressed: () {
-                                    // Handle social media link tap
+                                    // TODO: open link
                                   },
                                   icon: FaIcon(_getSocialMediaIcon(entry.key), color: Colors.black87),
                                 );
@@ -164,13 +210,13 @@ class _VendorProfileScreenState extends State<VendorProfileScreen> {
                   ),
                   const SizedBox(height: 24),
 
-                  // Bio Section
-                  _sectionCard(title: 'About Us', children: [
+                  // Bio
+                  _sectionCard(title: l10n.sec_about_us, children: [
                     Text(_vendorData['bio']),
                   ]),
 
-                  // Products Section
-                  _sectionCard(title: 'Our Products', children: [
+                  // Products
+                  _sectionCard(title: l10n.sec_our_products, children: [
                     GridView.builder(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
@@ -180,48 +226,34 @@ class _VendorProfileScreenState extends State<VendorProfileScreen> {
                         mainAxisSpacing: 16,
                         crossAxisSpacing: 16,
                       ),
-                      itemCount: _vendorData['products'].length,
+                      itemCount: (_vendorData['products'] as List).length,
                       itemBuilder: (context, index) {
-                        final product = _vendorData['products'][index];
-                        return _buildProductCard(product);
+                        final product = (_vendorData['products'] as List)[index] as Map<String, String>;
+                        return _buildProductCard(product, l10n);
                       },
                     ),
                   ]),
 
-                  // Back to Edit Profile Button (at the bottom)
+                  // Back/Edit
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 20),
                     child: ElevatedButton.icon(
-                      onPressed: () {
-                        Navigator.pop(context); // Go back to the Edit Profile screen
-                      },
-                      icon: const Icon(
-                        Icons.edit,
-                        color: Colors.white,
-                        size: 20, // Make the icon smaller for better balance
-                      ),
-                      label: const Text(
-                        'Edit Profile',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,  // Increase the font size slightly
-                        ),
+                      onPressed: () => Navigator.pop(context),
+                      icon: const Icon(Icons.edit, color: Colors.white, size: 20),
+                      label: Text(
+                        l10n.btn_edit_profile,
+                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                       ),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.black,  // Replaced 'primary' with 'backgroundColor'
-                        foregroundColor: Colors.white, // Replaced 'onPrimary' with 'foregroundColor'
+                        backgroundColor: Colors.black,
+                        foregroundColor: Colors.white,
                         padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),  // More rounded corners
-                        ),
-                        elevation: 5, // Add shadow for depth
-                        shadowColor: Colors.black.withOpacity(0.2), // Light shadow color
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                        elevation: 5,
+                        shadowColor: Colors.black.withOpacity(0.2),
                       ),
                     ),
-                  )
-
-
-
+                  ),
                 ],
               ),
             ),
@@ -231,7 +263,7 @@ class _VendorProfileScreenState extends State<VendorProfileScreen> {
     );
   }
 
-  Widget _buildProductCard(Map<String, String> product) {
+  Widget _buildProductCard(Map<String, String> product, AppLocalizations l10n) {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -251,7 +283,7 @@ class _VendorProfileScreenState extends State<VendorProfileScreen> {
             borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
             child: Image.asset(
               product['imageUrl']!,
-              height: 120, // Reduced size to prevent overflow
+              height: 120,
               width: double.infinity,
               fit: BoxFit.cover,
             ),
@@ -269,7 +301,7 @@ class _VendorProfileScreenState extends State<VendorProfileScreen> {
                 ),
                 const SizedBox(height: 6),
                 Text(
-                  product['category']!,
+                  _localizeCategory(product['category']!, l10n),
                   style: const TextStyle(fontSize: 12, color: Colors.grey),
                 ),
                 const SizedBox(height: 8),

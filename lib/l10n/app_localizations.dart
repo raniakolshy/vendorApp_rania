@@ -2452,13 +2452,13 @@ abstract class AppLocalizations {
   /// No description provided for @nameAndDescriptionTitle.
   ///
   /// In en, this message translates to:
-  /// **'Name & description'**
+  /// **'Name & Description'**
   String get nameAndDescriptionTitle;
 
   /// No description provided for @productTitleLabel.
   ///
   /// In en, this message translates to:
-  /// **'Product title'**
+  /// **'Product Title'**
   String get productTitleLabel;
 
   /// No description provided for @productTitleHelp.
@@ -2530,7 +2530,7 @@ abstract class AppLocalizations {
   /// No description provided for @tagsHelp.
   ///
   /// In en, this message translates to:
-  /// **'Add one keyword that describes your product.'**
+  /// **'Add keywords that describe your product.'**
   String get tagsHelp;
 
   /// No description provided for @descriptionLabel.
@@ -2860,7 +2860,7 @@ abstract class AppLocalizations {
   /// No description provided for @clickOrDropImage.
   ///
   /// In en, this message translates to:
-  /// **'Click or drop image'**
+  /// **'Click or drop Image'**
   String get clickOrDropImage;
 
   /// No description provided for @saveDraftButton.
@@ -3150,6 +3150,1410 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Edit Product Screen'**
   String get editProductScreen;
+
+  /// No description provided for @customerAnalyticsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Analytics'**
+  String get customerAnalyticsTitle;
+
+  /// No description provided for @customersLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Customers'**
+  String get customersLabel;
+
+  /// No description provided for @incomeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Income'**
+  String get incomeLabel;
+
+  /// No description provided for @searchCustomerHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search customer'**
+  String get searchCustomerHint;
+
+  /// No description provided for @loadMoreButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Load more'**
+  String get loadMoreButton;
+
+  /// No description provided for @noCustomersMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'No customers match your search.'**
+  String get noCustomersMatch;
+
+  /// No description provided for @contactLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact'**
+  String get contactLabel;
+
+  /// No description provided for @genderLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Gender'**
+  String get genderLabel;
+
+  /// No description provided for @addressLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Address'**
+  String get addressLabel;
+
+  /// No description provided for @baseTotalLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Base Total'**
+  String get baseTotalLabel;
+
+  /// No description provided for @ordersLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Orders'**
+  String get ordersLabel;
+
+  /// No description provided for @maleLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Male'**
+  String get maleLabel;
+
+  /// No description provided for @femaleLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Female'**
+  String get femaleLabel;
+
+  /// No description provided for @inputYourTextHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Input your text'**
+  String get inputYourTextHint;
+
+  /// No description provided for @addTagHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Add tag'**
+  String get addTagHint;
+
+  /// No description provided for @skuHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Ex: SKU-12345'**
+  String get skuHint;
+
+  /// No description provided for @enterValidNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a valid number'**
+  String get enterValidNumber;
+
+  /// No description provided for @specialPriceHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., 24.99'**
+  String get specialPriceHint;
+
+  /// No description provided for @stockAvailabilityTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Stock & Availability'**
+  String get stockAvailabilityTitle;
+
+  /// No description provided for @stockHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., 100'**
+  String get stockHint;
+
+  /// No description provided for @weightHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., 0.50'**
+  String get weightHint;
+
+  /// No description provided for @maxQuantityHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., 5'**
+  String get maxQuantityHint;
+
+  /// No description provided for @enterNonNegativeNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a non-negative number'**
+  String get enterNonNegativeNumber;
+
+  /// No description provided for @invisible.
+  ///
+  /// In en, this message translates to:
+  /// **'Invisible'**
+  String get invisible;
+
+  /// No description provided for @visible.
+  ///
+  /// In en, this message translates to:
+  /// **'Visible'**
+  String get visible;
+
+  /// No description provided for @metaInfoTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Meta Infos'**
+  String get metaInfoTitle;
+
+  /// No description provided for @urlKeyHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., apple-iphone-14-pro'**
+  String get urlKeyHint;
+
+  /// No description provided for @metaTitleHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., Buy the iPhone 14 Pro'**
+  String get metaTitleHint;
+
+  /// No description provided for @productImagesLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Product Images'**
+  String get productImagesLabel;
+
+  /// No description provided for @productImagesHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'It is preferable to upload 3 images of the product.'**
+  String get productImagesHelp;
+
+  /// No description provided for @threeImagesWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'⚠️ Preferably upload at least 3 images'**
+  String get threeImagesWarning;
+
+  /// No description provided for @linkedProductsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Linked Products'**
+  String get linkedProductsTitle;
+
+  /// No description provided for @deleteTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get deleteTooltip;
+
+  /// No description provided for @sec_name_description.
+  ///
+  /// In en, this message translates to:
+  /// **'Name & description'**
+  String get sec_name_description;
+
+  /// No description provided for @lbl_product_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Product title'**
+  String get lbl_product_title;
+
+  /// No description provided for @help_product_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the full product name (e.g., Apple iPhone 14 Pro).'**
+  String get help_product_title;
+
+  /// No description provided for @hint_input_text.
+  ///
+  /// In en, this message translates to:
+  /// **'Input your text'**
+  String get hint_input_text;
+
+  /// No description provided for @v_required.
+  ///
+  /// In en, this message translates to:
+  /// **'Required'**
+  String get v_required;
+
+  /// No description provided for @lbl_category.
+  ///
+  /// In en, this message translates to:
+  /// **'Category'**
+  String get lbl_category;
+
+  /// No description provided for @help_category.
+  ///
+  /// In en, this message translates to:
+  /// **'Select the category that best fits your product.'**
+  String get help_category;
+
+  /// No description provided for @lbl_tags.
+  ///
+  /// In en, this message translates to:
+  /// **'Tags'**
+  String get lbl_tags;
+
+  /// No description provided for @help_tags.
+  ///
+  /// In en, this message translates to:
+  /// **'Add keywords that describe your product.'**
+  String get help_tags;
+
+  /// No description provided for @hint_add_tag.
+  ///
+  /// In en, this message translates to:
+  /// **'Add tag'**
+  String get hint_add_tag;
+
+  /// No description provided for @lbl_description.
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get lbl_description;
+
+  /// No description provided for @help_description.
+  ///
+  /// In en, this message translates to:
+  /// **'Detailed description of features, materials, sizing, etc.'**
+  String get help_description;
+
+  /// No description provided for @lbl_short_description.
+  ///
+  /// In en, this message translates to:
+  /// **'Short Description'**
+  String get lbl_short_description;
+
+  /// No description provided for @help_short_description.
+  ///
+  /// In en, this message translates to:
+  /// **'Short summary (1–2 sentences) for listings/search results.'**
+  String get help_short_description;
+
+  /// No description provided for @lbl_sku.
+  ///
+  /// In en, this message translates to:
+  /// **'SKU'**
+  String get lbl_sku;
+
+  /// No description provided for @help_sku.
+  ///
+  /// In en, this message translates to:
+  /// **'Unique stock keeping unit (e.g., SKU-12345).'**
+  String get help_sku;
+
+  /// No description provided for @hint_sku.
+  ///
+  /// In en, this message translates to:
+  /// **'Ex: SKU-12345'**
+  String get hint_sku;
+
+  /// No description provided for @sec_price.
+  ///
+  /// In en, this message translates to:
+  /// **'Price'**
+  String get sec_price;
+
+  /// No description provided for @lbl_amount.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount'**
+  String get lbl_amount;
+
+  /// No description provided for @help_amount.
+  ///
+  /// In en, this message translates to:
+  /// **'Base selling price without discounts.'**
+  String get help_amount;
+
+  /// No description provided for @hint_amount_default.
+  ///
+  /// In en, this message translates to:
+  /// **'8'**
+  String get hint_amount_default;
+
+  /// No description provided for @v_number.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a valid number'**
+  String get v_number;
+
+  /// No description provided for @lbl_special_toggle.
+  ///
+  /// In en, this message translates to:
+  /// **'Special Price'**
+  String get lbl_special_toggle;
+
+  /// No description provided for @help_special_toggle.
+  ///
+  /// In en, this message translates to:
+  /// **'Turn on to add a promotional/sale price.'**
+  String get help_special_toggle;
+
+  /// No description provided for @lbl_special_price.
+  ///
+  /// In en, this message translates to:
+  /// **'Special price'**
+  String get lbl_special_price;
+
+  /// No description provided for @help_special_price.
+  ///
+  /// In en, this message translates to:
+  /// **'Discounted price that overrides the regular amount.'**
+  String get help_special_price;
+
+  /// No description provided for @hint_price_example.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., 24.99'**
+  String get hint_price_example;
+
+  /// No description provided for @lbl_min_qty.
+  ///
+  /// In en, this message translates to:
+  /// **'Minimum amount'**
+  String get lbl_min_qty;
+
+  /// No description provided for @help_min_qty.
+  ///
+  /// In en, this message translates to:
+  /// **'Minimum quantity a customer is allowed to purchase.'**
+  String get help_min_qty;
+
+  /// No description provided for @lbl_max_qty.
+  ///
+  /// In en, this message translates to:
+  /// **'Maximum amount'**
+  String get lbl_max_qty;
+
+  /// No description provided for @help_max_qty.
+  ///
+  /// In en, this message translates to:
+  /// **'Maximum quantity a customer is allowed to purchase.'**
+  String get help_max_qty;
+
+  /// No description provided for @lbl_taxes.
+  ///
+  /// In en, this message translates to:
+  /// **'Taxes'**
+  String get lbl_taxes;
+
+  /// No description provided for @help_taxes.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply taxes to this product at checkout.'**
+  String get help_taxes;
+
+  /// No description provided for @sec_stock_availability.
+  ///
+  /// In en, this message translates to:
+  /// **'Stock & Availability'**
+  String get sec_stock_availability;
+
+  /// No description provided for @lbl_stock.
+  ///
+  /// In en, this message translates to:
+  /// **'Stock'**
+  String get lbl_stock;
+
+  /// No description provided for @help_stock.
+  ///
+  /// In en, this message translates to:
+  /// **'Number of units available.'**
+  String get help_stock;
+
+  /// No description provided for @hint_stock.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., 100'**
+  String get hint_stock;
+
+  /// No description provided for @lbl_weight.
+  ///
+  /// In en, this message translates to:
+  /// **'Weight'**
+  String get lbl_weight;
+
+  /// No description provided for @help_weight.
+  ///
+  /// In en, this message translates to:
+  /// **'Weight in kilograms (used for shipping).'**
+  String get help_weight;
+
+  /// No description provided for @hint_weight.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., 0.50'**
+  String get hint_weight;
+
+  /// No description provided for @lbl_allowed_qty_per_customer.
+  ///
+  /// In en, this message translates to:
+  /// **'Allowed Quantity per Customer'**
+  String get lbl_allowed_qty_per_customer;
+
+  /// No description provided for @help_allowed_qty_per_customer.
+  ///
+  /// In en, this message translates to:
+  /// **'Optional: maximum number of units a single customer can buy for this product.'**
+  String get help_allowed_qty_per_customer;
+
+  /// No description provided for @hint_allowed_qty.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., 5'**
+  String get hint_allowed_qty;
+
+  /// No description provided for @v_non_negative.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a non-negative number'**
+  String get v_non_negative;
+
+  /// No description provided for @lbl_stock_availability.
+  ///
+  /// In en, this message translates to:
+  /// **'Stock Availability'**
+  String get lbl_stock_availability;
+
+  /// No description provided for @help_stock_availability.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose current availability status.'**
+  String get help_stock_availability;
+
+  /// No description provided for @lbl_visibility.
+  ///
+  /// In en, this message translates to:
+  /// **'Visibility'**
+  String get lbl_visibility;
+
+  /// No description provided for @help_visibility.
+  ///
+  /// In en, this message translates to:
+  /// **'Invisible products are hidden from the storefront.'**
+  String get help_visibility;
+
+  /// No description provided for @sec_meta_infos.
+  ///
+  /// In en, this message translates to:
+  /// **'Meta Infos'**
+  String get sec_meta_infos;
+
+  /// No description provided for @lbl_url_key.
+  ///
+  /// In en, this message translates to:
+  /// **'Url Key'**
+  String get lbl_url_key;
+
+  /// No description provided for @help_url_key.
+  ///
+  /// In en, this message translates to:
+  /// **'SEO-friendly slug used in the product URL.'**
+  String get help_url_key;
+
+  /// No description provided for @hint_url_key.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., apple-iphone-14-pro'**
+  String get hint_url_key;
+
+  /// No description provided for @lbl_meta_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Meta Title'**
+  String get lbl_meta_title;
+
+  /// No description provided for @help_meta_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Title shown in search engine results.'**
+  String get help_meta_title;
+
+  /// No description provided for @hint_meta_title.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., Buy the iPhone 14 Pro'**
+  String get hint_meta_title;
+
+  /// No description provided for @lbl_meta_keywords.
+  ///
+  /// In en, this message translates to:
+  /// **'Meta Keywords'**
+  String get lbl_meta_keywords;
+
+  /// No description provided for @help_meta_keywords.
+  ///
+  /// In en, this message translates to:
+  /// **'Optional: comma-separated keywords.'**
+  String get help_meta_keywords;
+
+  /// No description provided for @lbl_meta_description.
+  ///
+  /// In en, this message translates to:
+  /// **'Meta Description'**
+  String get lbl_meta_description;
+
+  /// No description provided for @help_meta_description.
+  ///
+  /// In en, this message translates to:
+  /// **'Short paragraph for search engines (150–160 chars).'**
+  String get help_meta_description;
+
+  /// No description provided for @lbl_product_images.
+  ///
+  /// In en, this message translates to:
+  /// **'Product Images'**
+  String get lbl_product_images;
+
+  /// No description provided for @help_product_images.
+  ///
+  /// In en, this message translates to:
+  /// **'It is preferable to upload 3 images of the product.'**
+  String get help_product_images;
+
+  /// No description provided for @btn_click_or_drop_image.
+  ///
+  /// In en, this message translates to:
+  /// **'Click or drop image'**
+  String get btn_click_or_drop_image;
+
+  /// No description provided for @warn_prefer_three_images.
+  ///
+  /// In en, this message translates to:
+  /// **'⚠️ Preferably upload at least 3 images'**
+  String get warn_prefer_three_images;
+
+  /// No description provided for @sec_linked_products.
+  ///
+  /// In en, this message translates to:
+  /// **'Linked Products'**
+  String get sec_linked_products;
+
+  /// No description provided for @title_product_relationships.
+  ///
+  /// In en, this message translates to:
+  /// **'Product Relationships'**
+  String get title_product_relationships;
+
+  /// No description provided for @tab_related.
+  ///
+  /// In en, this message translates to:
+  /// **'Related'**
+  String get tab_related;
+
+  /// No description provided for @tab_upsell.
+  ///
+  /// In en, this message translates to:
+  /// **'Up-Sell'**
+  String get tab_upsell;
+
+  /// No description provided for @tab_crosssell.
+  ///
+  /// In en, this message translates to:
+  /// **'Cross-Sell'**
+  String get tab_crosssell;
+
+  /// No description provided for @related_products.
+  ///
+  /// In en, this message translates to:
+  /// **'Related Products'**
+  String get related_products;
+
+  /// No description provided for @upsell_products.
+  ///
+  /// In en, this message translates to:
+  /// **'Up-Sell Products'**
+  String get upsell_products;
+
+  /// No description provided for @crosssell_products.
+  ///
+  /// In en, this message translates to:
+  /// **'Cross-Sell Products'**
+  String get crosssell_products;
+
+  /// No description provided for @filters.
+  ///
+  /// In en, this message translates to:
+  /// **'Filters'**
+  String get filters;
+
+  /// No description provided for @btn_reset.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset'**
+  String get btn_reset;
+
+  /// No description provided for @btn_apply.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply'**
+  String get btn_apply;
+
+  /// No description provided for @status_enabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Enabled'**
+  String get status_enabled;
+
+  /// No description provided for @status_disabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Disabled'**
+  String get status_disabled;
+
+  /// No description provided for @btn_filters.
+  ///
+  /// In en, this message translates to:
+  /// **'Filters'**
+  String get btn_filters;
+
+  /// No description provided for @btn_filters_on.
+  ///
+  /// In en, this message translates to:
+  /// **'Filters • On'**
+  String get btn_filters_on;
+
+  /// No description provided for @filters_showing_enabled_only.
+  ///
+  /// In en, this message translates to:
+  /// **'Showing: Enabled only'**
+  String get filters_showing_enabled_only;
+
+  /// No description provided for @filters_showing_disabled_only.
+  ///
+  /// In en, this message translates to:
+  /// **'Showing: Disabled only'**
+  String get filters_showing_disabled_only;
+
+  /// No description provided for @filters_custom.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom filters'**
+  String get filters_custom;
+
+  /// No description provided for @empty_no_linked_products.
+  ///
+  /// In en, this message translates to:
+  /// **'No linked products yet'**
+  String get empty_no_linked_products;
+
+  /// No description provided for @empty_no_linked_products_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Add related, up-sell or cross-sell products to improve discovery and increase AOV.'**
+  String get empty_no_linked_products_desc;
+
+  /// No description provided for @btn_add_product.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Product'**
+  String get btn_add_product;
+
+  /// No description provided for @btn_browse_catalog.
+  ///
+  /// In en, this message translates to:
+  /// **'Browse Catalog'**
+  String get btn_browse_catalog;
+
+  /// No description provided for @btn_save_draft.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Draft'**
+  String get btn_save_draft;
+
+  /// No description provided for @btn_publish_now.
+  ///
+  /// In en, this message translates to:
+  /// **'Publish now'**
+  String get btn_publish_now;
+
+  /// No description provided for @btn_edit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get btn_edit;
+
+  /// No description provided for @btn_delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get btn_delete;
+
+  /// No description provided for @tt_delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get tt_delete;
+
+  /// No description provided for @lbl_price.
+  ///
+  /// In en, this message translates to:
+  /// **'Price'**
+  String get lbl_price;
+
+  /// No description provided for @id_with_value.
+  ///
+  /// In en, this message translates to:
+  /// **'ID: {value}'**
+  String id_with_value(String value);
+
+  /// No description provided for @inventory_with_value.
+  ///
+  /// In en, this message translates to:
+  /// **'Inventory: {value}'**
+  String inventory_with_value(String value);
+
+  /// No description provided for @price_with_currency.
+  ///
+  /// In en, this message translates to:
+  /// **'\${value}'**
+  String price_with_currency(String value);
+
+  /// No description provided for @err_add_three_images.
+  ///
+  /// In en, this message translates to:
+  /// **'Please add at least 3 product images'**
+  String get err_add_three_images;
+
+  /// No description provided for @err_special_lower_than_amount.
+  ///
+  /// In en, this message translates to:
+  /// **'Special price must be less than Amount'**
+  String get err_special_lower_than_amount;
+
+  /// No description provided for @toast_draft_saved.
+  ///
+  /// In en, this message translates to:
+  /// **'Draft saved'**
+  String get toast_draft_saved;
+
+  /// No description provided for @toast_product_published.
+  ///
+  /// In en, this message translates to:
+  /// **'Product published'**
+  String get toast_product_published;
+
+  /// No description provided for @toast_product_deleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Product deleted'**
+  String get toast_product_deleted;
+
+  /// No description provided for @curr_symbol.
+  ///
+  /// In en, this message translates to:
+  /// **'\$'**
+  String get curr_symbol;
+
+  /// No description provided for @cat_food.
+  ///
+  /// In en, this message translates to:
+  /// **'Food'**
+  String get cat_food;
+
+  /// No description provided for @cat_electronics.
+  ///
+  /// In en, this message translates to:
+  /// **'Electronics'**
+  String get cat_electronics;
+
+  /// No description provided for @cat_apparel.
+  ///
+  /// In en, this message translates to:
+  /// **'Apparel'**
+  String get cat_apparel;
+
+  /// No description provided for @cat_beauty.
+  ///
+  /// In en, this message translates to:
+  /// **'Beauty'**
+  String get cat_beauty;
+
+  /// No description provided for @cat_home.
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get cat_home;
+
+  /// No description provided for @cat_home_appliances.
+  ///
+  /// In en, this message translates to:
+  /// **'Home Appliances'**
+  String get cat_home_appliances;
+
+  /// No description provided for @cat_other.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get cat_other;
+
+  /// No description provided for @stock_in.
+  ///
+  /// In en, this message translates to:
+  /// **'In Stock'**
+  String get stock_in;
+
+  /// No description provided for @stock_out.
+  ///
+  /// In en, this message translates to:
+  /// **'Out of Stock'**
+  String get stock_out;
+
+  /// No description provided for @visibility_invisible.
+  ///
+  /// In en, this message translates to:
+  /// **'Invisible'**
+  String get visibility_invisible;
+
+  /// No description provided for @visibility_visible.
+  ///
+  /// In en, this message translates to:
+  /// **'Visible'**
+  String get visibility_visible;
+
+  /// No description provided for @hint_search_name_sku.
+  ///
+  /// In en, this message translates to:
+  /// **'Search name, SKU…'**
+  String get hint_search_name_sku;
+
+  /// No description provided for @inv_in_stock_label.
+  ///
+  /// In en, this message translates to:
+  /// **'In Stock'**
+  String get inv_in_stock_label;
+
+  /// No description provided for @inv_low_stock_label.
+  ///
+  /// In en, this message translates to:
+  /// **'Low Stock'**
+  String get inv_low_stock_label;
+
+  /// No description provided for @inv_out_stock_label.
+  ///
+  /// In en, this message translates to:
+  /// **'Out of Stock'**
+  String get inv_out_stock_label;
+
+  /// No description provided for @demo_mouse_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Wireless Ergonomic Mouse'**
+  String get demo_mouse_name;
+
+  /// No description provided for @demo_tshirt_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Organic Cotton T-Shirt'**
+  String get demo_tshirt_name;
+
+  /// No description provided for @demo_espresso_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Espresso Coffee Machine'**
+  String get demo_espresso_name;
+
+  /// No description provided for @profile_settings.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile settings'**
+  String get profile_settings;
+
+  /// No description provided for @sec_profile_information.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile Information'**
+  String get sec_profile_information;
+
+  /// No description provided for @lbl_company_logo.
+  ///
+  /// In en, this message translates to:
+  /// **'Company Logo'**
+  String get lbl_company_logo;
+
+  /// No description provided for @help_company_logo.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload your company logo'**
+  String get help_company_logo;
+
+  /// No description provided for @lbl_company_banner.
+  ///
+  /// In en, this message translates to:
+  /// **'Company Banner'**
+  String get lbl_company_banner;
+
+  /// No description provided for @help_company_banner.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload your company banner'**
+  String get help_company_banner;
+
+  /// No description provided for @lbl_display_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Display name'**
+  String get lbl_display_name;
+
+  /// No description provided for @help_display_name.
+  ///
+  /// In en, this message translates to:
+  /// **'The name that will be displayed on your vendor profile'**
+  String get help_display_name;
+
+  /// No description provided for @hint_company.
+  ///
+  /// In en, this message translates to:
+  /// **'Company'**
+  String get hint_company;
+
+  /// No description provided for @lbl_location.
+  ///
+  /// In en, this message translates to:
+  /// **'Location'**
+  String get lbl_location;
+
+  /// No description provided for @help_location.
+  ///
+  /// In en, this message translates to:
+  /// **'The physical location of your business'**
+  String get help_location;
+
+  /// No description provided for @lbl_phone_number.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone Number'**
+  String get lbl_phone_number;
+
+  /// No description provided for @help_phone_number.
+  ///
+  /// In en, this message translates to:
+  /// **'Your company\'s contact phone number'**
+  String get help_phone_number;
+
+  /// No description provided for @hint_phone.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter phone number'**
+  String get hint_phone;
+
+  /// No description provided for @lbl_bio.
+  ///
+  /// In en, this message translates to:
+  /// **'Bio'**
+  String get lbl_bio;
+
+  /// No description provided for @help_bio.
+  ///
+  /// In en, this message translates to:
+  /// **'A short description of your company.'**
+  String get help_bio;
+
+  /// No description provided for @lbl_low_stock_qty.
+  ///
+  /// In en, this message translates to:
+  /// **'Low Stock Quantity'**
+  String get lbl_low_stock_qty;
+
+  /// No description provided for @help_low_stock_qty.
+  ///
+  /// In en, this message translates to:
+  /// **'Set the threshold for low stock warnings'**
+  String get help_low_stock_qty;
+
+  /// No description provided for @lbl_tax_vat.
+  ///
+  /// In en, this message translates to:
+  /// **'Tax/VAT Number'**
+  String get lbl_tax_vat;
+
+  /// No description provided for @help_tax_vat.
+  ///
+  /// In en, this message translates to:
+  /// **'Your official tax or VAT identification number'**
+  String get help_tax_vat;
+
+  /// No description provided for @lbl_payment_details.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment Details'**
+  String get lbl_payment_details;
+
+  /// No description provided for @help_payment_details.
+  ///
+  /// In en, this message translates to:
+  /// **'Details on how customers can pay for products.'**
+  String get help_payment_details;
+
+  /// No description provided for @lbl_social_ids.
+  ///
+  /// In en, this message translates to:
+  /// **'Social Media IDs'**
+  String get lbl_social_ids;
+
+  /// No description provided for @help_social_ids.
+  ///
+  /// In en, this message translates to:
+  /// **'Link your social media profiles'**
+  String get help_social_ids;
+
+  /// No description provided for @sm_twitter.
+  ///
+  /// In en, this message translates to:
+  /// **'Twitter ID'**
+  String get sm_twitter;
+
+  /// No description provided for @sm_facebook.
+  ///
+  /// In en, this message translates to:
+  /// **'Facebook ID'**
+  String get sm_facebook;
+
+  /// No description provided for @sm_instagram.
+  ///
+  /// In en, this message translates to:
+  /// **'Instagram ID'**
+  String get sm_instagram;
+
+  /// No description provided for @sm_youtube.
+  ///
+  /// In en, this message translates to:
+  /// **'Youtube ID'**
+  String get sm_youtube;
+
+  /// No description provided for @sm_vimeo.
+  ///
+  /// In en, this message translates to:
+  /// **'Vimeo ID'**
+  String get sm_vimeo;
+
+  /// No description provided for @sm_pinterest.
+  ///
+  /// In en, this message translates to:
+  /// **'Pinterest ID'**
+  String get sm_pinterest;
+
+  /// No description provided for @sm_moleskine.
+  ///
+  /// In en, this message translates to:
+  /// **'Moleskine ID'**
+  String get sm_moleskine;
+
+  /// No description provided for @sm_tiktok.
+  ///
+  /// In en, this message translates to:
+  /// **'Tiktok ID'**
+  String get sm_tiktok;
+
+  /// No description provided for @sec_company_policy.
+  ///
+  /// In en, this message translates to:
+  /// **'Company Policy'**
+  String get sec_company_policy;
+
+  /// No description provided for @lbl_return_policy.
+  ///
+  /// In en, this message translates to:
+  /// **'Return Policy'**
+  String get lbl_return_policy;
+
+  /// No description provided for @help_return_policy.
+  ///
+  /// In en, this message translates to:
+  /// **'Describe your company’s return policy.'**
+  String get help_return_policy;
+
+  /// No description provided for @lbl_shipping_policy.
+  ///
+  /// In en, this message translates to:
+  /// **'Shipping Policy'**
+  String get lbl_shipping_policy;
+
+  /// No description provided for @help_shipping_policy.
+  ///
+  /// In en, this message translates to:
+  /// **'Describe your company’s shipping policy.'**
+  String get help_shipping_policy;
+
+  /// No description provided for @lbl_privacy_policy.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy Policy'**
+  String get lbl_privacy_policy;
+
+  /// No description provided for @help_privacy_policy.
+  ///
+  /// In en, this message translates to:
+  /// **'Describe your company’s privacy policy.'**
+  String get help_privacy_policy;
+
+  /// No description provided for @sec_meta_information.
+  ///
+  /// In en, this message translates to:
+  /// **'Meta Information'**
+  String get sec_meta_information;
+
+  /// No description provided for @help_meta_keywords_profile.
+  ///
+  /// In en, this message translates to:
+  /// **'Add your company’s meta keywords.'**
+  String get help_meta_keywords_profile;
+
+  /// No description provided for @help_meta_description_profile.
+  ///
+  /// In en, this message translates to:
+  /// **'A short description of your company for search engines.'**
+  String get help_meta_description_profile;
+
+  /// No description provided for @lbl_google_analytics.
+  ///
+  /// In en, this message translates to:
+  /// **'Google Analytic ID'**
+  String get lbl_google_analytics;
+
+  /// No description provided for @help_google_analytics.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Google Analytics tracking ID'**
+  String get help_google_analytics;
+
+  /// No description provided for @lbl_profile_target.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile Page Target Url Path'**
+  String get lbl_profile_target;
+
+  /// No description provided for @help_profile_target.
+  ///
+  /// In en, this message translates to:
+  /// **'This is the final URL of your profile page.'**
+  String get help_profile_target;
+
+  /// No description provided for @lbl_profile_request.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile Page Request Url Path'**
+  String get lbl_profile_request;
+
+  /// No description provided for @help_profile_request.
+  ///
+  /// In en, this message translates to:
+  /// **'Customize the URL of your profile page.'**
+  String get help_profile_request;
+
+  /// No description provided for @lbl_collection_target.
+  ///
+  /// In en, this message translates to:
+  /// **'Collection Page Target Url Path'**
+  String get lbl_collection_target;
+
+  /// No description provided for @help_collection_target.
+  ///
+  /// In en, this message translates to:
+  /// **'The final URL for your product collection page.'**
+  String get help_collection_target;
+
+  /// No description provided for @lbl_collection_request.
+  ///
+  /// In en, this message translates to:
+  /// **'Collection Page Request Url Path'**
+  String get lbl_collection_request;
+
+  /// No description provided for @help_collection_request.
+  ///
+  /// In en, this message translates to:
+  /// **'Customize the URL of your collection page.'**
+  String get help_collection_request;
+
+  /// No description provided for @lbl_review_target.
+  ///
+  /// In en, this message translates to:
+  /// **'Review Page Target Url Path'**
+  String get lbl_review_target;
+
+  /// No description provided for @help_review_target.
+  ///
+  /// In en, this message translates to:
+  /// **'The final URL for your reviews page.'**
+  String get help_review_target;
+
+  /// No description provided for @lbl_review_request.
+  ///
+  /// In en, this message translates to:
+  /// **'Review Page Request Url Path'**
+  String get lbl_review_request;
+
+  /// No description provided for @help_review_request.
+  ///
+  /// In en, this message translates to:
+  /// **'Customize the URL for your reviews page.'**
+  String get help_review_request;
+
+  /// No description provided for @lbl_location_target.
+  ///
+  /// In en, this message translates to:
+  /// **'Location Page Target Url Path'**
+  String get lbl_location_target;
+
+  /// No description provided for @help_location_target.
+  ///
+  /// In en, this message translates to:
+  /// **'The final URL for your location page.'**
+  String get help_location_target;
+
+  /// No description provided for @lbl_location_request.
+  ///
+  /// In en, this message translates to:
+  /// **'Location Page Request Url Path'**
+  String get lbl_location_request;
+
+  /// No description provided for @help_location_request.
+  ///
+  /// In en, this message translates to:
+  /// **'Customize the URL for your location page.'**
+  String get help_location_request;
+
+  /// No description provided for @lbl_privacy_request.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy Policy Page Request Url Path'**
+  String get lbl_privacy_request;
+
+  /// No description provided for @help_privacy_request.
+  ///
+  /// In en, this message translates to:
+  /// **'Customize the URL for your privacy policy page.'**
+  String get help_privacy_request;
+
+  /// No description provided for @btn_view_profile.
+  ///
+  /// In en, this message translates to:
+  /// **'View Profile'**
+  String get btn_view_profile;
+
+  /// No description provided for @btn_save.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get btn_save;
+
+  /// No description provided for @btn_replace_logo.
+  ///
+  /// In en, this message translates to:
+  /// **'Replace Logo'**
+  String get btn_replace_logo;
+
+  /// No description provided for @lbl_image_selected.
+  ///
+  /// In en, this message translates to:
+  /// **'Image selected'**
+  String get lbl_image_selected;
+
+  /// No description provided for @toast_profile_saved.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile saved'**
+  String get toast_profile_saved;
+
+  /// No description provided for @country_tunisia.
+  ///
+  /// In en, this message translates to:
+  /// **'Tunisia'**
+  String get country_tunisia;
+
+  /// No description provided for @country_us.
+  ///
+  /// In en, this message translates to:
+  /// **'United States'**
+  String get country_us;
+
+  /// No description provided for @country_canada.
+  ///
+  /// In en, this message translates to:
+  /// **'Canada'**
+  String get country_canada;
+
+  /// No description provided for @country_uk.
+  ///
+  /// In en, this message translates to:
+  /// **'United Kingdom'**
+  String get country_uk;
+
+  /// No description provided for @country_germany.
+  ///
+  /// In en, this message translates to:
+  /// **'Germany'**
+  String get country_germany;
+
+  /// No description provided for @country_france.
+  ///
+  /// In en, this message translates to:
+  /// **'France'**
+  String get country_france;
+
+  /// No description provided for @country_japan.
+  ///
+  /// In en, this message translates to:
+  /// **'Japan'**
+  String get country_japan;
+
+  /// No description provided for @country_australia.
+  ///
+  /// In en, this message translates to:
+  /// **'Australia'**
+  String get country_australia;
+
+  /// No description provided for @country_brazil.
+  ///
+  /// In en, this message translates to:
+  /// **'Brazil'**
+  String get country_brazil;
+
+  /// No description provided for @country_india.
+  ///
+  /// In en, this message translates to:
+  /// **'India'**
+  String get country_india;
+
+  /// No description provided for @country_china.
+  ///
+  /// In en, this message translates to:
+  /// **'China'**
+  String get country_china;
+
+  /// No description provided for @sec_about_us.
+  ///
+  /// In en, this message translates to:
+  /// **'About Us'**
+  String get sec_about_us;
+
+  /// No description provided for @sec_our_products.
+  ///
+  /// In en, this message translates to:
+  /// **'Our Products'**
+  String get sec_our_products;
+
+  /// No description provided for @btn_edit_profile.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Profile'**
+  String get btn_edit_profile;
+
+  /// No description provided for @social_tooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Open {network}'**
+  String social_tooltip(String network);
+
+  /// No description provided for @cat_accessories.
+  ///
+  /// In en, this message translates to:
+  /// **'Accessories'**
+  String get cat_accessories;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

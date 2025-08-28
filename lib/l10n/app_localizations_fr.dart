@@ -1215,10 +1215,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get invoiceDetailsFooter => 'This information will be included in all your PDF invoices and packing slips.';
 
   @override
-  String get nameAndDescriptionTitle => 'Name & description';
+  String get nameAndDescriptionTitle => 'Name & Description';
 
   @override
-  String get productTitleLabel => 'Product title';
+  String get productTitleLabel => 'Product Title';
 
   @override
   String get productTitleHelp => 'Enter the full product name (e.g., Apple iPhone 14 Pro).';
@@ -1254,7 +1254,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get tagsLabel => 'Tags';
 
   @override
-  String get tagsHelp => 'Add one keyword that describes your product.';
+  String get tagsHelp => 'Add keywords that describe your product.';
 
   @override
   String get descriptionLabel => 'Description';
@@ -1419,7 +1419,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get coverImagesHelp => 'Upload a clear, high-resolution product image.';
 
   @override
-  String get clickOrDropImage => 'Click or drop image';
+  String get clickOrDropImage => 'Click or drop Image';
 
   @override
   String get saveDraftButton => 'Save Draft';
@@ -1570,4 +1570,714 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get editProductScreen => 'Edit Product Screen';
+
+  @override
+  String get customerAnalyticsTitle => 'Customer Analytics';
+
+  @override
+  String get customersLabel => 'Customers';
+
+  @override
+  String get incomeLabel => 'Income';
+
+  @override
+  String get searchCustomerHint => 'Search customer';
+
+  @override
+  String get loadMoreButton => 'Load more';
+
+  @override
+  String get noCustomersMatch => 'No customers match your search.';
+
+  @override
+  String get contactLabel => 'Contact';
+
+  @override
+  String get genderLabel => 'Gender';
+
+  @override
+  String get addressLabel => 'Address';
+
+  @override
+  String get baseTotalLabel => 'Base Total';
+
+  @override
+  String get ordersLabel => 'Orders';
+
+  @override
+  String get maleLabel => 'Male';
+
+  @override
+  String get femaleLabel => 'Female';
+
+  @override
+  String get inputYourTextHint => 'Input your text';
+
+  @override
+  String get addTagHint => 'Add tag';
+
+  @override
+  String get skuHint => 'Ex: SKU-12345';
+
+  @override
+  String get enterValidNumber => 'Enter a valid number';
+
+  @override
+  String get specialPriceHint => 'e.g., 24.99';
+
+  @override
+  String get stockAvailabilityTitle => 'Stock & Availability';
+
+  @override
+  String get stockHint => 'e.g., 100';
+
+  @override
+  String get weightHint => 'e.g., 0.50';
+
+  @override
+  String get maxQuantityHint => 'e.g., 5';
+
+  @override
+  String get enterNonNegativeNumber => 'Enter a non-negative number';
+
+  @override
+  String get invisible => 'Invisible';
+
+  @override
+  String get visible => 'Visible';
+
+  @override
+  String get metaInfoTitle => 'Meta Infos';
+
+  @override
+  String get urlKeyHint => 'e.g., apple-iphone-14-pro';
+
+  @override
+  String get metaTitleHint => 'e.g., Buy the iPhone 14 Pro';
+
+  @override
+  String get productImagesLabel => 'Product Images';
+
+  @override
+  String get productImagesHelp => 'It is preferable to upload 3 images of the product.';
+
+  @override
+  String get threeImagesWarning => '⚠️ Preferably upload at least 3 images';
+
+  @override
+  String get linkedProductsTitle => 'Linked Products';
+
+  @override
+  String get deleteTooltip => 'Delete';
+
+  @override
+  String get sec_name_description => 'Name & description';
+
+  @override
+  String get lbl_product_title => 'Product title';
+
+  @override
+  String get help_product_title => 'Enter the full product name (e.g., Apple iPhone 14 Pro).';
+
+  @override
+  String get hint_input_text => 'Input your text';
+
+  @override
+  String get v_required => 'Required';
+
+  @override
+  String get lbl_category => 'Category';
+
+  @override
+  String get help_category => 'Select the category that best fits your product.';
+
+  @override
+  String get lbl_tags => 'Tags';
+
+  @override
+  String get help_tags => 'Add keywords that describe your product.';
+
+  @override
+  String get hint_add_tag => 'Add tag';
+
+  @override
+  String get lbl_description => 'Description';
+
+  @override
+  String get help_description => 'Detailed description of features, materials, sizing, etc.';
+
+  @override
+  String get lbl_short_description => 'Short Description';
+
+  @override
+  String get help_short_description => 'Short summary (1–2 sentences) for listings/search results.';
+
+  @override
+  String get lbl_sku => 'SKU';
+
+  @override
+  String get help_sku => 'Unique stock keeping unit (e.g., SKU-12345).';
+
+  @override
+  String get hint_sku => 'Ex: SKU-12345';
+
+  @override
+  String get sec_price => 'Price';
+
+  @override
+  String get lbl_amount => 'Amount';
+
+  @override
+  String get help_amount => 'Base selling price without discounts.';
+
+  @override
+  String get hint_amount_default => '8';
+
+  @override
+  String get v_number => 'Enter a valid number';
+
+  @override
+  String get lbl_special_toggle => 'Special Price';
+
+  @override
+  String get help_special_toggle => 'Turn on to add a promotional/sale price.';
+
+  @override
+  String get lbl_special_price => 'Special price';
+
+  @override
+  String get help_special_price => 'Discounted price that overrides the regular amount.';
+
+  @override
+  String get hint_price_example => 'e.g., 24.99';
+
+  @override
+  String get lbl_min_qty => 'Minimum amount';
+
+  @override
+  String get help_min_qty => 'Minimum quantity a customer is allowed to purchase.';
+
+  @override
+  String get lbl_max_qty => 'Maximum amount';
+
+  @override
+  String get help_max_qty => 'Maximum quantity a customer is allowed to purchase.';
+
+  @override
+  String get lbl_taxes => 'Taxes';
+
+  @override
+  String get help_taxes => 'Apply taxes to this product at checkout.';
+
+  @override
+  String get sec_stock_availability => 'Stock & Availability';
+
+  @override
+  String get lbl_stock => 'Stock';
+
+  @override
+  String get help_stock => 'Number of units available.';
+
+  @override
+  String get hint_stock => 'e.g., 100';
+
+  @override
+  String get lbl_weight => 'Weight';
+
+  @override
+  String get help_weight => 'Weight in kilograms (used for shipping).';
+
+  @override
+  String get hint_weight => 'e.g., 0.50';
+
+  @override
+  String get lbl_allowed_qty_per_customer => 'Allowed Quantity per Customer';
+
+  @override
+  String get help_allowed_qty_per_customer => 'Optional: maximum number of units a single customer can buy for this product.';
+
+  @override
+  String get hint_allowed_qty => 'e.g., 5';
+
+  @override
+  String get v_non_negative => 'Enter a non-negative number';
+
+  @override
+  String get lbl_stock_availability => 'Stock Availability';
+
+  @override
+  String get help_stock_availability => 'Choose current availability status.';
+
+  @override
+  String get lbl_visibility => 'Visibility';
+
+  @override
+  String get help_visibility => 'Invisible products are hidden from the storefront.';
+
+  @override
+  String get sec_meta_infos => 'Meta Infos';
+
+  @override
+  String get lbl_url_key => 'Url Key';
+
+  @override
+  String get help_url_key => 'SEO-friendly slug used in the product URL.';
+
+  @override
+  String get hint_url_key => 'e.g., apple-iphone-14-pro';
+
+  @override
+  String get lbl_meta_title => 'Meta Title';
+
+  @override
+  String get help_meta_title => 'Title shown in search engine results.';
+
+  @override
+  String get hint_meta_title => 'e.g., Buy the iPhone 14 Pro';
+
+  @override
+  String get lbl_meta_keywords => 'Meta Keywords';
+
+  @override
+  String get help_meta_keywords => 'Optional: comma-separated keywords.';
+
+  @override
+  String get lbl_meta_description => 'Meta Description';
+
+  @override
+  String get help_meta_description => 'Short paragraph for search engines (150–160 chars).';
+
+  @override
+  String get lbl_product_images => 'Product Images';
+
+  @override
+  String get help_product_images => 'It is preferable to upload 3 images of the product.';
+
+  @override
+  String get btn_click_or_drop_image => 'Click or drop image';
+
+  @override
+  String get warn_prefer_three_images => '⚠️ Preferably upload at least 3 images';
+
+  @override
+  String get sec_linked_products => 'Linked Products';
+
+  @override
+  String get title_product_relationships => 'Product Relationships';
+
+  @override
+  String get tab_related => 'Related';
+
+  @override
+  String get tab_upsell => 'Up-Sell';
+
+  @override
+  String get tab_crosssell => 'Cross-Sell';
+
+  @override
+  String get related_products => 'Related Products';
+
+  @override
+  String get upsell_products => 'Up-Sell Products';
+
+  @override
+  String get crosssell_products => 'Cross-Sell Products';
+
+  @override
+  String get filters => 'Filters';
+
+  @override
+  String get btn_reset => 'Reset';
+
+  @override
+  String get btn_apply => 'Apply';
+
+  @override
+  String get status_enabled => 'Enabled';
+
+  @override
+  String get status_disabled => 'Disabled';
+
+  @override
+  String get btn_filters => 'Filters';
+
+  @override
+  String get btn_filters_on => 'Filters • On';
+
+  @override
+  String get filters_showing_enabled_only => 'Showing: Enabled only';
+
+  @override
+  String get filters_showing_disabled_only => 'Showing: Disabled only';
+
+  @override
+  String get filters_custom => 'Custom filters';
+
+  @override
+  String get empty_no_linked_products => 'No linked products yet';
+
+  @override
+  String get empty_no_linked_products_desc => 'Add related, up-sell or cross-sell products to improve discovery and increase AOV.';
+
+  @override
+  String get btn_add_product => 'Add Product';
+
+  @override
+  String get btn_browse_catalog => 'Browse Catalog';
+
+  @override
+  String get btn_save_draft => 'Save Draft';
+
+  @override
+  String get btn_publish_now => 'Publish now';
+
+  @override
+  String get btn_edit => 'Edit';
+
+  @override
+  String get btn_delete => 'Delete';
+
+  @override
+  String get tt_delete => 'Delete';
+
+  @override
+  String get lbl_price => 'Price';
+
+  @override
+  String id_with_value(String value) {
+    return 'ID: $value';
+  }
+
+  @override
+  String inventory_with_value(String value) {
+    return 'Inventory: $value';
+  }
+
+  @override
+  String price_with_currency(String value) {
+    return '\$$value';
+  }
+
+  @override
+  String get err_add_three_images => 'Please add at least 3 product images';
+
+  @override
+  String get err_special_lower_than_amount => 'Special price must be less than Amount';
+
+  @override
+  String get toast_draft_saved => 'Draft saved';
+
+  @override
+  String get toast_product_published => 'Product published';
+
+  @override
+  String get toast_product_deleted => 'Product deleted';
+
+  @override
+  String get curr_symbol => '\$';
+
+  @override
+  String get cat_food => 'Food';
+
+  @override
+  String get cat_electronics => 'Electronics';
+
+  @override
+  String get cat_apparel => 'Apparel';
+
+  @override
+  String get cat_beauty => 'Beauty';
+
+  @override
+  String get cat_home => 'Home';
+
+  @override
+  String get cat_home_appliances => 'Home Appliances';
+
+  @override
+  String get cat_other => 'Other';
+
+  @override
+  String get stock_in => 'In Stock';
+
+  @override
+  String get stock_out => 'Out of Stock';
+
+  @override
+  String get visibility_invisible => 'Invisible';
+
+  @override
+  String get visibility_visible => 'Visible';
+
+  @override
+  String get hint_search_name_sku => 'Search name, SKU…';
+
+  @override
+  String get inv_in_stock_label => 'In Stock';
+
+  @override
+  String get inv_low_stock_label => 'Low Stock';
+
+  @override
+  String get inv_out_stock_label => 'Out of Stock';
+
+  @override
+  String get demo_mouse_name => 'Wireless Ergonomic Mouse';
+
+  @override
+  String get demo_tshirt_name => 'Organic Cotton T-Shirt';
+
+  @override
+  String get demo_espresso_name => 'Espresso Coffee Machine';
+
+  @override
+  String get profile_settings => 'Profile settings';
+
+  @override
+  String get sec_profile_information => 'Profile Information';
+
+  @override
+  String get lbl_company_logo => 'Company Logo';
+
+  @override
+  String get help_company_logo => 'Upload your company logo';
+
+  @override
+  String get lbl_company_banner => 'Company Banner';
+
+  @override
+  String get help_company_banner => 'Upload your company banner';
+
+  @override
+  String get lbl_display_name => 'Display name';
+
+  @override
+  String get help_display_name => 'The name that will be displayed on your vendor profile';
+
+  @override
+  String get hint_company => 'Company';
+
+  @override
+  String get lbl_location => 'Location';
+
+  @override
+  String get help_location => 'The physical location of your business';
+
+  @override
+  String get lbl_phone_number => 'Phone Number';
+
+  @override
+  String get help_phone_number => 'Your company\'s contact phone number';
+
+  @override
+  String get hint_phone => 'Enter phone number';
+
+  @override
+  String get lbl_bio => 'Bio';
+
+  @override
+  String get help_bio => 'A short description of your company.';
+
+  @override
+  String get lbl_low_stock_qty => 'Low Stock Quantity';
+
+  @override
+  String get help_low_stock_qty => 'Set the threshold for low stock warnings';
+
+  @override
+  String get lbl_tax_vat => 'Tax/VAT Number';
+
+  @override
+  String get help_tax_vat => 'Your official tax or VAT identification number';
+
+  @override
+  String get lbl_payment_details => 'Payment Details';
+
+  @override
+  String get help_payment_details => 'Details on how customers can pay for products.';
+
+  @override
+  String get lbl_social_ids => 'Social Media IDs';
+
+  @override
+  String get help_social_ids => 'Link your social media profiles';
+
+  @override
+  String get sm_twitter => 'Twitter ID';
+
+  @override
+  String get sm_facebook => 'Facebook ID';
+
+  @override
+  String get sm_instagram => 'Instagram ID';
+
+  @override
+  String get sm_youtube => 'Youtube ID';
+
+  @override
+  String get sm_vimeo => 'Vimeo ID';
+
+  @override
+  String get sm_pinterest => 'Pinterest ID';
+
+  @override
+  String get sm_moleskine => 'Moleskine ID';
+
+  @override
+  String get sm_tiktok => 'Tiktok ID';
+
+  @override
+  String get sec_company_policy => 'Company Policy';
+
+  @override
+  String get lbl_return_policy => 'Return Policy';
+
+  @override
+  String get help_return_policy => 'Describe your company’s return policy.';
+
+  @override
+  String get lbl_shipping_policy => 'Shipping Policy';
+
+  @override
+  String get help_shipping_policy => 'Describe your company’s shipping policy.';
+
+  @override
+  String get lbl_privacy_policy => 'Privacy Policy';
+
+  @override
+  String get help_privacy_policy => 'Describe your company’s privacy policy.';
+
+  @override
+  String get sec_meta_information => 'Meta Information';
+
+  @override
+  String get help_meta_keywords_profile => 'Add your company’s meta keywords.';
+
+  @override
+  String get help_meta_description_profile => 'A short description of your company for search engines.';
+
+  @override
+  String get lbl_google_analytics => 'Google Analytic ID';
+
+  @override
+  String get help_google_analytics => 'Your Google Analytics tracking ID';
+
+  @override
+  String get lbl_profile_target => 'Profile Page Target Url Path';
+
+  @override
+  String get help_profile_target => 'This is the final URL of your profile page.';
+
+  @override
+  String get lbl_profile_request => 'Profile Page Request Url Path';
+
+  @override
+  String get help_profile_request => 'Customize the URL of your profile page.';
+
+  @override
+  String get lbl_collection_target => 'Collection Page Target Url Path';
+
+  @override
+  String get help_collection_target => 'The final URL for your product collection page.';
+
+  @override
+  String get lbl_collection_request => 'Collection Page Request Url Path';
+
+  @override
+  String get help_collection_request => 'Customize the URL of your collection page.';
+
+  @override
+  String get lbl_review_target => 'Review Page Target Url Path';
+
+  @override
+  String get help_review_target => 'The final URL for your reviews page.';
+
+  @override
+  String get lbl_review_request => 'Review Page Request Url Path';
+
+  @override
+  String get help_review_request => 'Customize the URL for your reviews page.';
+
+  @override
+  String get lbl_location_target => 'Location Page Target Url Path';
+
+  @override
+  String get help_location_target => 'The final URL for your location page.';
+
+  @override
+  String get lbl_location_request => 'Location Page Request Url Path';
+
+  @override
+  String get help_location_request => 'Customize the URL for your location page.';
+
+  @override
+  String get lbl_privacy_request => 'Privacy Policy Page Request Url Path';
+
+  @override
+  String get help_privacy_request => 'Customize the URL for your privacy policy page.';
+
+  @override
+  String get btn_view_profile => 'View Profile';
+
+  @override
+  String get btn_save => 'Save';
+
+  @override
+  String get btn_replace_logo => 'Replace Logo';
+
+  @override
+  String get lbl_image_selected => 'Image selected';
+
+  @override
+  String get toast_profile_saved => 'Profile saved';
+
+  @override
+  String get country_tunisia => 'Tunisia';
+
+  @override
+  String get country_us => 'United States';
+
+  @override
+  String get country_canada => 'Canada';
+
+  @override
+  String get country_uk => 'United Kingdom';
+
+  @override
+  String get country_germany => 'Germany';
+
+  @override
+  String get country_france => 'France';
+
+  @override
+  String get country_japan => 'Japan';
+
+  @override
+  String get country_australia => 'Australia';
+
+  @override
+  String get country_brazil => 'Brazil';
+
+  @override
+  String get country_india => 'India';
+
+  @override
+  String get country_china => 'China';
+
+  @override
+  String get sec_about_us => 'About Us';
+
+  @override
+  String get sec_our_products => 'Our Products';
+
+  @override
+  String get btn_edit_profile => 'Edit Profile';
+
+  @override
+  String social_tooltip(String network) {
+    return 'Open $network';
+  }
+
+  @override
+  String get cat_accessories => 'Accessories';
 }
