@@ -728,7 +728,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get customers => 'العملاء';
 
   @override
-  String get allTime => 'جميع الأوقات';
+  String get allTime => 'كل الوقت';
 
   @override
   String get last7days => 'آخر 7 أيام';
@@ -902,7 +902,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get checkStore => 'هيا نتحقق من متجرك!';
 
   @override
-  String get last30Days => 'آخر 30 يوماً';
+  String get last30Days => 'آخر 30 يومًا';
 
   @override
   String get last7Days => 'آخر 7 أيام';
@@ -1167,10 +1167,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get status => 'الحالة';
 
   @override
-  String get orderId => 'رقم الطلب';
+  String get orderId => 'معرف الطلب';
 
   @override
-  String get purchasedOn => 'تم الشراء في';
+  String get purchasedOn => 'تاريخ الشراء';
 
   @override
   String get baseTotal => 'المجموع الأساسي';
@@ -1188,7 +1188,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get closed => 'مغلقة';
 
   @override
-  String get pending => 'قيد الانتظار';
+  String get pending => 'في انتظار المراجعة';
 
   @override
   String get printPdfTitle => 'طباعة PDF';
@@ -2280,4 +2280,150 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get cat_accessories => 'اكسسوارات';
+
+  @override
+  String get earning => 'الأرباح';
+
+  @override
+  String get balance => 'الرصيد';
+
+  @override
+  String get totalValueOfSales => 'إجمالي قيمة المبيعات';
+
+  @override
+  String get productViews => 'عدد مشاهدات المنتج';
+
+  @override
+  String get lifetimeValue => 'القيمة الإجمالية';
+
+  @override
+  String get customerCost => 'تكلفة الزبون';
+
+  @override
+  String get earningHistory => 'سجل الأرباح';
+
+  @override
+  String get interval => 'الفترة';
+
+  @override
+  String get totalAmount => 'المبلغ الإجمالي';
+
+  @override
+  String get totalEarning => 'إجمالي الأرباح';
+
+  @override
+  String get discountAmount => 'قيمة الخصم';
+
+  @override
+  String get adminCommission => 'عمولة الإدارة';
+
+  @override
+  String get loading => 'جاري التحميل...';
+
+  @override
+  String positiveChangeThisWeek(Object change_percentage) {
+    return '+$change_percentage% هذا الأسبوع';
+  }
+
+  @override
+  String negativeChangeThisWeek(Object change_percentage) {
+    return '-$change_percentage% هذا الأسبوع';
+  }
+
+  @override
+  String get exportedTo => 'تم التصدير إلى';
+
+  @override
+  String get failedToExport => 'فشل التصدير:';
+
+  @override
+  String get chartNotReady => 'عذرًا، الرسم البياني ليس جاهزًا بعد.';
+
+  @override
+  String get reviews => 'المراجعات';
+
+  @override
+  String get searchReviews => 'البحث عن مراجعات';
+
+  @override
+  String get allReviews => 'جميع المراجعات';
+
+  @override
+  String get approved => 'مقبولة';
+
+  @override
+  String get rejected => 'مرفوضة';
+
+  @override
+  String get noReviewsFound => 'لا توجد مراجعات تطابق بحثك.';
+
+  @override
+  String get feedSummary => 'ملخص المراجعة';
+
+  @override
+  String get feedReview => 'مراجعة كاملة';
+
+  @override
+  String reviewStatus(String status) {
+    String _temp0 = intl.Intl.selectLogic(
+      status,
+      {
+        'approved': 'مقبولة',
+        'pending': 'في انتظار المراجعة',
+        'rejected': 'مرفوضة',
+        'other': 'غير معروف',
+      },
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get downloadStarted => 'بدأ التحميل...';
+
+  @override
+  String get filterByDate => 'تصفية حسب التاريخ';
+
+  @override
+  String get cancel => 'إلغاء';
+
+  @override
+  String get apply => 'تطبيق';
+
+  @override
+  String filtered(Object start, Object end) {
+    return 'تمت التصفية';
+  }
+
+  @override
+  String get currentBalance => 'الرصيد الحالي';
+
+  @override
+  String get availableForWithdrawal => 'متاح للسحب';
+
+  @override
+  String get payoutHistory => 'سجل المدفوعات';
+
+  @override
+  String get id => 'المعرّف';
+
+  @override
+  String get transactionId => 'معرف المعاملة';
+
+  @override
+  String get earnings => 'الأرباح';
+
+  @override
+  String get paid => 'مدفوع';
+
+  @override
+  String get onProcess => 'قيد المعالجة';
+
+  @override
+  String get failed => 'فشل';
+
+  @override
+  String get transactionIdLabel => 'المعرف';
+
+  @override
+  String get country_uae => 'الإمارات العربية المتحدة';
 }

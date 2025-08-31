@@ -2356,7 +2356,7 @@ abstract class AppLocalizations {
   /// No description provided for @orderId.
   ///
   /// In en, this message translates to:
-  /// **'Order Id'**
+  /// **'Order ID'**
   String get orderId;
 
   /// No description provided for @purchasedOn.
@@ -4554,6 +4554,264 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Accessories'**
   String get cat_accessories;
+
+  /// No description provided for @earning.
+  ///
+  /// In en, this message translates to:
+  /// **'Earning'**
+  String get earning;
+
+  /// No description provided for @balance.
+  ///
+  /// In en, this message translates to:
+  /// **'Balance'**
+  String get balance;
+
+  /// No description provided for @totalValueOfSales.
+  ///
+  /// In en, this message translates to:
+  /// **'Total value of sales'**
+  String get totalValueOfSales;
+
+  /// No description provided for @productViews.
+  ///
+  /// In en, this message translates to:
+  /// **'Product views'**
+  String get productViews;
+
+  /// No description provided for @lifetimeValue.
+  ///
+  /// In en, this message translates to:
+  /// **'Lifetime Value'**
+  String get lifetimeValue;
+
+  /// No description provided for @customerCost.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Cost'**
+  String get customerCost;
+
+  /// No description provided for @earningHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'Earning history'**
+  String get earningHistory;
+
+  /// No description provided for @interval.
+  ///
+  /// In en, this message translates to:
+  /// **'Interval'**
+  String get interval;
+
+  /// No description provided for @totalAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Amount'**
+  String get totalAmount;
+
+  /// No description provided for @totalEarning.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Earning'**
+  String get totalEarning;
+
+  /// No description provided for @discountAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Discount Amount'**
+  String get discountAmount;
+
+  /// No description provided for @adminCommission.
+  ///
+  /// In en, this message translates to:
+  /// **'Admin Commission'**
+  String get adminCommission;
+
+  /// No description provided for @loading.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading...'**
+  String get loading;
+
+  /// No description provided for @positiveChangeThisWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'+{change_percentage}% this week'**
+  String positiveChangeThisWeek(Object change_percentage);
+
+  /// No description provided for @negativeChangeThisWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'-{change_percentage}% this week'**
+  String negativeChangeThisWeek(Object change_percentage);
+
+  /// No description provided for @exportedTo.
+  ///
+  /// In en, this message translates to:
+  /// **'Exported to'**
+  String get exportedTo;
+
+  /// No description provided for @failedToExport.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to export:'**
+  String get failedToExport;
+
+  /// No description provided for @chartNotReady.
+  ///
+  /// In en, this message translates to:
+  /// **'Oops, chart not ready yet.'**
+  String get chartNotReady;
+
+  /// No description provided for @reviews.
+  ///
+  /// In en, this message translates to:
+  /// **'Reviews'**
+  String get reviews;
+
+  /// No description provided for @searchReviews.
+  ///
+  /// In en, this message translates to:
+  /// **'Search reviews'**
+  String get searchReviews;
+
+  /// No description provided for @allReviews.
+  ///
+  /// In en, this message translates to:
+  /// **'All Reviews'**
+  String get allReviews;
+
+  /// No description provided for @approved.
+  ///
+  /// In en, this message translates to:
+  /// **'Approved'**
+  String get approved;
+
+  /// No description provided for @rejected.
+  ///
+  /// In en, this message translates to:
+  /// **'Rejected'**
+  String get rejected;
+
+  /// No description provided for @noReviewsFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No reviews match your search.'**
+  String get noReviewsFound;
+
+  /// No description provided for @feedSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'Feed Summary'**
+  String get feedSummary;
+
+  /// No description provided for @feedReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Feed Review'**
+  String get feedReview;
+
+  /// No description provided for @reviewStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'{status, select, approved{Approved} pending{Pending} rejected{Rejected} other{Unknown}}'**
+  String reviewStatus(String status);
+
+  /// No description provided for @downloadStarted.
+  ///
+  /// In en, this message translates to:
+  /// **'Download started...'**
+  String get downloadStarted;
+
+  /// No description provided for @filterByDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Filter by date'**
+  String get filterByDate;
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// No description provided for @apply.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply'**
+  String get apply;
+
+  /// No description provided for @filtered.
+  ///
+  /// In en, this message translates to:
+  /// **'Filtered'**
+  String filtered(Object start, Object end);
+
+  /// No description provided for @currentBalance.
+  ///
+  /// In en, this message translates to:
+  /// **'Current balance'**
+  String get currentBalance;
+
+  /// No description provided for @availableForWithdrawal.
+  ///
+  /// In en, this message translates to:
+  /// **'Available for withdrawal'**
+  String get availableForWithdrawal;
+
+  /// No description provided for @payoutHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'Payout history'**
+  String get payoutHistory;
+
+  /// No description provided for @id.
+  ///
+  /// In en, this message translates to:
+  /// **'ID'**
+  String get id;
+
+  /// No description provided for @transactionId.
+  ///
+  /// In en, this message translates to:
+  /// **'Transaction ID'**
+  String get transactionId;
+
+  /// No description provided for @earnings.
+  ///
+  /// In en, this message translates to:
+  /// **'Earnings'**
+  String get earnings;
+
+  /// No description provided for @paid.
+  ///
+  /// In en, this message translates to:
+  /// **'Paid'**
+  String get paid;
+
+  /// No description provided for @onProcess.
+  ///
+  /// In en, this message translates to:
+  /// **'On process'**
+  String get onProcess;
+
+  /// No description provided for @failed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed'**
+  String get failed;
+
+  /// No description provided for @transactionIdLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'ID'**
+  String get transactionIdLabel;
+
+  /// No description provided for @country_uae.
+  ///
+  /// In en, this message translates to:
+  /// **'United Arab Emirates'**
+  String get country_uae;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

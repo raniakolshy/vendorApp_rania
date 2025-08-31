@@ -1167,7 +1167,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get status => 'Status';
 
   @override
-  String get orderId => 'Order Id';
+  String get orderId => 'Order ID';
 
   @override
   String get purchasedOn => 'Purchased on';
@@ -2280,4 +2280,150 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get cat_accessories => 'Accessories';
+
+  @override
+  String get earning => 'Earning';
+
+  @override
+  String get balance => 'Balance';
+
+  @override
+  String get totalValueOfSales => 'Total value of sales';
+
+  @override
+  String get productViews => 'Product views';
+
+  @override
+  String get lifetimeValue => 'Lifetime Value';
+
+  @override
+  String get customerCost => 'Customer Cost';
+
+  @override
+  String get earningHistory => 'Earning history';
+
+  @override
+  String get interval => 'Interval';
+
+  @override
+  String get totalAmount => 'Total Amount';
+
+  @override
+  String get totalEarning => 'Total Earning';
+
+  @override
+  String get discountAmount => 'Discount Amount';
+
+  @override
+  String get adminCommission => 'Admin Commission';
+
+  @override
+  String get loading => 'Loading...';
+
+  @override
+  String positiveChangeThisWeek(Object change_percentage) {
+    return '+$change_percentage% this week';
+  }
+
+  @override
+  String negativeChangeThisWeek(Object change_percentage) {
+    return '-$change_percentage% this week';
+  }
+
+  @override
+  String get exportedTo => 'Exported to';
+
+  @override
+  String get failedToExport => 'Failed to export:';
+
+  @override
+  String get chartNotReady => 'Oops, chart not ready yet.';
+
+  @override
+  String get reviews => 'Reviews';
+
+  @override
+  String get searchReviews => 'Search reviews';
+
+  @override
+  String get allReviews => 'All Reviews';
+
+  @override
+  String get approved => 'Approved';
+
+  @override
+  String get rejected => 'Rejected';
+
+  @override
+  String get noReviewsFound => 'No reviews match your search.';
+
+  @override
+  String get feedSummary => 'Feed Summary';
+
+  @override
+  String get feedReview => 'Feed Review';
+
+  @override
+  String reviewStatus(String status) {
+    String _temp0 = intl.Intl.selectLogic(
+      status,
+      {
+        'approved': 'Approved',
+        'pending': 'Pending',
+        'rejected': 'Rejected',
+        'other': 'Unknown',
+      },
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get downloadStarted => 'Download started...';
+
+  @override
+  String get filterByDate => 'Filter by date';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get apply => 'Apply';
+
+  @override
+  String filtered(Object start, Object end) {
+    return 'Filtered';
+  }
+
+  @override
+  String get currentBalance => 'Current balance';
+
+  @override
+  String get availableForWithdrawal => 'Available for withdrawal';
+
+  @override
+  String get payoutHistory => 'Payout history';
+
+  @override
+  String get id => 'ID';
+
+  @override
+  String get transactionId => 'Transaction ID';
+
+  @override
+  String get earnings => 'Earnings';
+
+  @override
+  String get paid => 'Paid';
+
+  @override
+  String get onProcess => 'On process';
+
+  @override
+  String get failed => 'Failed';
+
+  @override
+  String get transactionIdLabel => 'ID';
+
+  @override
+  String get country_uae => 'United Arab Emirates';
 }

@@ -66,10 +66,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
   bool _tiktokEnabled = false;
 
   final List<String> _countries = const [
-    'Tunisia', 'United States', 'Canada', 'United Kingdom', 'Germany', 'France',
+    'United Arab Emirates','Egypte', 'United States', 'Canada', 'United Kingdom', 'Germany', 'France',
     'Japan', 'Australia', 'Brazil', 'India', 'China'
   ];
-  String _selectedCountry = 'Tunisia';
+  String _selectedCountry = 'United Arab Emirates';
 
   // ---------- styling helpers ----------
   BorderRadius get _radius => BorderRadius.circular(16);
@@ -657,8 +657,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   // Helpers
   String _localizeCountry(String raw, AppLocalizations l10n) {
     switch (raw) {
-      case 'Tunisia':
-        return l10n.country_tunisia;
+      case 'United Arab Emirates':
+        return l10n.country_uae;
       case 'United States':
         return l10n.country_us;
       case 'Canada':
@@ -685,7 +685,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   final Map<String, String> _countryCodeMap = const {
-    'Tunisia': 'TN',
+    'United Arab Emirates': 'AE',
     'United States': 'US',
     'Canada': 'CA',
     'United Kingdom': 'GB',

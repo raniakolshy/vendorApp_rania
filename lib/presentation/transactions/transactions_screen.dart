@@ -1,7 +1,39 @@
+import 'package:app_vendor/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
-void main() => runApp(const TransactionsScreen());
+void main() => runApp(const MyApp());
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      // Ici, on ne peut pas utiliser AppLocalizations directement
+      title: 'Payouts',
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      theme: ThemeData(
+        useMaterial3: true,
+        scaffoldBackgroundColor: const Color(0xFFF3F3F4),
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color(0xFF1B1B1B),
+          primary: const Color(0xFF1B1B1B),
+          onPrimary: Colors.white,
+          secondary: const Color(0xFFD3D3D3),
+          onSecondary: const Color(0xFF4A4A4A),
+          surface: Colors.white,
+          onSurface: const Color(0xFF1B1B1B),
+          background: const Color(0xFFF3F3F4),
+          onBackground: const Color(0xFF1B1B1B),
+        ),
+      ),
+      home: const TransactionsScreen(),
+    );
+  }
+}
 
 /// A custom widget for a gap with a specific height.
 class Gap extends StatelessWidget {
@@ -20,26 +52,7 @@ class TransactionsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Payouts',
-      theme: ThemeData(
-        useMaterial3: true,
-        scaffoldBackgroundColor: const Color(0xFFF3F3F4),
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFF1B1B1B),
-          primary: const Color(0xFF1B1B1B),
-          onPrimary: Colors.white,
-          secondary: const Color(0xFFD3D3D3),
-          onSecondary: const Color(0xFF4A4A4A),
-          surface: Colors.white,
-          onSurface: const Color(0xFF1B1B1B),
-          background: const Color(0xFFF3F3F4),
-          onBackground: const Color(0xFF1B1B1B),
-        ),
-      ),
-      home: const PayoutsScreen(),
-    );
+    return const PayoutsScreen();
   }
 }
 
@@ -82,9 +95,9 @@ class _PayoutsScreenState extends State<PayoutsScreen> {
 
   void _showDownloadNotification() {
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text("Download started..."),
-        duration: Duration(seconds: 2),
+      SnackBar(
+        content: Text(AppLocalizations.of(context)!.downloadStarted),
+        duration: const Duration(seconds: 2),
       ),
     );
   }
@@ -111,7 +124,7 @@ class _PayoutsScreenState extends State<PayoutsScreen> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text("Filter by date",
+                Text(AppLocalizations.of(context)!.filterByDate,
                     style: Theme.of(context).textTheme.titleMedium),
                 const Gap(16),
                 Container(
@@ -147,7 +160,7 @@ class _PayoutsScreenState extends State<PayoutsScreen> {
                     startRangeSelectionColor: Color(0xFFE51742),
                     endRangeSelectionColor: Color(0xFFE51742),
                     rangeSelectionColor: Color(0xFFE51742).withOpacity(0.2),
-                    todayHighlightColor: Color(0xFF273647), // 🔵 your brand dark blue
+                    todayHighlightColor: Color(0xFF273647),
                     onSelectionChanged: (args) {
                       if (args.value is PickerDateRange) {
                         final PickerDateRange range = args.value;
@@ -171,7 +184,7 @@ class _PayoutsScreenState extends State<PayoutsScreen> {
                             borderRadius: BorderRadius.circular(12),
                           ),
                         ),
-                        child: const Text("Cancel"),
+                        child: Text(AppLocalizations.of(context)!.cancel),
                       ),
                     ),
                     const SizedBox(width: 12),
@@ -183,7 +196,7 @@ class _PayoutsScreenState extends State<PayoutsScreen> {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text(
-                                "Filtered: ${tempRange.start.toLocal()} → ${tempRange.end.toLocal()}",
+                                "${AppLocalizations.of(context)!.filtered}: ${tempRange.start.toLocal()} → ${tempRange.end.toLocal()}",
                               ),
                               duration: const Duration(seconds: 3),
                             ),
@@ -196,7 +209,7 @@ class _PayoutsScreenState extends State<PayoutsScreen> {
                             borderRadius: BorderRadius.circular(12),
                           ),
                         ),
-                        child: const Text("Apply"),
+                        child: Text(AppLocalizations.of(context)!.apply),
                       ),
                     ),
                   ],
@@ -208,8 +221,6 @@ class _PayoutsScreenState extends State<PayoutsScreen> {
       },
     );
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -224,7 +235,7 @@ class _PayoutsScreenState extends State<PayoutsScreen> {
           children: [
             const Gap(30),
             Text(
-              'Payouts',
+              AppLocalizations.of(context)!.payouts,
               style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                 fontSize: 24,
                 fontWeight: FontWeight.w700,
@@ -233,7 +244,7 @@ class _PayoutsScreenState extends State<PayoutsScreen> {
             ),
             const Gap(20),
             BalanceCard(
-              label: 'Current balance',
+              label: AppLocalizations.of(context)!.currentBalance,
               amount: r'$128k',
               icon: Image.asset(
                 'assets/icons/trending_up.png',
@@ -245,7 +256,7 @@ class _PayoutsScreenState extends State<PayoutsScreen> {
             ),
             const Gap(16),
             BalanceCard(
-              label: 'Available for withdrawal',
+              label: AppLocalizations.of(context)!.availableForWithdrawal,
               amount: r'$512k',
               icon: Image.asset(
                 'assets/icons/balance.png',
@@ -366,7 +377,7 @@ class _PayoutHistory extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Payout history',
+              Text(AppLocalizations.of(context)!.payoutHistory,
                   style: Theme.of(context).textTheme.titleLarge),
               Row(
                 children: [
@@ -437,13 +448,13 @@ class TransactionItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        _TransactionDetailRow(label: 'ID', value: transaction.id),
+        _TransactionDetailRow(label: AppLocalizations.of(context)!.transactionIdLabel, value: transaction.id),
         _TransactionDetailRow(
-            label: 'Transaction ID', value: transaction.transactionId),
-        _TransactionDetailRow(label: 'Status', status: transaction.status),
-        _TransactionDetailRow(label: 'Earnings', value: transaction.earnings),
+            label: AppLocalizations.of(context)!.transactionId, value: transaction.transactionId),
+        _TransactionDetailRow(label: AppLocalizations.of(context)!.status, status: transaction.status),
+        _TransactionDetailRow(label: AppLocalizations.of(context)!.earnings, value: transaction.earnings),
         _TransactionDetailRow(
-            label: 'Purchased on', value: transaction.purchasedOn),
+            label: AppLocalizations.of(context)!.purchasedOn, value: transaction.purchasedOn),
         const Gap(20),
         const Divider(height: 1),
       ],
@@ -508,14 +519,14 @@ class _StatusPill extends StatelessWidget {
     }
   }
 
-  String get _label {
+  String _label(BuildContext context) {
     switch (status) {
       case TransactionStatus.paid:
-        return 'Paid';
+        return AppLocalizations.of(context)!.paid;
       case TransactionStatus.onProcess:
-        return 'On process';
+        return AppLocalizations.of(context)!.onProcess;
       case TransactionStatus.failed:
-        return 'Failed';
+        return AppLocalizations.of(context)!.failed;
     }
   }
 
@@ -528,7 +539,7 @@ class _StatusPill extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
       ),
       child: Text(
-        _label,
+        _label(context),
         style: TextStyle(
           fontWeight: FontWeight.w700,
           color: _textColor,
@@ -585,7 +596,9 @@ class _LoadMoreButton extends StatelessWidget {
               ),
             const SizedBox(width: 10),
             Text(
-              isLoading ? 'Loading...' : 'Load more',
+              isLoading
+                  ? AppLocalizations.of(context)!.loading
+                  : AppLocalizations.of(context)!.loadMore,
               style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
