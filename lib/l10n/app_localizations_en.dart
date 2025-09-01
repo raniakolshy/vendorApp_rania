@@ -2432,4 +2432,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get hiThere => 'Hi There';
+
+  @override
+  String get download => 'download';
+
+  @override
+  String get clearFilter => 'clear Filter';
+
+  @override
+  String get noTransactionsForDateRange => 'No Transactions For Date Range';
+
+  @override
+  String get noTransactionsAvailable => 'NoTransactionsAvailable';
 }

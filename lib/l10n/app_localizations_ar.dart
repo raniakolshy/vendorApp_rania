@@ -2432,4 +2432,16 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get hiThere => 'مرحباً';
+
+  @override
+  String get download => 'تحميل';
+
+  @override
+  String get clearFilter => 'مسح الفلتر';
+
+  @override
+  String get noTransactionsForDateRange => 'لا توجد معاملات لنطاق التاريخ';
+
+  @override
+  String get noTransactionsAvailable => 'لا توجد معاملات متاحة';
 }

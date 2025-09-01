@@ -1,39 +1,9 @@
-import 'package:app_vendor/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
-void main() => runApp(const MyApp());
+import '../../l10n/app_localizations.dart';
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      // Ici, on ne peut pas utiliser AppLocalizations directement
-      title: 'Payouts',
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
-      supportedLocales: AppLocalizations.supportedLocales,
-      theme: ThemeData(
-        useMaterial3: true,
-        scaffoldBackgroundColor: const Color(0xFFF3F3F4),
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFF1B1B1B),
-          primary: const Color(0xFF1B1B1B),
-          onPrimary: Colors.white,
-          secondary: const Color(0xFFD3D3D3),
-          onSecondary: const Color(0xFF4A4A4A),
-          surface: Colors.white,
-          onSurface: const Color(0xFF1B1B1B),
-          background: const Color(0xFFF3F3F4),
-          onBackground: const Color(0xFF1B1B1B),
-        ),
-      ),
-      home: const TransactionsScreen(),
-    );
-  }
-}
+void main() => runApp(const TransactionsScreen());
 
 /// A custom widget for a gap with a specific height.
 class Gap extends StatelessWidget {
@@ -52,7 +22,28 @@ class TransactionsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const PayoutsScreen();
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Payouts',
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      theme: ThemeData(
+        useMaterial3: true,
+        scaffoldBackgroundColor: const Color(0xFFF3F3F4),
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color(0xFF1B1B1B),
+          primary: const Color(0xFF1B1B1B),
+          onPrimary: Colors.white,
+          secondary: const Color(0xFFD3D3D3),
+          onSecondary: const Color(0xFF4A4A4A),
+          surface: Colors.white,
+          onSurface: const Color(0xFF1B1B1B),
+          background: const Color(0xFFF3F3F4),
+          onBackground: const Color(0xFF1B1B1B),
+        ),
+      ),
+      home: const PayoutsScreen(),
+    );
   }
 }
 
@@ -77,18 +68,29 @@ class _PayoutsScreenState extends State<PayoutsScreen> {
       status: index.isEven
           ? TransactionStatus.paid
           : TransactionStatus.onProcess,
-      earnings: r'AED 7,750.88',
-      purchasedOn: '12 / 12 / 2025',
+      earnings: r'AED7,750.88',
+      purchasedOn: DateTime(2025, 12, index + 1), // Use DateTime instead of String
     ),
   );
 
+  List<Transaction> get _filteredTransactions {
+    if (_selectedRange == null) {
+      return _allTransactions;
+    }
+
+    return _allTransactions.where((transaction) {
+      return transaction.purchasedOn.isAfter(_selectedRange!.start.subtract(const Duration(days: 1))) &&
+          transaction.purchasedOn.isBefore(_selectedRange!.end.add(const Duration(days: 1)));
+    }).toList();
+  }
+
   Future<void> _loadMore() async {
-    if (_shownCount >= _allTransactions.length || _isLoadingMore) return;
+    final filtered = _filteredTransactions;
+    if (_shownCount >= filtered.length || _isLoadingMore) return;
     setState(() => _isLoadingMore = true);
     await Future.delayed(const Duration(seconds: 1));
     setState(() {
-      _shownCount =
-          (_shownCount + _pageSize).clamp(0, _allTransactions.length);
+      _shownCount = (_shownCount + _pageSize).clamp(0, filtered.length);
       _isLoadingMore = false;
     });
   }
@@ -102,12 +104,19 @@ class _PayoutsScreenState extends State<PayoutsScreen> {
     );
   }
 
+  void _clearFilter() {
+    setState(() {
+      _selectedRange = null;
+      _shownCount = _pageSize;
+    });
+  }
+
   Future<void> _pickDateRange() async {
     DateTimeRange tempRange =
         _selectedRange ??
             DateTimeRange(
-              start: DateTime.now(),
-              end: DateTime.now().add(const Duration(days: 7)),
+              start: DateTime.now().subtract(const Duration(days: 30)),
+              end: DateTime.now(),
             );
 
     await showModalBottomSheet(
@@ -129,7 +138,7 @@ class _PayoutsScreenState extends State<PayoutsScreen> {
                 const Gap(16),
                 Container(
                   decoration: BoxDecoration(
-                    color: Colors.white, // 🔥 force white background
+                    color: Colors.white,
                     borderRadius: BorderRadius.circular(16),
                   ),
                   child: SfDateRangePicker(
@@ -175,6 +184,23 @@ class _PayoutsScreenState extends State<PayoutsScreen> {
                 const Gap(20),
                 Row(
                   children: [
+                    if (_selectedRange != null)
+                      Expanded(
+                        child: OutlinedButton(
+                          onPressed: () {
+                            _clearFilter();
+                            Navigator.pop(context);
+                          },
+                          style: OutlinedButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(vertical: 14),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                          ),
+                          child: Text(AppLocalizations.of(context)!.clearFilter),
+                        ),
+                      ),
+                    if (_selectedRange != null) const SizedBox(width: 12),
                     Expanded(
                       child: OutlinedButton(
                         onPressed: () => Navigator.pop(context),
@@ -184,14 +210,17 @@ class _PayoutsScreenState extends State<PayoutsScreen> {
                             borderRadius: BorderRadius.circular(12),
                           ),
                         ),
-                        child: Text(AppLocalizations.of(context)!.cancel),
+                        child: const Text("Cancel"),
                       ),
                     ),
                     const SizedBox(width: 12),
                     Expanded(
                       child: ElevatedButton(
                         onPressed: () {
-                          setState(() => _selectedRange = tempRange);
+                          setState(() {
+                            _selectedRange = tempRange;
+                            _shownCount = _pageSize;
+                          });
                           Navigator.pop(context);
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
@@ -222,10 +251,15 @@ class _PayoutsScreenState extends State<PayoutsScreen> {
     );
   }
 
+  String _formatDate(DateTime date) {
+    return '${date.day.toString().padLeft(2, '0')} / ${date.month.toString().padLeft(2, '0')} / ${date.year}';
+  }
+
   @override
   Widget build(BuildContext context) {
-    final visibleTransactions = _allTransactions.take(_shownCount).toList();
-    final canLoadMore = _shownCount < _allTransactions.length;
+    final filteredTransactions = _filteredTransactions;
+    final visibleTransactions = filteredTransactions.take(_shownCount).toList();
+    final canLoadMore = _shownCount < filteredTransactions.length;
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -256,7 +290,7 @@ class _PayoutsScreenState extends State<PayoutsScreen> {
             ),
             const Gap(16),
             BalanceCard(
-              label: AppLocalizations.of(context)!.availableForWithdrawal,
+              label: AppLocalizations.of(context)!.currentBalance,
               amount: r'AED 512k',
               icon: Image.asset(
                 'assets/icons/balance.png',
@@ -274,6 +308,8 @@ class _PayoutsScreenState extends State<PayoutsScreen> {
               onLoadMore: _loadMore,
               onDownload: _showDownloadNotification,
               onFilter: _pickDateRange,
+              selectedRange: _selectedRange,
+              onClearFilter: _clearFilter,
             ),
             const Gap(30),
           ],
@@ -346,6 +382,8 @@ class _PayoutHistory extends StatelessWidget {
   final VoidCallback onLoadMore;
   final VoidCallback onDownload;
   final VoidCallback onFilter;
+  final DateTimeRange? selectedRange;
+  final VoidCallback onClearFilter;
 
   const _PayoutHistory({
     required this.transactions,
@@ -354,7 +392,13 @@ class _PayoutHistory extends StatelessWidget {
     required this.onLoadMore,
     required this.onDownload,
     required this.onFilter,
+    this.selectedRange,
+    required this.onClearFilter,
   });
+
+  String _formatDate(DateTime date) {
+    return '${date.day.toString().padLeft(2, '0')} / ${date.month.toString().padLeft(2, '0')} / ${date.year}';
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -381,9 +425,16 @@ class _PayoutHistory extends StatelessWidget {
                   style: Theme.of(context).textTheme.titleLarge),
               Row(
                 children: [
+                  if (selectedRange != null)
+                    IconButton(
+                      onPressed: onClearFilter,
+                      icon: const Icon(Icons.clear, color: Colors.red),
+                      tooltip: AppLocalizations.of(context)!.clearFilter,
+                    ),
                   IconButton(
                     onPressed: onFilter,
                     icon: const Icon(Icons.filter_list_rounded),
+                    tooltip: AppLocalizations.of(context)!.filterByDate,
                   ),
                   IconButton(
                     onPressed: onDownload,
@@ -392,20 +443,51 @@ class _PayoutHistory extends StatelessWidget {
                       width: 20,
                       height: 20,
                     ),
+                    tooltip: AppLocalizations.of(context)!.download,
                   ),
                 ],
               ),
             ],
           ),
+          if (selectedRange != null) ...[
+            const Gap(8),
+            Text(
+              'AED {AppLocalizations.of(context)!.filtered}: AED {_formatDate(selectedRange!.start)} - AED {_formatDate(selectedRange!.end)}',
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                color: Colors.grey[600],
+                fontStyle: FontStyle.italic,
+              ),
+            ),
+          ],
           const Gap(16),
-          ListView.separated(
-            physics: const NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            itemCount: transactions.length,
-            separatorBuilder: (_, __) => const Gap(20),
-            itemBuilder: (context, i) =>
-                TransactionItem(transaction: transactions[i]),
-          ),
+          if (transactions.isEmpty)
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 40),
+              child: Column(
+                children: [
+                  Icon(Icons.receipt_long, size: 48, color: Colors.grey[300]),
+                  const Gap(16),
+                  Text(
+                    selectedRange != null
+                        ? AppLocalizations.of(context)!.noTransactionsForDateRange
+                        : AppLocalizations.of(context)!.noTransactionsAvailable,
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      color: Colors.grey[600],
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+            )
+          else
+            ListView.separated(
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: transactions.length,
+              separatorBuilder: (_, __) => const Gap(20),
+              itemBuilder: (context, i) =>
+                  TransactionItem(transaction: transactions[i]),
+            ),
           const Gap(16),
           if (transactions.isNotEmpty && canLoadMore)
             Center(
@@ -428,7 +510,7 @@ class Transaction {
   final String transactionId;
   final TransactionStatus status;
   final String earnings;
-  final String purchasedOn;
+  final DateTime purchasedOn;
 
   Transaction({
     required this.id,
@@ -444,6 +526,10 @@ class TransactionItem extends StatelessWidget {
   final Transaction transaction;
   const TransactionItem({super.key, required this.transaction});
 
+  String _formatDate(DateTime date) {
+    return '${date.day.toString().padLeft(2, '0')} / ${date.month.toString().padLeft(2, '0')} / ${date.year}';
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -454,7 +540,9 @@ class TransactionItem extends StatelessWidget {
         _TransactionDetailRow(label: AppLocalizations.of(context)!.status, status: transaction.status),
         _TransactionDetailRow(label: AppLocalizations.of(context)!.earnings, value: transaction.earnings),
         _TransactionDetailRow(
-            label: AppLocalizations.of(context)!.purchasedOn, value: transaction.purchasedOn),
+          label: AppLocalizations.of(context)!.purchasedOn,
+          value: _formatDate(transaction.purchasedOn),
+        ),
         const Gap(20),
         const Divider(height: 1),
       ],

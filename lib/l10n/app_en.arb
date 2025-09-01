@@ -1159,5 +1159,9 @@
   "loadMore": "Load more",
   "country_uae": "United Arab Emirates",
   "egypte": "Egypte",
-  "hiThere": "Hi There"
+  "hiThere": "Hi There",
+  "download" : "download",
+  "clearFilter": "clear Filter",
+  "noTransactionsForDateRange" :"No Transactions For Date Range",
+  "noTransactionsAvailable" : "No Transactions Available"
 }

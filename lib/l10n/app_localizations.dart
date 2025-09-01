@@ -4824,6 +4824,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Hi There'**
   String get hiThere;
+
+  /// No description provided for @download.
+  ///
+  /// In en, this message translates to:
+  /// **'download'**
+  String get download;
+
+  /// No description provided for @clearFilter.
+  ///
+  /// In en, this message translates to:
+  /// **'clear Filter'**
+  String get clearFilter;
+
+  /// No description provided for @noTransactionsForDateRange.
+  ///
+  /// In en, this message translates to:
+  /// **'No Transactions For Date Range'**
+  String get noTransactionsForDateRange;
+
+  /// No description provided for @noTransactionsAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'NoTransactionsAvailable'**
+  String get noTransactionsAvailable;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

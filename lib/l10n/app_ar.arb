@@ -1129,6 +1129,10 @@
   "loadMore": "تحميل المزيد",
   "country_uae": "الإمارات العربية المتحدة",
   "egypte": "مصر",
-  "hiThere": "مرحباً"
+  "hiThere": "مرحباً",
+  "download" :"تحميل",
+  "clearFilter": "مسح الفلتر",
+  "noTransactionsForDateRange" :"لا توجد معاملات لنطاق التاريخ",
+  "noTransactionsAvailable" : "لا توجد معاملات متاحة"
 
 }
