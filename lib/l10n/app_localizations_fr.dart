@@ -1955,7 +1955,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String price_with_currency(String value) {
-    return '\$$value';
+    return 'AED $value';
   }
 
   @override
@@ -1974,7 +1974,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get toast_product_deleted => 'Product deleted';
 
   @override
-  String get curr_symbol => '\$';
+  String get curr_symbol => 'AED';
 
   @override
   String get cat_food => 'Food';
@@ -2426,4 +2426,10 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get country_uae => 'United Arab Emirates';
+
+  @override
+  String get egypte => 'Egypte';
+
+  @override
+  String get hiThere => 'Hi There';
 }

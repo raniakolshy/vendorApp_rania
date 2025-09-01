@@ -73,11 +73,11 @@ class _PayoutsScreenState extends State<PayoutsScreen> {
     10,
         (index) => Transaction(
       id: '12345',
-      transactionId: 'TXN${1000 + index}',
+      transactionId: 'TXN AED{1000 + index}',
       status: index.isEven
           ? TransactionStatus.paid
           : TransactionStatus.onProcess,
-      earnings: r'$7,750.88',
+      earnings: r'AED 7,750.88',
       purchasedOn: '12 / 12 / 2025',
     ),
   );
@@ -196,7 +196,7 @@ class _PayoutsScreenState extends State<PayoutsScreen> {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text(
-                                "${AppLocalizations.of(context)!.filtered}: ${tempRange.start.toLocal()} → ${tempRange.end.toLocal()}",
+                                "AED {AppLocalizations.of(context)!.filtered}: AED {tempRange.start.toLocal()} → AED {tempRange.end.toLocal()}",
                               ),
                               duration: const Duration(seconds: 3),
                             ),
@@ -245,7 +245,7 @@ class _PayoutsScreenState extends State<PayoutsScreen> {
             const Gap(20),
             BalanceCard(
               label: AppLocalizations.of(context)!.currentBalance,
-              amount: r'$128k',
+              amount: r'AED 128k',
               icon: Image.asset(
                 'assets/icons/trending_up.png',
                 width: 24,
@@ -257,7 +257,7 @@ class _PayoutsScreenState extends State<PayoutsScreen> {
             const Gap(16),
             BalanceCard(
               label: AppLocalizations.of(context)!.availableForWithdrawal,
-              amount: r'$512k',
+              amount: r'AED 512k',
               icon: Image.asset(
                 'assets/icons/balance.png',
                 width: 24,

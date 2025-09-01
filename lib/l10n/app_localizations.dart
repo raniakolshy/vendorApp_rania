@@ -3910,7 +3910,7 @@ abstract class AppLocalizations {
   /// No description provided for @price_with_currency.
   ///
   /// In en, this message translates to:
-  /// **'\${value}'**
+  /// **'AED {value}'**
   String price_with_currency(String value);
 
   /// No description provided for @err_add_three_images.
@@ -3946,7 +3946,7 @@ abstract class AppLocalizations {
   /// No description provided for @curr_symbol.
   ///
   /// In en, this message translates to:
-  /// **'\$'**
+  /// **'AED'**
   String get curr_symbol;
 
   /// No description provided for @cat_food.
@@ -4812,6 +4812,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'United Arab Emirates'**
   String get country_uae;
+
+  /// No description provided for @egypte.
+  ///
+  /// In en, this message translates to:
+  /// **'Egypte'**
+  String get egypte;
+
+  /// No description provided for @hiThere.
+  ///
+  /// In en, this message translates to:
+  /// **'Hi There'**
+  String get hiThere;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

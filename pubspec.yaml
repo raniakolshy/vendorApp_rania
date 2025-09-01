@@ -47,7 +47,12 @@ dev_dependencies:
   fl_chart: ^0.68.0
   flutter_lints: ^5.0.0
   uuid: ^4.4.0
+  flutter_launcher_icons: ^0.13.1
 
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/icons/LOGO KOLSHY.png"
 
 flutter:
   generate: true

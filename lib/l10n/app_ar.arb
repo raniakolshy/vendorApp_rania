@@ -869,7 +869,7 @@
       "value": { "type": "String" }
     }
   },
-  "price_with_currency": "{value} $",
+  "price_with_currency": "{value} AED",
   "@price_with_currency": {
     "placeholders": {
       "value": { "type": "String" }
@@ -882,7 +882,7 @@
   "toast_product_published": "تم نشر المنتج",
   "toast_product_deleted": "تم حذف المنتج",
 
-  "curr_symbol": "$",
+  "curr_symbol": "AED",
 
   "cat_food": "طعام",
   "cat_electronics": "إلكترونيات",
@@ -1128,5 +1128,7 @@
   "loading": "جاري التحميل...",
   "loadMore": "تحميل المزيد",
   "country_uae": "الإمارات العربية المتحدة",
-  "Egypte": "مصر"
+  "egypte": "مصر",
+  "hiThere": "مرحباً"
+
 }

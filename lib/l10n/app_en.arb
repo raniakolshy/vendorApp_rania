@@ -900,7 +900,7 @@
       "value": { "type": "String" }
     }
   },
-  "price_with_currency": "${value}",
+  "price_with_currency": "AED {value}",
   "@price_with_currency": {
     "placeholders": {
       "value": { "type": "String" }
@@ -913,7 +913,7 @@
   "toast_product_published": "Product published",
   "toast_product_deleted": "Product deleted",
 
-  "curr_symbol": "$",
+  "curr_symbol": "AED",
 
   "cat_food": "Food",
   "cat_electronics": "Electronics",
@@ -1158,5 +1158,6 @@
   "loading": "Loading...",
   "loadMore": "Load more",
   "country_uae": "United Arab Emirates",
-  "Egypte": "Egypte"
+  "egypte": "Egypte",
+  "hiThere": "Hi There"
 }
