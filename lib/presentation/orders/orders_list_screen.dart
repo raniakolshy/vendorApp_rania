@@ -1,5 +1,6 @@
-import 'package:app_vendor/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
+
+import '../../l10n/app_localizations.dart';
 
 void main() => runApp(const OrdersApp());
 
@@ -22,7 +23,6 @@ class OrdersApp extends StatelessWidget {
           displayColor: const Color(0xFF1B1B1B),
         ),
       ),
-      // Add localizationsDelegates to MaterialApp for localization support
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       home: const OrdersListScreen(),
@@ -30,7 +30,6 @@ class OrdersApp extends StatelessWidget {
   }
 }
 
-/// Keep this name as requested
 class OrdersListScreen extends StatefulWidget {
   const OrdersListScreen({super.key});
 
@@ -39,16 +38,12 @@ class OrdersListScreen extends StatefulWidget {
 }
 
 class _OrdersListScreenState extends State<OrdersListScreen> {
-  // ----- UI state
   final TextEditingController _searchCtrl = TextEditingController();
-  // Initialisation à null pour pouvoir la définir dans didChangeDependencies
-  String? _filter;
+  String _filter = 'All Orders';
   static const int _pageSize = 2;
   int _shown = _pageSize;
   bool _loadingMore = false;
 
-
-  // ----- Data
   final List<Order> _allOrders = [
     Order(
       thumbnailAsset: 'assets/img_square.jpg',
@@ -101,10 +96,9 @@ class _OrdersListScreenState extends State<OrdersListScreen> {
   ];
 
   @override
-  void didChangeDependencies() {
+  void didChangeDependencies(){
     super.didChangeDependencies();
-    // Initialise _filter avec la traduction correcte lors du chargement des dépendances
-    if (_filter == null) {
+    if(_filter == null){
       _filter = AppLocalizations.of(context)!.allOrders;
     }
   }
@@ -112,13 +106,6 @@ class _OrdersListScreenState extends State<OrdersListScreen> {
   List<Order> get _filtered {
     final q = _searchCtrl.text.trim().toLowerCase();
     final byText = _allOrders.where((o) => o.name.toLowerCase().contains(q));
-
-    // Obtenez les traductions pour les filtres
-    final _localizations = AppLocalizations.of(context)!;
-    final deliveredText = _localizations.delivered;
-    final processingText = _localizations.processing;
-    final cancelledText = _localizations.cancelled;
-
     switch (_filter) {
       case 'Delivered':
       case 'تم التوصيل':
@@ -169,6 +156,7 @@ class _OrdersListScreenState extends State<OrdersListScreen> {
     final visible = _filtered.take(_shown).toList();
     final canLoadMore = _shown < _filtered.length && !_loadingMore;
 
+
     final List<String> filterOptions = [
       _localizations.allOrders,
       _localizations.delivered,
@@ -179,7 +167,6 @@ class _OrdersListScreenState extends State<OrdersListScreen> {
     return Scaffold(
       body: Column(
         children: [
-          // Main card
           Expanded(
             child: SingleChildScrollView(
               padding: const EdgeInsets.all(16),
@@ -199,9 +186,8 @@ class _OrdersListScreenState extends State<OrdersListScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Title
                     Text(
-                      _localizations.ordersDetails,
+                      'Orders Details',
                       style: Theme.of(context)
                           .textTheme
                           .titleLarge
@@ -209,17 +195,15 @@ class _OrdersListScreenState extends State<OrdersListScreen> {
                     ),
                     const SizedBox(height: 20),
 
-                    // Search and Filter row
                     Row(
                       children: [
-                        // Search
                         Expanded(
                           flex: 3,
                           child: _InputSurface(
                             child: TextField(
                               controller: _searchCtrl,
                               decoration: InputDecoration(
-                                hintText: _localizations.searchProduct,
+                                hintText: 'Search product',
                                 hintStyle: TextStyle(
                                   color: Colors.black.withOpacity(.35),
                                 ),
@@ -239,7 +223,6 @@ class _OrdersListScreenState extends State<OrdersListScreen> {
                         ),
                         const SizedBox(width: 12),
 
-                        // Filter
                         Expanded(
                           flex: 2,
                           child: DropdownButtonFormField<String>(
@@ -272,7 +255,6 @@ class _OrdersListScreenState extends State<OrdersListScreen> {
 
                     const SizedBox(height: 24),
 
-                    // Orders list with soft dividers
                     ListView.separated(
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
@@ -286,7 +268,6 @@ class _OrdersListScreenState extends State<OrdersListScreen> {
 
                     const SizedBox(height: 24),
 
-                    // Load more button with static asset icon
                     if (_filtered.isNotEmpty)
                       Center(
                         child: Opacity(
@@ -328,9 +309,9 @@ class _OrdersListScreenState extends State<OrdersListScreen> {
                                         height: 18,
                                       ),
                                     const SizedBox(width: 10),
-                                    Text(
-                                      _localizations.loadMore,
-                                      style: const TextStyle(
+                                    const Text(
+                                      'Load more',
+                                      style: TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.w600),
                                     ),
@@ -343,12 +324,12 @@ class _OrdersListScreenState extends State<OrdersListScreen> {
                       ),
 
                     if (_filtered.isEmpty)
-                      Padding(
-                        padding: const EdgeInsets.only(top: 24),
+                      const Padding(
+                        padding: EdgeInsets.only(top: 24),
                         child: Center(
                           child: Text(
-                            _localizations.noOrders,
-                            style: const TextStyle(color: Colors.black54, fontSize: 16),
+                            'No orders match your search.',
+                            style: TextStyle(color: Colors.black54, fontSize: 16),
                           ),
                         ),
                       ),
@@ -363,7 +344,6 @@ class _OrdersListScreenState extends State<OrdersListScreen> {
   }
 }
 
-// ===== UI pieces
 
 class _OrderRow extends StatelessWidget {
   const _OrderRow({required this.order});
@@ -430,31 +410,31 @@ class _OrderRow extends StatelessWidget {
                   ),
                   const SizedBox(height: 10),
                   _RowKVText(
-                      k: _localizations.orderId,
+                      k: _localizations.status,
                       vText: order.orderId,
                       keyStyle: keyStyle,
                       valStyle: valStyle),
                   const SizedBox(height: 10),
                   _RowKVText(
-                      k: _localizations.purchasedOn,
+                      k: _localizations.status,
                       vText: order.purchasedOn,
                       keyStyle: keyStyle,
                       valStyle: valStyle),
                   const SizedBox(height: 10),
                   _RowKVText(
-                      k: _localizations.baseTotal,
+                      k: _localizations.status,
                       vText: order.baseTotal,
                       keyStyle: keyStyle,
                       valStyle: valStyle),
                   const SizedBox(height: 10),
                   _RowKVText(
-                      k: _localizations.purchasedTotal,
+                      k: _localizations.status,
                       vText: order.purchasedTotal,
                       keyStyle: keyStyle,
                       valStyle: valStyle),
                   const SizedBox(height: 10),
                   _RowKVText(
-                      k: _localizations.customer,
+                      k: _localizations.status,
                       vText: order.customer,
                       keyStyle: keyStyle,
                       valStyle: valStyle),
@@ -552,6 +532,23 @@ class _StatusPill extends StatelessWidget {
     }
   }
 
+  String get _label {
+    switch (status) {
+      case OrderStatus.delivered:
+        return 'Delivered';
+      case OrderStatus.processing:
+        return 'Processing';
+      case OrderStatus.cancelled:
+        return 'Cancelled';
+      case OrderStatus.onHold:
+        return 'On Hold';
+      case OrderStatus.closed:
+        return 'Closed';
+      case OrderStatus.pending:
+        return 'Pending';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final _localizations = AppLocalizations.of(context)!;
@@ -585,7 +582,7 @@ class _StatusPill extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
         child: Text(
-          label,
+          _label,
           style: Theme.of(context)
               .textTheme
               .labelLarge
@@ -616,7 +613,6 @@ class _InputSurface extends StatelessWidget {
   }
 }
 
-// ===== Models
 
 enum OrderStatus { delivered, processing, cancelled, onHold, closed, pending }
 

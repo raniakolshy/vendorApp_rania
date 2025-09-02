@@ -66,7 +66,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   bool _tiktokEnabled = false;
 
   final List<String> _countries = const [
-    'United Arab Emirates', 'United States', 'Canada', 'United Kingdom', 'Germany', 'France',
+    'United Arab Emirates','Egypte', 'United States', 'Canada', 'United Kingdom', 'Germany', 'France',
     'Japan', 'Australia', 'Brazil', 'India', 'China'
   ];
   String _selectedCountry = 'United Arab Emirates';
@@ -268,7 +268,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 _label(l10n.lbl_tax_vat, help: l10n.help_tax_vat),
                                 TextFormField(
                                   controller: _taxVatNumber,
-                                  decoration: _dec(context, hint: ''),
+                                  decoration: _dec(context, hint: 'TN1234567'),
                                 ),
                                 const SizedBox(height: 20),
 

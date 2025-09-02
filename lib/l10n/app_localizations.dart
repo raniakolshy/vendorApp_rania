@@ -4848,6 +4848,26 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'NoTransactionsAvailable'**
   String get noTransactionsAvailable;
+
+
+  String get filterEnabledProducts;
+
+  String get filterDisabledProducts;
+
+  String get filterLowStock;
+
+  String get filterOutOfStock;
+
+  String get filterDeniedProduct;
+
+  String get filterAll;
+
+  String get confirmLogout;
+
+  String get logoutSuccessful;
+
+  String get logoutFailed;
+
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

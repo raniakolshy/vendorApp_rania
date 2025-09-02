@@ -1,8 +1,11 @@
+
+import 'package:app_vendor/services/api_client.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:app_vendor/state_management/locale_provider.dart';
 import 'package:app_vendor/l10n/app_localizations.dart';
-
+import 'presentation/auth/login/login_screen.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'presentation/Translation/Language.dart';
 import 'presentation/admin/admin_news_screen.dart';
 import 'presentation/admin/ask_admin_screen.dart';
@@ -11,7 +14,6 @@ import 'presentation/profile/edit_profile_screen.dart';
 import 'presentation/analytics/customer_analytics_screen.dart';
 import 'presentation/dashboard/dashboard_screen.dart';
 import 'presentation/orders/orders_list_screen.dart';
-import 'presentation/payouts/payouts_screen.dart';
 import 'presentation/products/add_product_screen.dart';
 import 'presentation/products/drafts_list_screen.dart';
 import 'presentation/products/products_list_screen.dart';
@@ -20,6 +22,7 @@ import 'presentation/reviews/reviews_screen.dart';
 import 'presentation/transactions/transactions_screen.dart' as transactions_screen;
 import 'presentation/common/app_shell.dart';
 import 'presentation/common/nav_key.dart';
+import 'presentation/auth/login/welcome_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,6 +35,7 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   final LocaleProvider localeProvider;
+
   const MyApp({super.key, required this.localeProvider});
 
   @override
@@ -60,11 +64,50 @@ class MyApp extends StatelessWidget {
               fontFamily: 'Inter',
               scaffoldBackgroundColor: Colors.white,
             ),
-            home: const Home(),
+            home: const AuthWrapper(), // Changed to AuthWrapper
           );
         },
       ),
     );
+  }
+}
+
+class AuthWrapper extends StatefulWidget {
+  const AuthWrapper({super.key});
+
+  @override
+  State<AuthWrapper> createState() => _AuthWrapperState();
+}
+
+class _AuthWrapperState extends State<AuthWrapper> {
+  bool _isLoading = true;
+  bool _isLoggedIn = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _checkAuthStatus();
+  }
+
+  Future<void> _checkAuthStatus() async {
+    final isLoggedIn = await ApiClient().isLoggedIn();
+    setState(() {
+      _isLoggedIn = isLoggedIn;
+      _isLoading = false;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (_isLoading) {
+      return const Scaffold(
+        body: Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+    }
+
+    return _isLoggedIn ? const Home() : const WelcomeScreen();
   }
 }
 
@@ -80,9 +123,40 @@ class _HomeState extends State<Home> {
   NavKey _selected = NavKey.dashboard;
   int _bottomIndex = 1;
   int _unreadCount = 4;
+  bool _isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _checkAuthentication();
+  }
+
+  Future<void> _checkAuthentication() async {
+    final isLoggedIn = await ApiClient().isLoggedIn();
+
+    if (!isLoggedIn) {
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (_) => const LoginScreen()),
+            (route) => false,
+      );
+      return;
+    }
+
+    setState(() {
+      _isLoading = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    if (_isLoading) {
+      return const Scaffold(
+        body: Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+    }
     return AppShell(
       scaffoldKey: _scaffoldKey,
       selected: _selected,
@@ -123,8 +197,6 @@ class _HomeState extends State<Home> {
         return const CustomerAnalyticsScreen();
       case NavKey.transactions:
         return const transactions_screen.TransactionsScreen();
-      case NavKey.payouts:
-        return const PayoutsScreen();
       case NavKey.revenue:
         return const RevenueScreen();
       case NavKey.review:

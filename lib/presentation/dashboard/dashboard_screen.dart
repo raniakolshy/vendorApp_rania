@@ -3,6 +3,8 @@ import 'package:app_vendor/l10n/app_localizations.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
+import '../../services/api_client.dart';
+
 /// =============================================================
 /// Constants / Colors
 /// =============================================================
@@ -191,14 +193,20 @@ class DashboardScreen extends StatefulWidget {
 class _DashboardScreenState extends State<DashboardScreen> {
   String _salesRangeKey = kRangeAll;
   String _aovRangeKey   = kRangeAll;
+  String? _userName;
 
-  /// Replace with your API data; this mimics the website “flat line”
   final WebsiteSeries site = WebsiteSeries.flat(
     start: DateTime.now().subtract(const Duration(days: 60)),
     days: 90,
     sales: 8.2,
     aov: 0.0,
   );
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserName();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -250,7 +258,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        l10n.helloUser('Mr Jake'),
+                                        _userName != null ? l10n.helloUser(_userName!) : l10n.hiThere,
                                         style: Theme.of(context).textTheme.titleLarge?.copyWith(
                                           fontWeight: FontWeight.w700, color: Colors.white,
                                         ),
@@ -399,7 +407,37 @@ class _DashboardScreenState extends State<DashboardScreen> {
       ),
     );
   }
+
+  Future<void> _loadUserName() async {
+    try {
+      final customerInfo = await ApiClient().getCustomerInfo();
+
+      if (customerInfo != null) {
+        final firstName = customerInfo['firstname'] ?? '';
+        final lastName = customerInfo['lastname'] ?? ''; // FIXED: lowercase 'l'
+        final email = customerInfo['email'] ?? '';
+
+        setState(() {
+          _userName = '$firstName $lastName'.trim(); // FIXED: lowercase 'l'
+          if (_userName!.isEmpty) _userName = email;
+        });
+      } else {
+        setState(() {
+          _userName = 'Guest';
+        });
+      }
+    } catch (e) {
+      print('Error loading user name: $e');
+      setState(() {
+        _userName = 'Guest';
+      });
+    }
+  }
 }
+
+// =============================================================
+// All of the nested classes moved outside of the State class
+// =============================================================
 
 /// Little dropdown used in cards (modern popup)
 class _RangeDropDown extends StatelessWidget {
@@ -701,15 +739,14 @@ class SectionCard extends StatelessWidget {
     );
   }
 }
-
 /// =============================================================
 /// TOTAL SALES card
 /// =============================================================
 class TotalSalesCard extends StatefulWidget {
   final String rangeKey;
   final ValueChanged<String> onRangeChanged;
-  final Map<DateTime, double> data;              // main
-  final Map<DateTime, double>? compareData;      // comparison
+  final Map<DateTime, double> data;
+  final Map<DateTime, double>? compareData;
 
   const TotalSalesCard({
     super.key,

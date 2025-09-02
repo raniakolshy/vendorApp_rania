@@ -1163,5 +1163,11 @@
   "download" : "download",
   "clearFilter": "clear Filter",
   "noTransactionsForDateRange" :"No Transactions For Date Range",
-  "noTransactionsAvailable" : "No Transactions Available"
+  "noTransactionsAvailable" : "No Transactions Available",
+  "filterLowStock": "Low Stock",
+  "filterOutOfStock": "Out of Stock",
+  "filterDeniedProduct": "Denied Product",
+  "confirmLogout" :"Confirm Logout",
+  "logoutSuccessful" : "Logout Successful",
+  "logoutFailed": "Logout Failed"
 }

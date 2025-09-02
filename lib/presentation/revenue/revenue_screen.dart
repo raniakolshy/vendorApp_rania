@@ -26,38 +26,39 @@ class _RevenueScreenState extends State<RevenueScreen> {
     {
       'interval': 'From 15 / 11 to 01 / 25',
       'orderId': '12345',
-      'totalAmount': 'AED7,750.88',
-      'totalEarning': 'AED7,750.88',
+      'totalAmount': '\$7,750.88',
+      'totalEarning': '\$7,750.88',
       'discount': '20%',
-      'commission': 'AED7,750.88',
+      'commission': '\$7,750.88',
     },
     {
       'interval': 'From 15 / 11 to 01 / 25',
       'orderId': '12346',
-      'totalAmount': 'AED6,120.20',
-      'totalEarning': 'AED6,120.20',
+      'totalAmount': '\$6,120.20',
+      'totalEarning': '\$6,120.20',
       'discount': '10%',
-      'commission': 'AED820.00',
+      'commission': '\$820.00',
     },
     {
       'interval': 'From 15 / 11 to 01 / 25',
       'orderId': '12347',
-      'totalAmount': 'AED5,010.90',
-      'totalEarning': 'AED5,010.90',
+      'totalAmount': '\$5,010.90',
+      'totalEarning': '\$5,010.90',
       'discount': '0%',
-      'commission': 'AED610.00',
+      'commission': '\$610.00',
     },
   ];
 
   Future<void> _loadMore() async {
     setState(() => _isLoading = true);
-    await Future.delayed(const Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 1)); // fake delay for loading
     setState(() {
       _shown = (_shown + _pageSize).clamp(0, _historyData.length);
       _isLoading = false;
     });
   }
 
+  // ----- FILTER + CHART DATA -----
   final List<String> _filters = ['allTime', 'last7Days', 'last30Days', 'thisYear'];
   late String _selectedFilter = _filters.first;
 
@@ -107,6 +108,7 @@ class _RevenueScreenState extends State<RevenueScreen> {
     }
   }
 
+  // ----- DOWNLOAD (no plugin) -----
   final GlobalKey _chartKey = GlobalKey();
 
   Future<void> _downloadChart() async {
@@ -175,6 +177,7 @@ class _RevenueScreenState extends State<RevenueScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // Page Title
             Row(
               children: [
                 Text(
@@ -189,9 +192,11 @@ class _RevenueScreenState extends State<RevenueScreen> {
               ],
             ),
             const SizedBox(height: 20),
+
+            // Metrics
             _buildMetricCard(
               label: l10n.earning,
-              value: 'AED128k',
+              value: '\$128k',
               change: l10n.positiveChangeThisWeek(37.8),
               isPositive: true,
               iconPath: 'assets/icons/trending_up.png',
@@ -200,7 +205,7 @@ class _RevenueScreenState extends State<RevenueScreen> {
             const SizedBox(height: 16),
             _buildMetricCard(
               label: l10n.balance,
-              value: 'AED512.64',
+              value: '\$512.64',
               change: l10n.negativeChangeThisWeek(37.8),
               isPositive: false,
               iconPath: 'assets/icons/balance.png',
@@ -209,19 +214,23 @@ class _RevenueScreenState extends State<RevenueScreen> {
             const SizedBox(height: 16),
             _buildMetricCard(
               label: l10n.totalValueOfSales,
-              value: 'AED64k',
+              value: '\$64k',
               change: l10n.positiveChangeThisWeek(37.8),
               isPositive: true,
               iconPath: 'assets/icons/cart.png',
               backgroundColor: const Color(0xFFD0E0FF),
             ),
+
             const SizedBox(height: 24),
+
+            // Product views card
             Container(
               decoration: _boxDecoration(),
               padding: const EdgeInsets.all(18),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  // Header row with title + filter + download
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -232,20 +241,21 @@ class _RevenueScreenState extends State<RevenueScreen> {
                           fontWeight: FontWeight.w700,
                         ),
                       ),
+                      // inside your Row with filter + download
                       Row(
                         children: [
                           Theme(
                             data: Theme.of(context).copyWith(
                               dropdownMenuTheme: DropdownMenuThemeData(
                                 menuStyle: MenuStyle(
-                                  backgroundColor: WidgetStateProperty.all(Colors.white),
-                                  elevation: WidgetStateProperty.all(8),
+                                  backgroundColor: WidgetStateProperty.all(Colors.white), // white menu
+                                  elevation: WidgetStateProperty.all(8), // shadow
                                   shape: WidgetStateProperty.all(
                                     RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(12),
+                                      borderRadius: BorderRadius.circular(12), // rounded
                                     ),
                                   ),
-                                  side: WidgetStateProperty.all(BorderSide.none),
+                                  side: WidgetStateProperty.all(BorderSide.none), // no border
                                 ),
                               ),
                             ),
@@ -259,7 +269,7 @@ class _RevenueScreenState extends State<RevenueScreen> {
                                 child: DropdownButton<String>(
                                   value: _selectedFilter,
                                   borderRadius: BorderRadius.circular(12),
-                                  dropdownColor: Colors.white,
+                                  dropdownColor: Colors.white, // just in case
                                   items: _filters
                                       .map(
                                         (f) => DropdownMenuItem(
@@ -283,6 +293,7 @@ class _RevenueScreenState extends State<RevenueScreen> {
                             ),
                           ),
                           const SizedBox(width: 8),
+                          // Download button
                           IconButton(
                             onPressed: _downloadChart,
                             style: ButtonStyle(
@@ -298,6 +309,8 @@ class _RevenueScreenState extends State<RevenueScreen> {
                     ],
                   ),
                   const SizedBox(height: 16),
+
+                  // Chart wrapped with RepaintBoundary for export
                   RepaintBoundary(
                     key: _chartKey,
                     child: SizedBox(
@@ -318,7 +331,7 @@ class _RevenueScreenState extends State<RevenueScreen> {
                           labelStyle: const TextStyle(fontSize: 12),
                           numberFormat: NumberFormat.compactCurrency(
                             decimalDigits: 0,
-                            symbol: 'AED',
+                            symbol: '\$',
                           ),
                         ),
                         series: <CartesianSeries<ChartData, String>>[
@@ -355,7 +368,10 @@ class _RevenueScreenState extends State<RevenueScreen> {
                 ],
               ),
             ),
+
             const SizedBox(height: 24),
+
+            // Earning History Card
             Container(
               decoration: _boxDecoration(),
               padding: const EdgeInsets.all(18),
@@ -372,6 +388,7 @@ class _RevenueScreenState extends State<RevenueScreen> {
                   const SizedBox(height: 16),
                   ...visible.map((item) => _buildHistoryItem(item, l10n)),
                   const SizedBox(height: 12),
+
                   if (_historyData.isNotEmpty && canLoadMore)
                     Center(
                       child: _LoadMoreButton(
@@ -400,6 +417,7 @@ class _RevenueScreenState extends State<RevenueScreen> {
     ],
   );
 
+  // ----- UI helpers -----
   Widget _buildHistoryItem(Map<String, String> item, AppLocalizations l10n) {
     return Column(
       children: [
@@ -484,6 +502,7 @@ class _RevenueScreenState extends State<RevenueScreen> {
   }
 }
 
+// Custom Load More Button
 class _LoadMoreButton extends StatelessWidget {
   final VoidCallback onPressed;
   final bool isLoading;

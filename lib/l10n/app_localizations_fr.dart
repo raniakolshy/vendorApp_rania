@@ -2444,4 +2444,31 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get noTransactionsAvailable => 'NoTransactionsAvailable';
+
+  @override
+  String get filterEnabledProducts => 'Enabled Products';
+
+  @override
+  String get filterDisabledProducts => 'Disabled Products';
+
+  @override
+  String get filterLowStock => 'Low Stock';
+
+  @override
+  String get filterOutOfStock=> 'Out of Stock';
+
+  @override
+  String get filterDeniedProduct => 'Denied Product';
+
+  @override
+  String get filterAll => 'All';
+
+  @override
+  String get confirmLogout => 'Confirm Logout';
+
+  @override
+  String get logoutSuccessful => 'Logout Successful';
+
+  @override
+  String get logoutFailed => 'Logout Failed';
 }
