@@ -74,6 +74,10 @@ class _LoginFormState extends State<LoginForm> {
     return s.startsWith('Exception: ') ? s.substring(11) : s;
   }
 
+  // presentation/auth/login/login_screen.dart - Update the login method
+
+  // presentation/auth/login/login_screen.dart - SIMPLIFIED
+
   Future<void> _onLoginPressed() async {
     if (_isLoading) return;
     FocusScope.of(context).unfocus();
@@ -83,24 +87,23 @@ class _LoginFormState extends State<LoginForm> {
       return;
     }
 
-    if (!await checkConnectivity()) {
-      _showMessage("No internet connection.", isError: true);
-      return;
-    }
-
     setState(() => _isLoading = true);
     try {
+      // 1. Login first
       await ApiClient().loginCustomer(
         _emailController.text.trim(),
         _passwordController.text,
       );
 
+      // 2. Simple check - if login worked, user is valid
       _showMessage("Login successful!", isError: false);
+
       if (!mounted) return;
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (_) => const Home()),
       );
+
     } catch (e) {
       _showMessage("Login failed: ${_cleanError(e)}", isError: true);
     } finally {

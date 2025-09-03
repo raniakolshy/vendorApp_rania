@@ -10,14 +10,15 @@ import '../pdf/print_pdf_screen.dart';
 import '../profile/edit_profile_screen.dart';
 import 'nav_key.dart';
 
-
 /// ---- theme constants (delete if you already have these) ----
+
 const kIconGray = Color(0xFF8E9196);
 const kTextGray = Color(0xFF2E2F32);
 const kDividerGray = Color(0xFFE7E8EA);
 const kDrawerActive = Color(0xFFF4F5F7);
 const kMutedOrange = Color(0xFFFF8A00);
 const kRedLogout = Color(0xFFE64949);
+
 /// -----------------------------------------------------------
 
 class KolshyDrawer extends StatefulWidget {
@@ -182,6 +183,7 @@ class _AssetIcon extends StatelessWidget {
     required this.active,
     this.size = 22,
   });
+
   @override
   Widget build(BuildContext context) {
     final path = 'assets/icons/${base}_${active ? 'on' : 'off'}.png';
@@ -243,7 +245,6 @@ class _DrawerItem extends StatelessWidget {
               ),
             ),
             if (trailing != null) trailing!,
-
           ],
         ),
       ),
@@ -292,7 +293,6 @@ class _Expandable extends StatelessWidget {
                 ),
                 AnimatedRotation(
                   turns: open ? .5 : 0,
-
                   duration: const Duration(milliseconds: 160),
                   child:
                   const Icon(Icons.expand_more_rounded, color: kIconGray),
@@ -322,6 +322,7 @@ class _Child extends StatelessWidget {
     required this.active,
     required this.onTap,
   });
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -358,6 +359,7 @@ class _Child extends StatelessWidget {
 class _RevenueBadge extends StatelessWidget {
   final int count;
   const _RevenueBadge(this.count);
+
   @override
   Widget build(BuildContext context) => Container(
     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
@@ -493,7 +495,6 @@ class _ProfileMenuDialog extends StatelessWidget {
               ),
 
               // Destructive action
-              // In your drawer file, update the logout section:
               InkWell(
                 onTap: () async {
                   Navigator.pop(context);
@@ -524,11 +525,11 @@ class _ProfileMenuDialog extends StatelessWidget {
                       // Call the logout API
                       await ApiClient().logout();
 
-                      // Navigate to welcome screen
-                      Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(builder: (_) => const WelcomeScreen()),
-                            (route) => false,
+                      // Use a NavigatorState that's not tied to the dialog context
+                      // Navigate to welcome screen and remove all previous routes
+                      Navigator.of(context, rootNavigator: true).pushAndRemoveUntil(
+                        MaterialPageRoute(builder: (context) => const WelcomeScreen()),
+                            (Route<dynamic> route) => false,
                       );
 
                       // Show success message
@@ -609,6 +610,7 @@ class _MenuRow extends StatelessWidget {
 
 class _DividerLine extends StatelessWidget {
   const _DividerLine();
+
   @override
   Widget build(BuildContext context) {
     return const Padding(
