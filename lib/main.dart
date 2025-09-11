@@ -13,7 +13,7 @@ import 'presentation/pdf/print_pdf_screen.dart';
 import 'presentation/profile/edit_profile_screen.dart';
 import 'presentation/analytics/customer_analytics_screen.dart';
 import 'presentation/dashboard/dashboard_screen.dart' hide AppLocalizations, ApiClient;
-import 'presentation/orders/orders_list_screen.dart';
+import 'presentation/orders/orders_list_screen.dart' hide VendorApiClient;
 import 'presentation/products/add_product_screen.dart';
 import 'presentation/products/drafts_list_screen.dart';
 import 'presentation/products/products_list_screen.dart';
@@ -29,7 +29,7 @@ void main() async {
 
   final localeProvider = LocaleProvider();
   await localeProvider.loadSavedLocale();
-
+  await VendorApiClient().init();
   runApp(MyApp(localeProvider: localeProvider));
 }
 
@@ -90,11 +90,27 @@ class _AuthWrapperState extends State<AuthWrapper> {
   }
 
   Future<void> _checkAuthStatus() async {
-    final isLoggedIn = await ApiClient().isLoggedIn();
-    setState(() {
-      _isLoggedIn = isLoggedIn;
-      _isLoading = false;
-    });
+    try {
+      final hasToken = VendorApiClient().hasToken;
+      if (hasToken) {
+        await VendorApiClient().getVendorProfile();
+        setState(() {
+          _isLoggedIn = true;
+          _isLoading = false;
+        });
+      } else {
+        setState(() {
+          _isLoggedIn = false;
+          _isLoading = false;
+        });
+      }
+    } catch (e) {
+      await VendorApiClient.removeToken();
+      setState(() {
+        _isLoggedIn = false;
+        _isLoading = false;
+      });
+    }
   }
 
   @override
@@ -110,6 +126,7 @@ class _AuthWrapperState extends State<AuthWrapper> {
     return _isLoggedIn ? const Home() : const WelcomeScreen();
   }
 }
+
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -132,7 +149,7 @@ class _HomeState extends State<Home> {
   }
 
   Future<void> _checkAuthentication() async {
-    final isLoggedIn = await ApiClient().isLoggedIn();
+    final isLoggedIn = VendorApiClient().hasToken;
 
     if (!isLoggedIn) {
       Navigator.pushAndRemoveUntil(

@@ -379,10 +379,38 @@ class _RevenueBadge extends StatelessWidget {
   );
 }
 
-class _ProfileButton extends StatelessWidget {
+class _ProfileButton extends StatefulWidget {
   final ValueChanged<NavKey> onSelect;
 
   const _ProfileButton({required this.onSelect});
+
+  @override
+  State<_ProfileButton> createState() => _ProfileButtonState();
+}
+
+class _ProfileButtonState extends State<_ProfileButton> {
+  VendorProfile? _vendorProfile;
+  bool _isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadVendorProfile();
+  }
+
+  Future<void> _loadVendorProfile() async {
+    try {
+      final profile = await VendorApiClient().getVendorProfile();
+      setState(() {
+        _vendorProfile = profile;
+        _isLoading = false;
+      });
+    } catch (e) {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -391,35 +419,52 @@ class _ProfileButton extends StatelessWidget {
       onTap: () => showDialog(
         context: context,
         barrierColor: Colors.black.withOpacity(.25),
-        builder: (_) => _ProfileMenuDialog(onSelect: onSelect),
+        builder: (_) => _ProfileMenuDialog(onSelect: widget.onSelect),
       ),
-      child: const Padding(
-        padding: EdgeInsets.symmetric(horizontal: 6, vertical: 8),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 8),
         child: Row(
           children: [
             CircleAvatar(
               radius: 18,
-              backgroundImage: AssetImage('assets/avatar_placeholder.jpg'),
-              backgroundColor: Color(0xFFEDEDED),
+              backgroundImage: _isLoading
+                  ? const AssetImage('assets/avatar.png')
+                  : (_vendorProfile?.logoUrl != null &&
+                  _vendorProfile!.logoUrl!.isNotEmpty
+                  ? NetworkImage(
+                VendorApiClient().productImageUrl(
+                  _vendorProfile!.logoUrl,
+                  vendor: true,
+                ),
+              )
+                  : const AssetImage('assets/avatar.png')) as ImageProvider,
+              backgroundColor: const Color(0xFFEDEDED),
             ),
-            SizedBox(width: 12),
+
+            const SizedBox(width: 12),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Annette Black',
-                      style: TextStyle(
-                          fontWeight: FontWeight.w700, color: kTextGray)),
-                  SizedBox(height: 2),
-                  Text('Kolshy Store',
-                      style: TextStyle(
-                          color: Colors.black54,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 12)),
+                  Text(
+                    _isLoading
+                        ? 'Loading...'
+                        : '${_vendorProfile?.companyName ?? (_vendorProfile != null ? '${_vendorProfile!.firstname} ${_vendorProfile!.lastname}' : 'User')}',
+                    style: const TextStyle(
+                        fontWeight: FontWeight.w700, color: kTextGray),
+                  ),
+                  const SizedBox(height: 2),
+                  Text(
+                    _isLoading ? '' : 'Kolshy Vendor',
+                    style: const TextStyle(
+                        color: Colors.black54,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 12),
+                  ),
                 ],
               ),
             ),
-            Icon(Icons.keyboard_arrow_down_rounded, color: kIconGray),
+            const Icon(Icons.keyboard_arrow_down_rounded, color: kIconGray),
           ],
         ),
       ),
@@ -434,6 +479,7 @@ class _ProfileMenuDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
     return Dialog(
       elevation: 20,
       insetPadding: const EdgeInsets.symmetric(horizontal: 24),
@@ -497,53 +543,46 @@ class _ProfileMenuDialog extends StatelessWidget {
               // Destructive action
               InkWell(
                 onTap: () async {
-                  Navigator.pop(context);
-
-                  // Show confirmation dialog
                   final bool? confirm = await showDialog<bool>(
                     context: context,
-                    builder: (BuildContext context) {
+                    builder: (BuildContext context2) {
                       return AlertDialog(
-                        title: Text(AppLocalizations.of(context)!.logout),
-                        content: Text(AppLocalizations.of(context)!.confirmLogout),
+                        title: Text(t?.logout ?? 'Logout'),
+                        content: Text(t?.confirmLogout ?? 'Are you sure you want to log out?'),
                         actions: <Widget>[
                           TextButton(
-                            onPressed: () => Navigator.of(context).pop(false),
-                            child: Text(AppLocalizations.of(context)!.cancel),
+                            onPressed: () => Navigator.of(context2).pop(false),
+                            child: Text(t?.cancel ?? 'Cancel'),
                           ),
                           TextButton(
-                            onPressed: () => Navigator.of(context).pop(true),
-                            child: Text(AppLocalizations.of(context)!.logout),
+                            onPressed: () => Navigator.of(context2).pop(true),
+                            child: Text(t?.logout ?? 'Logout'),
                           ),
                         ],
                       );
                     },
                   );
-
                   if (confirm == true) {
                     try {
-                      // Call the logout API
-                      await ApiClient().logout();
+                      await VendorApiClient().logout();
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(builder: (_) => const WelcomeScreen()),
+                              (route) => false,
+                        );
 
-                      // Use a NavigatorState that's not tied to the dialog context
-                      // Navigate to welcome screen and remove all previous routes
-                      Navigator.of(context, rootNavigator: true).pushAndRemoveUntil(
-                        MaterialPageRoute(builder: (context) => const WelcomeScreen()),
-                            (Route<dynamic> route) => false,
-                      );
-
-                      // Show success message
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(AppLocalizations.of(context)!.logoutSuccessful),
-                          backgroundColor: Colors.green,
-                        ),
-                      );
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(t?.logoutSuccessful ?? 'Logged out successfully'),
+                            backgroundColor: Colors.green,
+                          ),
+                        );
+                      });
                     } catch (e) {
-                      // Show error message
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text('${AppLocalizations.of(context)!.logoutFailed}: $e'),
+                          content: Text('${t?.logoutFailed ?? 'Logout failed'}: $e'),
                           backgroundColor: Colors.red,
                         ),
                       );
@@ -552,10 +591,10 @@ class _ProfileMenuDialog extends StatelessWidget {
                 },
                 borderRadius: BorderRadius.circular(12),
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 6, vertical: 12),
+                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 12),
                   child: Text(
-                    AppLocalizations.of(context)!.logout,
-                    style: TextStyle(
+                    t?.logout ?? 'Logout',
+                    style: const TextStyle(
                       color: kRedLogout,
                       fontWeight: FontWeight.w700,
                       fontSize: 16,

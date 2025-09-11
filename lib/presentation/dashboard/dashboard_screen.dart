@@ -7,6 +7,7 @@ import 'package:flutter/widgets.dart';
 
 import '../../services/api_client.dart';
 
+
 /// =============================================================
 /// Constants / Colors
 /// =============================================================
@@ -401,7 +402,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   Future<void> _loadUserName() async {
     try {
-      final customerInfo = await ApiClient().getCustomerInfo();
+      final customerInfo = await VendorApiClient().getCustomerInfo();
 
       if (customerInfo != null) {
         final firstName = customerInfo['firstname'] ?? '';
@@ -426,22 +427,23 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Future<void> _fetchDashboardData() async {
     setState(() => _isLoading = true);
     try {
-      final apiClient = ApiClient();
-      final stats            = await apiClient.getDashboardStats();
-      final salesHistory     = await apiClient.getSalesHistory();
-      final customerBreakdown= await apiClient.getCustomerBreakdown();
-      final topProducts      = await apiClient.getTopSellingProducts();
-      final topCategories    = await apiClient.getTopCategories();
-      final productRatings   = await apiClient.getProductRatings();
-      final latestReviews    = await apiClient.getLatestReviews();
+      final vendorApi = VendorApiClient();
+      final stats = await vendorApi.getDashboardStats();
+      final salesHistory = await vendorApi.getSalesHistory();
+      final customerBreakdown = await vendorApi.getCustomerBreakdown();
+      final topProducts = await vendorApi.getTopSellingProducts();
+      final topCategories = await vendorApi.getTopCategories();
+      final productRatings = await vendorApi.getProductRatings();
+      final latestReviews = await vendorApi.getLatestReviews();
+      final customerInfo = await vendorApi.getCustomerInfo();
 
       setState(() {
         _dashboardStats     = stats;
-        _salesHistory       = salesHistory;
-        _customerBreakdown  = customerBreakdown;
+        _salesHistory       = _convertToSalesHistory(salesHistory);
+        _customerBreakdown  = _convertToCustomerBreakdown(customerBreakdown);
         _topProducts        = topProducts;
         _topCategories      = topCategories;
-        _productRatings     = productRatings;
+        _productRatings     = _convertToProductRatings(productRatings);
         _latestReviews      = latestReviews;
       });
     } catch (e) {
@@ -454,6 +456,105 @@ class _DashboardScreenState extends State<DashboardScreen> {
       if (mounted) setState(() => _isLoading = false);
     }
   }
+}
+Map<String, double> _convertToSalesHistory(dynamic salesData) {
+  final result = <String, double>{};
+
+  if (salesData is Map<String, double>) {
+    return salesData;
+  } else if (salesData is List<Map<String, dynamic>>) {
+    // Convert list of maps to date->amount mapping
+    for (var item in salesData) {
+      if (item['date'] != null && item['amount'] != null) {
+        final date = item['date'].toString();
+        final amount = double.tryParse(item['amount'].toString()) ?? 0.0;
+        result[date] = amount;
+      }
+    }
+  }
+
+  return result;
+}
+
+Map<String, int> _convertToCustomerBreakdown(dynamic breakdownData) {
+  final result = <String, int>{};
+
+  if (breakdownData is Map<String, int>) {
+    return breakdownData;
+  } else if (breakdownData is Map<String, dynamic>) {
+    // Convert dynamic values to int
+    breakdownData.forEach((key, value) {
+      if (value is int) {
+        result[key] = value;
+      } else if (value is num) {
+        result[key] = value.toInt();
+      } else if (value is String) {
+        result[key] = int.tryParse(value) ?? 0;
+      }
+    });
+  }
+
+  // Ensure we have the expected keys with default values
+  result['old'] = result['old'] ?? result['old_customers'] ?? 0;
+  result['new'] = result['new'] ?? result['new_customers'] ?? 0;
+  result['returning'] = result['returning'] ?? result['returning_customers'] ?? 0;
+
+  return result;
+}
+
+Map<String, Map<int, double>> _convertToProductRatings(dynamic ratingsData) {
+  final result = <String, Map<int, double>>{};
+
+  if (ratingsData is Map<String, Map<int, double>>) {
+    return ratingsData;
+  } else if (ratingsData is Map<String, dynamic>) {
+    // Convert nested dynamic values to the expected format
+    ratingsData.forEach((category, ratingMap) {
+      if (ratingMap is Map<int, double>) {
+        result[category] = ratingMap;
+      } else if (ratingMap is Map<String, dynamic>) {
+        final convertedMap = <int, double>{};
+        ratingMap.forEach((key, value) {
+          final intKey = int.tryParse(key.toString());
+          final doubleValue = value is double ? value :
+          (value is num ? value.toDouble() :
+          double.tryParse(value.toString()) ?? 0.0);
+          if (intKey != null) {
+            convertedMap[intKey] = doubleValue;
+          }
+        });
+        result[category] = convertedMap;
+      }
+    });
+  } else if (ratingsData is List<Map<String, dynamic>>) {
+    // Handle list format - convert to expected structure
+    final priceRatings = <int, double>{};
+    final valueRatings = <int, double>{};
+    final qualityRatings = <int, double>{};
+
+    for (var rating in ratingsData) {
+      final stars = int.tryParse(rating['stars']?.toString() ?? '0') ?? 0;
+      final pricePercent = double.tryParse(rating['price_percent']?.toString() ?? '0') ?? 0.0;
+      final valuePercent = double.tryParse(rating['value_percent']?.toString() ?? '0') ?? 0.0;
+      final qualityPercent = double.tryParse(rating['quality_percent']?.toString() ?? '0') ?? 0.0;
+
+      if (stars >= 1 && stars <= 5) {
+        priceRatings[stars] = pricePercent;
+        valueRatings[stars] = valuePercent;
+        qualityRatings[stars] = qualityPercent;
+      }
+    }
+
+    result['price'] = priceRatings;
+    result['value'] = valueRatings;
+    result['quality'] = qualityRatings;
+  }
+
+  result['price'] = result['price'] ?? {5: 0.0, 4: 0.0, 3: 0.0, 2: 0.0, 1: 0.0};
+  result['value'] = result['value'] ?? {5: 0.0, 4: 0.0, 3: 0.0, 2: 0.0, 1: 0.0};
+  result['quality'] = result['quality'] ?? {5: 0.0, 4: 0.0, 3: 0.0, 2: 0.0, 1: 0.0};
+
+  return result;
 }
 
 // =============================================================
@@ -1047,8 +1148,6 @@ class AOVSection extends StatelessWidget {
     final labels = xLabelsForRangeKey(context, rangeKey);
     final series = spotsFromSiteByKey(data, rangeKey);
     final b = yBounds(series);
-
-    // Simple AOV proxy: mean of visible points (replace with true AOV if available)
     final avg = (series.isEmpty)
         ? 0.0
         : series.map((s) => s.y).reduce((a, b) => a + b) / series.length;
@@ -1634,7 +1733,6 @@ int? _hitTestDonut({
   final dy = localPos.dy - center.dy;
   final r = (size.shortestSide / 2);
 
-  // Donut ring bounds (use squared distances to avoid sqrt)
   final outerR2 = r * r;
   final innerR = r - strokeWidth;
   final innerR2 = innerR * innerR;
@@ -1642,7 +1740,6 @@ int? _hitTestDonut({
   final dist2 = dx * dx + dy * dy;
   if (dist2 < innerR2 || dist2 > outerR2) return null;
 
-  // Angle 0 at +X axis, normalize to [0, 2π)
   var angle = atan2(dy, dx);
   if (angle < 0) angle += 2 * pi;
 

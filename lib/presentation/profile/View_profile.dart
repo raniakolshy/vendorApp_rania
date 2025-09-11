@@ -1,6 +1,11 @@
-import 'package:app_vendor/l10n/app_localizations.dart';
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+// Use ONE import; keep it namespaced so there are no clashes.
+import 'package:app_vendor/services/api_client.dart' as api;
 
 class VendorProfileScreen extends StatefulWidget {
   const VendorProfileScreen({super.key});
@@ -10,89 +15,271 @@ class VendorProfileScreen extends StatefulWidget {
 }
 
 class _VendorProfileScreenState extends State<VendorProfileScreen> {
-  // Mock data : contenu business (non traduit intentionnellement)
-  final Map<String, dynamic> _vendorData = {
-    'companyName': 'Gadgets & Gear Co.',
-    'location': 'New York, USA',
-    'bio':
-    'We are a leading provider of high-quality electronics and adventure gear. Our mission is to bring you the best products to enhance your daily life and outdoor experiences.',
-    'logoUrl': 'assets/logo.jpg',
-    'bannerUrl': 'assets/welcome_background.jpeg',
-    'socialMedia': {
-      'twitter': 'gadgets_gear',
-      'instagram': 'gadgets_gear_official',
-      'youtube': 'GadgetsAndGear',
-    },
-    'products': [
-      {
-        'name': 'Wireless Headphones',
-        'price': 'AED 129.99',
-        'category': 'Electronics',
-        'imageUrl': 'assets/img_square.jpg'
-      },
-      {
-        'name': 'Smartwatch',
-        'price': 'AED 249.00',
-        'category': 'Electronics',
-        'imageUrl': 'assets/img_square.jpg'
-      },
-      {
-        'name': 'Portable Power Bank',
-        'price': 'AED 45.50',
-        'category': 'Accessories',
-        'imageUrl': 'assets/img_square.jpg'
-      },
-      {
-        'name': 'Action Camera',
-        'price': 'AED 399.99',
-        'category': 'Electronics',
-        'imageUrl': 'assets/img_square.jpg'
-      },
-      {
-        'name': 'Bluetooth Speaker',
-        'price': 'AED 89.95',
-        'category': 'Electronics',
-        'imageUrl': 'assets/img_square.jpg'
-      },
-      {
-        'name': 'Drone',
-        'price': 'AED 550.00',
-        'category': 'Electronics',
-        'imageUrl': 'assets/img_square.jpg'
-      },
-    ],
-  };
+  api.VendorProfile? _profile;
+  List<Map<String, dynamic>> _products = [];
+  bool _loading = true;
 
-  IconData _getSocialMediaIcon(String id) {
-    switch (id) {
-      case 'twitter':
-        return FontAwesomeIcons.twitter;
-      case 'facebook':
-        return FontAwesomeIcons.facebook;
-      case 'instagram':
-        return FontAwesomeIcons.instagram;
-      case 'youtube':
-        return FontAwesomeIcons.youtube;
-      case 'pinterest':
-        return FontAwesomeIcons.pinterest;
-      case 'tiktok':
-        return FontAwesomeIcons.tiktok;
-      default:
-        return Icons.link;
+  @override
+  void initState() {
+    super.initState();
+    _loadAll();
+  }
+
+  Future<void> _loadAll() async {
+    setState(() => _loading = true);
+    try {
+      final p = await api.VendorApiClient().getVendorProfileMe(); // returns VendorProfile
+      _profile = p;
+
+      // customerId is int? — only load products if it’s non-null
+      if (p.customerId != null) {
+        final raw = await api.VendorApiClient()
+            .getProductsByVendor(vendorId: p.customerId!, pageSize: 50); // <-- non-null now
+
+        // Convert List<dynamic> -> List<Map<String, dynamic>>
+        final items = raw
+            .whereType<Map>() // drop non-maps safely
+            .map((e) => Map<String, dynamic>.from(e))
+            .toList();
+
+        _products = items;
+      } else {
+        _products = [];
+      }
+    } catch (e) {
+      // optionally show a snackbar
+      // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed: $e')));
+    } finally {
+      if (mounted) setState(() => _loading = false);
     }
   }
 
-  String _localizeCategory(String raw, AppLocalizations l10n) {
-    switch (raw) {
-      case 'Electronics':
-        return l10n.cat_electronics;
-      case 'Accessories':
-        return l10n.cat_accessories;
-      default:
-        return raw;
+  // ---------- UI helpers ----------
+  ImageProvider? _bannerProvider() {
+    if (_profile == null) return null;
+    if (_profile!.bannerUrl?.isNotEmpty == true) {
+      final rel = _profile!.bannerUrl!;
+      final full = rel.startsWith('http')
+          ? rel
+          : '${api.VendorApiClient().mediaBaseUrlForVendor}/${rel.startsWith('/') ? rel.substring(1) : rel}';
+      return NetworkImage(full);
     }
+    if (_profile!.bannerBase64?.isNotEmpty == true) {
+      try {
+        final bytes = base64Decode(_profile!.bannerBase64!.split(',').last);
+        return MemoryImage(bytes);
+      } catch (_) {}
+    }
+    return null;
   }
 
+  ImageProvider? _logoProvider() {
+    if (_profile == null) return null;
+    if (_profile!.logoUrl?.isNotEmpty == true) {
+      final rel = _profile!.logoUrl!;
+      final full = rel.startsWith('http')
+          ? rel
+          : '${api.VendorApiClient().mediaBaseUrlForVendor}/${rel.startsWith('/') ? rel.substring(1) : rel}';
+      return NetworkImage(full);
+    }
+    if (_profile!.logoBase64?.isNotEmpty == true) {
+      try {
+        final bytes = base64Decode(_profile!.logoBase64!.split(',').last);
+        return MemoryImage(bytes);
+      } catch (_) {}
+    }
+    return null;
+  }
+
+  // ---------- Build ----------
+  @override
+  Widget build(BuildContext context) {
+    final banner = _bannerProvider();
+    final logo = _logoProvider();
+
+    return Scaffold(
+      backgroundColor: const Color(0xFFF7F7F7),
+      body: SafeArea(
+        child: _loading
+            ? const Center(
+          child: Padding(
+            padding: EdgeInsets.only(top: 60),
+            child: CircularProgressIndicator(),
+          ),
+        )
+            : Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 900),
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.fromLTRB(24, 20, 24, 24),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Banner
+                  Container(
+                    height: 200,
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFE5E5E5),
+                      borderRadius: BorderRadius.circular(16),
+                      image: banner != null
+                          ? DecorationImage(image: banner, fit: BoxFit.cover)
+                          : null,
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+
+                  // Header
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Logo
+                      Container(
+                        width: 80,
+                        height: 80,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.white,
+                          border: Border.all(color: Colors.black.withOpacity(0.1)),
+                          image: logo != null
+                              ? DecorationImage(image: logo, fit: BoxFit.cover)
+                              : null,
+                        ),
+                        child: logo == null
+                            ? const Icon(Icons.business, color: Colors.black38, size: 36)
+                            : null,
+                      ),
+                      const SizedBox(width: 16),
+                      // Vendor info
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              _profile?.companyName?.isNotEmpty == true ? _profile!.companyName! : '—',
+                              style: const TextStyle(fontSize: 28, fontWeight: FontWeight.w700),
+                            ),
+                            const SizedBox(height: 4),
+                            Row(
+                              children: [
+                                const Icon(Icons.location_on, size: 16, color: Colors.grey),
+                                const SizedBox(width: 4),
+                                Text(
+                                  _profile?.country?.isNotEmpty == true ? _profile!.country! : '—',
+                                  style: const TextStyle(fontSize: 16, color: Colors.grey),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 12),
+                            // Socials
+                            Wrap(
+                              spacing: 8.0,
+                              children: [
+                                if ((_profile?.twitter?.isNotEmpty ?? false))
+                                  const Icon(FontAwesomeIcons.twitter, color: Colors.black87),
+                                if ((_profile?.instagram?.isNotEmpty ?? false))
+                                  const Icon(FontAwesomeIcons.instagram, color: Colors.black87),
+                                if ((_profile?.youtube?.isNotEmpty ?? false))
+                                  const Icon(FontAwesomeIcons.youtube, color: Colors.black87),
+                                if ((_profile?.facebook?.isNotEmpty ?? false))
+                                  const Icon(FontAwesomeIcons.facebook, color: Colors.black87),
+                                if ((_profile?.pinterest?.isNotEmpty ?? false))
+                                  const Icon(FontAwesomeIcons.pinterest, color: Colors.black87),
+                                if ((_profile?.tiktok?.isNotEmpty ?? false))
+                                  const Icon(FontAwesomeIcons.tiktok, color: Colors.black87),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 24),
+
+                  // Bio
+                  _sectionCard(title: 'About Us', children: [
+                    Text(_profile?.bio?.isNotEmpty == true ? _profile!.bio! : '—'),
+                  ]),
+
+                  // Products
+                  _sectionCard(title: 'Our Products', children: [
+                    if (_products.isEmpty)
+                      const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 16),
+                        child: Text('No products found.'),
+                      )
+                    else
+                      GridView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          childAspectRatio: 0.7,
+                          mainAxisSpacing: 16,
+                          crossAxisSpacing: 16,
+                        ),
+                        itemCount: _products.length,
+                        itemBuilder: (context, index) {
+                          final product = _products[index];
+
+                          // Try to extract an image path from media_gallery_entries or image attr
+                          String imagePath = '';
+                          final mg = product['media_gallery_entries'];
+                          if (mg is List && mg.isNotEmpty) {
+                            final first = mg.first;
+                            if (first is Map && first['file'] != null) {
+                              imagePath = first['file'].toString();
+                            }
+                          } else if (product['image'] != null) {
+                            imagePath = product['image'].toString();
+                          }
+
+                          final imageUrl = api.VendorApiClient().productImageUrl(imagePath);
+                          final price = (product['price'] is num)
+                              ? (product['price'] as num).toDouble()
+                              : double.tryParse('${product['price']}');
+                          final name = (product['name'] ?? '').toString();
+                          final type = (product['type_id'] ?? '').toString();
+
+                          return _buildProductCard(
+                            name: name,
+                            price: price,
+                            category: type,
+                            imageUrl: imageUrl,
+                          );
+                        },
+                      ),
+                  ]),
+
+                  // Back
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 20),
+                    child: ElevatedButton.icon(
+                      onPressed: () => Navigator.pop(context),
+                      icon: const Icon(Icons.edit, color: Colors.white, size: 20),
+                      label: const Text(
+                        'Edit Profile',
+                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.black,
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                        elevation: 5,
+                        shadowColor: Colors.black.withOpacity(0.2),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  // ---------- UI helpers ----------
   Widget _sectionCard({required String title, required List<Widget> children}) {
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
@@ -119,151 +306,16 @@ class _VendorProfileScreenState extends State<VendorProfileScreen> {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
+  Widget _buildProductCard({
+    required String name,
+    required double? price,
+    required String category,
+    required String imageUrl,
+  }) {
+    final image = (imageUrl.isNotEmpty)
+        ? Image.network(imageUrl, height: 120, width: double.infinity, fit: BoxFit.cover)
+        : Image.asset('assets/img_square.jpg', height: 120, width: double.infinity, fit: BoxFit.cover);
 
-    return Scaffold(
-      backgroundColor: const Color(0xFFF7F7F7),
-      body: SafeArea(
-        child: Center(
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 900),
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.fromLTRB(24, 20, 24, 24),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Banner
-                  Container(
-                    height: 200,
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFE5E5E5),
-                      borderRadius: BorderRadius.circular(16),
-                      image: DecorationImage(
-                        image: AssetImage(_vendorData['bannerUrl']),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 24),
-
-                  // Header
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // Logo
-                      Container(
-                        width: 80,
-                        height: 80,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.white,
-                          border: Border.all(color: Colors.black.withOpacity(0.1)),
-                          image: DecorationImage(
-                            image: AssetImage(_vendorData['logoUrl']),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 16),
-                      // Infos
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              _vendorData['companyName'],
-                              style: const TextStyle(fontSize: 28, fontWeight: FontWeight.w700),
-                            ),
-                            const SizedBox(height: 4),
-                            Row(
-                              children: [
-                                const Icon(Icons.location_on, size: 16, color: Colors.grey),
-                                const SizedBox(width: 4),
-                                Text(
-                                  _vendorData['location'],
-                                  style: const TextStyle(fontSize: 16, color: Colors.grey),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 12),
-                            // Socials
-                            Wrap(
-                              spacing: 8.0,
-                              children: (_vendorData['socialMedia'] as Map<String, dynamic>)
-                                  .entries
-                                  .map<Widget>((entry) {
-                                return IconButton(
-                                  tooltip: l10n.social_tooltip(entry.key),
-                                  onPressed: () {
-                                    // TODO: open link
-                                  },
-                                  icon: FaIcon(_getSocialMediaIcon(entry.key), color: Colors.black87),
-                                );
-                              }).toList(),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 24),
-
-                  // Bio
-                  _sectionCard(title: l10n.sec_about_us, children: [
-                    Text(_vendorData['bio']),
-                  ]),
-
-                  // Products
-                  _sectionCard(title: l10n.sec_our_products, children: [
-                    GridView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        childAspectRatio: 0.7,
-                        mainAxisSpacing: 16,
-                        crossAxisSpacing: 16,
-                      ),
-                      itemCount: (_vendorData['products'] as List).length,
-                      itemBuilder: (context, index) {
-                        final product = (_vendorData['products'] as List)[index] as Map<String, String>;
-                        return _buildProductCard(product, l10n);
-                      },
-                    ),
-                  ]),
-
-                  // Back/Edit
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 20),
-                    child: ElevatedButton.icon(
-                      onPressed: () => Navigator.pop(context),
-                      icon: const Icon(Icons.edit, color: Colors.white, size: 20),
-                      label: Text(
-                        l10n.btn_edit_profile,
-                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.black,
-                        foregroundColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-                        elevation: 5,
-                        shadowColor: Colors.black.withOpacity(0.2),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildProductCard(Map<String, String> product, AppLocalizations l10n) {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -281,12 +333,7 @@ class _VendorProfileScreenState extends State<VendorProfileScreen> {
         children: [
           ClipRRect(
             borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
-            child: Image.asset(
-              product['imageUrl']!,
-              height: 120,
-              width: double.infinity,
-              fit: BoxFit.cover,
-            ),
+            child: image,
           ),
           Padding(
             padding: const EdgeInsets.all(8),
@@ -294,19 +341,19 @@ class _VendorProfileScreenState extends State<VendorProfileScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  product['name']!,
+                  name,
                   style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 14),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
                 const SizedBox(height: 6),
                 Text(
-                  _localizeCategory(product['category']!, l10n),
+                  category,
                   style: const TextStyle(fontSize: 12, color: Colors.grey),
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  product['price']!,
+                  price == null ? '—' : 'AED ${price.toStringAsFixed(2)}',
                   style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 16, color: Colors.black),
                 ),
               ],
