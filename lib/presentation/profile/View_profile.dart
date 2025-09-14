@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Use ONE import; keep it namespaced so there are no clashes.
-import 'package:app_vendor/services/api_client.dart' as api;
+import 'package:kolshy_vendor/services/api_client.dart' as api;
 
 class VendorProfileScreen extends StatefulWidget {
   const VendorProfileScreen({super.key});

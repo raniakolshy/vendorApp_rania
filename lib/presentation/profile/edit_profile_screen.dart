@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'dart:typed_data';
-import 'package:app_vendor/l10n/app_localizations.dart';
+import 'package:kolshy_vendor/l10n/app_localizations.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
@@ -11,7 +11,7 @@ import 'package:intl_phone_field/intl_phone_field.dart';
 import '../../services/api_client.dart';
 import '../common/description_markdown_field.dart';
 import 'View_profile.dart';
-import 'package:app_vendor/services/api_client.dart' as api;
+import 'package:kolshy_vendor/services/api_client.dart' as api;
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
 

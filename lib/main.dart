@@ -1,9 +1,8 @@
-
-import 'package:app_vendor/services/api_client.dart';
+import 'package:kolshy_vendor/services/api_client.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:app_vendor/state_management/locale_provider.dart';
-import 'package:app_vendor/l10n/app_localizations.dart';
+import 'package:kolshy_vendor/state_management/locale_provider.dart';
+import 'package:kolshy_vendor/l10n/app_localizations.dart';
 import 'presentation/auth/login/login_screen.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'presentation/Translation/Language.dart';
@@ -126,7 +125,6 @@ class _AuthWrapperState extends State<AuthWrapper> {
     return _isLoggedIn ? const Home() : const WelcomeScreen();
   }
 }
-
 
 class Home extends StatefulWidget {
   const Home({super.key});

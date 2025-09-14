@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
-import 'package:app_vendor/l10n/app_localizations.dart';
+import 'package:kolshy_vendor/l10n/app_localizations.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/material.dart';

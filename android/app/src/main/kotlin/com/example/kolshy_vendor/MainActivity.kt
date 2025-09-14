@@ -1,4 +1,4 @@
-package com.example.app_vendor
+package com.example.kolshy_vendor
 
 import io.flutter.embedding.android.FlutterActivity
 

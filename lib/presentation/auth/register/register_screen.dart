@@ -1,8 +1,8 @@
 // presentation/auth/register/register_screen.dart
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:app_vendor/l10n/app_localizations.dart';
-import 'package:app_vendor/main.dart';
+import 'package:kolshy_vendor/l10n/app_localizations.dart';
+import 'package:kolshy_vendor/main.dart';
 import '../../../services/api_client.dart';
 import '../login/login_screen.dart';
 

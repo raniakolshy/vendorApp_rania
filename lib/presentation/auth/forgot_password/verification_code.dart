@@ -1,5 +1,5 @@
-import 'package:app_vendor/l10n/app_localizations.dart';
-import 'package:app_vendor/main.dart';
+import 'package:kolshy_vendor/l10n/app_localizations.dart';
+import 'package:kolshy_vendor/main.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 

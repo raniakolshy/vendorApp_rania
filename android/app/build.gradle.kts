@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.app_vendor"
+    namespace = "com.example.kolshy_vendor"
     compileSdk = flutter.compileSdkVersion
 
     // ✅ Forcer la version NDK que tu veux utiliser
@@ -22,7 +22,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.example.app_vendor"
+        applicationId = "com.example.kolshy_vendor"
         minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode

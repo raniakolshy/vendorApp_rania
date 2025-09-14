@@ -1,9 +1,9 @@
-import 'package:app_vendor/presentation/auth/login/login_screen.dart';
-import 'package:app_vendor/presentation/auth/register/register_screen.dart';
-import 'package:app_vendor/presentation/dashboard/dashboard_screen.dart'; // New import for the DashboardScreen
+import 'package:kolshy_vendor/presentation/auth/login/login_screen.dart';
+import 'package:kolshy_vendor/presentation/auth/register/register_screen.dart';
+import 'package:kolshy_vendor/presentation/dashboard/dashboard_screen.dart'; // New import for the DashboardScreen
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:app_vendor/main.dart'; // Make sure this path is correct for your Home() widget
+import 'package:kolshy_vendor/main.dart'; // Make sure this path is correct for your Home() widget
 
 // Page d'accueil (welcome) – style basé sur la maquette fournie.
 class WelcomeScreen extends StatefulWidget {
